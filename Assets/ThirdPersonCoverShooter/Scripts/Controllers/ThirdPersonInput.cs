@@ -40,10 +40,10 @@ namespace CoverShooter
         public static event EventHandler Fired;
         public static bool zoomIn;
         public static bool zoomOut;
-  
+
         /// <summary>
         /// Camera moved by this input component.
-        
+
         public ThirdPersonCamera Camera
         {
             get
@@ -153,7 +153,7 @@ namespace CoverShooter
         private float _backMoveIntensity = 1;
         private float _frontMoveIntensity = 1;
 
-
+        public static bool isUsingWeapon = false;
 
 
         private void Awake()
@@ -177,7 +177,7 @@ namespace CoverShooter
         private void Update()
         {
 
-       
+
 
 
             if (Disabler != null && Disabler.activeSelf)
@@ -294,60 +294,61 @@ namespace CoverShooter
 
         protected virtual void UpdateAttack()
         {
-            
+
 
             // Use single button for zooming and shooting with Control Freak 2
             if (ControlFreak2.CF2Input.GetButtonDown("Fire") || _motor.IsInCover && _canZoom)
             {
                 _controller.ZoomInput = true;     // Start zooming
                 _controller.FireInput = false;    // Prevent immediate firing
-                
-                
+
+
 
             }
             if (ControlFreak2.CF2Input.GetButtonDown("Fire"))
             {
                 zoomIn = true;
                 zoomOut = false;
-                
+                isUsingWeapon = true;
+
             }
             if (ControlFreak2.CF2Input.GetButtonUp("Fire"))
             {
                 zoomIn = false;
                 zoomOut = true;
-                
+
 
                 // Check if player is in cover or not, and allow firing in both cases
                 if (_motor.IsInCover)
                 {
-                  
+
                     if (!EnemyManager.instance.finalShot)
                     {
-                      
+                        Invoke(nameof(PlayBackAnimation), 1.3f);
                         _controller.FireInput = true;
                         Fired?.Invoke(this, EventArgs.Empty);
-                        
+
                     }
                     else
                     {
                         EnemyManager.instance.shoot = true;
                     }
 
-                    
-                    
-                    
-                   
+
+
+
+
                 }
                 else
                 {
-                   // _controller.FireInput = true;
+                    // _controller.FireInput = true;
                     //Invoke("ResetFireInput", 0.1f);
                 }
                 // Stop any previous DelayedZoomOut coroutine and start a new one
                 //if (_zoomOutCoroutine != null)
                 //    StopCoroutine(_zoomOutCoroutine);
                 //_zoomOutCoroutine = StartCoroutine(DelayedZoomOut());
-               
+
 
 
             }
@@ -367,7 +368,10 @@ namespace CoverShooter
                 _controller.BlockInput = false;
         }
 
-
+        void PlayBackAnimation()
+        {
+            isUsingWeapon = false;
+        }
         //private IEnumerator DelayedZoomOut()
         //{
         //    yield return new WaitForSeconds(3f); // Wait for 3 seconds
