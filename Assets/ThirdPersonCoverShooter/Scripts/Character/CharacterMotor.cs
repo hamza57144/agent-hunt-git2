@@ -868,7 +868,7 @@ namespace CoverShooter
                    IsGunScopeReady &&
                    !HasGrenadeInHand && playerMotor.isInCoverAnim)
                     {
-                        if (_coverAim.IsAiming || wantsToAim)
+                        if (_coverAim.IsAiming || wantsToAim || ThirdPersonInput.isUsingWeapon)
                             return true;
                         else if (!_cover.In && !EquippedWeapon.IsNull && (wantsToAim || _wantsToAimWhenLeavingCover))
                             return true;
