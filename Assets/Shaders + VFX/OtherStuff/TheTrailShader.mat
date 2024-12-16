@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-378917446520232299
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TheTrailShader
+  m_Shader: {fileID: -6465566751694194690, guid: 7daa9d25bcf7d414db526231b7ed37bd, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_68f6087bb4df4c59a87a5d2e7ad1c693:
+        m_Texture: {fileID: 2800000, guid: 63bbe00a05da9d845801621c55985b12, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_7301757b0f8a4a20a708dc5a9815282c: 100
+    m_Colors:
+    - Color_dcc9daa7dcca40e49cf7d2a11ea1853f: {r: 0.030526895, g: 0.7568698, b: 0.9245283, a: 1}
+    - Color_e44075055a694b42b89c310f3a8c5a6a: {r: 1.8867924, g: 0.75821745, b: 0.3114987, a: 0.7647059}
+    - Vector2_b18c93b0167841369024d47b673f2990: {r: -3.5, g: 0, b: 0, a: 0}
+    - Vector2_b92bf353de3d4d02bf65c9728bf8a772: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
