@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿/*using UnityEditor;
 using UnityEngine;
 
 namespace CoverShooter
@@ -126,3 +126,4 @@ namespace CoverShooter
         }
     }
 }
+*/
