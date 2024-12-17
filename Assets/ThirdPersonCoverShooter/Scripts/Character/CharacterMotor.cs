@@ -69,6 +69,8 @@ namespace CoverShooter
         private static bool hasScope;
         private Enemy enemy;
         private HealthBar healthBar;
+        public bool isVisible;
+
         #region Properties
 
         /// <summary>
@@ -851,8 +853,30 @@ namespace CoverShooter
         /// <summary>
         /// Is aiming or intending to aim.
         /// </summary>
-        
-        
+      /*  public bool IsObjectVisibleToCamera( )
+        {
+            
+            Transform objTransform = this.gameObject.transform;
+            Vector3 viewportPos = camera.WorldToViewportPoint(objTransform.position);
+
+            // Check if within the viewport bounds
+            bool isInViewport = viewportPos.z > 0 &&
+                                viewportPos.x >= 0 && viewportPos.x <= 1 &&
+                                viewportPos.y >= 0 && viewportPos.y <= 1;
+
+            if (!isInViewport)
+                return false;
+
+            // Perform a raycast to ensure the object is not occluded
+            Vector3 direction = objTransform.position - camera.transform.position;
+            if (Physics.Raycast(camera.transform.position, direction, out RaycastHit hit))
+            {
+                return hit.transform == objTransform; // True if the ray directly hits the object
+            }
+
+            return false; // Object is occluded
+        }*/
+
         public bool IsAimingGun
         {
             get
@@ -6608,7 +6632,7 @@ namespace CoverShooter
             position = Vector3.zero;
             return false;
         }
-
+        
         private CoverClimb getClimb(Cover cover)
         {
             if (cover == null)
@@ -6618,5 +6642,6 @@ namespace CoverShooter
         }
 
         #endregion
+        
     }
 }

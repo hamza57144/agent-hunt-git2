@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,8 @@ namespace CoverShooter
         bool once=true;
         public float cameraOffset;
         public bool changeView;
+     
+        
         /// <summary>
         /// Field of view as defined by the current camera state.
         /// </summary>
@@ -339,7 +342,7 @@ namespace CoverShooter
 
                 if (Vector3.Distance(_shake, _shakeTarget) < 1)
                 {
-                    _shakeTarget = Random.onUnitSphere * t * _shakeIntensity * 5;
+                    _shakeTarget = UnityEngine.Random.onUnitSphere * t * _shakeIntensity * 5;
                     _shakeTarget.z = 0;
                 }
 

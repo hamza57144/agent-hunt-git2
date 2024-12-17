@@ -80,7 +80,6 @@ public class EnemyManager : MonoBehaviour
 
                             if (shoot)
                             {
-
                                 Shoot();
                             }
 
@@ -157,7 +156,7 @@ public class EnemyManager : MonoBehaviour
               
                 if (direction.magnitude >= minDistanceToPlayAnimation)
                 {
-                   
+                    gameManager.HideArrow();
                     Bullet bulletInstance = Instantiate(bulletPrefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
                     bulletInstance.Launch(shootingForce, hit.collider.transform, hit.point);
                     bulletTimeController.StartSequence(bulletInstance, hit.point);

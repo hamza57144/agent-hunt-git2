@@ -1,5 +1,6 @@
 using CoverShooter;
 using CoverShooter.AI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,8 @@ public class Nav_Movement : MonoBehaviour
     bool isInCover;
     bool wait = false;
     int totalEnemies = 0;
+    public event EventHandler PlayerRunning;
+    public event EventHandler PlayerStopped;
 
     private void Awake()
     {
@@ -42,9 +45,15 @@ public class Nav_Movement : MonoBehaviour
         characterMotor = GetComponent<CharacterMotor>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        MoveToCover(point);
         actor = GetComponent<Actor>();
-        
+        foreach (var item in coverPoint)
+        {
+            foreach(var enemyMotor in item.enemies)
+            {
+                enemyMotor.isVisible = false;
+            }
+        }
+        MoveToCover(point);
 
     }
     void CalculateEnemies()
@@ -122,7 +131,10 @@ public class Nav_Movement : MonoBehaviour
 
     void MoveToCover(int movPoint)
     {
-
+        foreach (var enemyMotor in coverPoint[movPoint].enemies)
+        {
+            enemyMotor.isVisible = true;
+        }
         agent.enabled = true;
         agent.isStopped = false;
         isInCover = false;
@@ -137,20 +149,22 @@ public class Nav_Movement : MonoBehaviour
 
     void UpdateAnimatorParameters()
     {
+       PlayerRunning?.Invoke(this,EventArgs.Empty);
         // Calculate movement speed and direction
         float movementSpeed = agent.velocity.magnitude;
         Vector3 localVelocity = transform.InverseTransformDirection(agent.velocity);
         float movementX = localVelocity.x;
         float movementZ = localVelocity.z;
-
         // Update animator parameters
         animator.SetFloat("MovementSpeed", movementSpeed * smoothness);
         animator.SetFloat("MovementX", movementX * smoothness);
         animator.SetFloat("MovementZ", movementZ * smoothness);
+        
     }
 
     void EnterCoverPosition()
     {
+        PlayerStopped?.Invoke(this,EventArgs.Empty);
         // Stop the agent
         agent.isStopped = true;
         isReached = true;

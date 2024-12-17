@@ -77,6 +77,7 @@ namespace CoverShooter
         /// <summary>
         /// All alive characters during the last update.
         /// </summary>
+        
         public static IEnumerable<Character> AllAlive
         {
             get

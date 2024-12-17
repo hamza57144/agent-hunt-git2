@@ -74,145 +74,63 @@ namespace CoverShooter
 
         private void LateUpdate()
         {
-            /* /// Manage health bars
-             {
-                 _keep.Clear();
+            _keep.Clear();
 
-                 if (HealthPrototype != null)
-                 {
-                     foreach (var character in Characters.AllAlive)
-                         if (character.Actor != null && (Player == null || character.Actor.Side != Player.Side))
-                         {
-                             var position = character.ViewportPoint();
-
-                             if (character.IsInSight(2, -0.01f))
-                             {
-                                 _keep.Add(character.Object);
-
-                                 if (!_bars.ContainsKey(character.Object))
-                                 {
-                                     var clone = GameObject.Instantiate(HealthPrototype.gameObject);
-                                     clone.transform.SetParent(transform);
-                                     clone.GetComponent<HealthBar>().Target = character.Object;
-                                     _bars.Add(character.Object, clone);
-                                 }
-
-                                 var t = _bars[character.Object].GetComponent<RectTransform>();
-                                 t.gameObject.SetActive(true);
-                                 t.position = new Vector3(position.x * Screen.width + Offset.x * Screen.height, position.y * Screen.height + Offset.y * Screen.height, t.position.z);
-                             }
-                         }
-                 }
-
-                 for (int i = 0; i < _bars.Count - _keep.Count; i++)
-                 {
-                     foreach (var key in _bars.Keys)
-                         if (!_keep.Contains(key))
-                         {
-                             GameObject.Destroy(_bars[key]);
-                             _bars.Remove(key);
-                             break;
-                         }
-                 }
-             }
- */
-            /// Manage arrows
+            if (ArrowPrototype != null)
             {
-                _keep.Clear();
-
-                if (ArrowPrototype != null)
+                foreach (var character in Characters.AllAlive)
                 {
-                    foreach (var character in Characters.AllAlive)
+                    if (character.Actor != null && (Player == null || character.Actor.Side != Player.Side))
                     {
-                        if (character.Actor != null && (Player == null || character.Actor.Side != Player.Side))
+                        var enemyTransform = character.Object.transform;
+                        var camera = Camera.main;
+
+                        // Access the CharacterMotor script of the enemy to check the visibility flag
+                        var characterMotor = character.Object.GetComponent<CharacterMotor>();
+
+                        if (characterMotor != null && characterMotor.isVisible) // Only show arrow if isVisible is true
                         {
-                            var enemyTransform = character.Object.transform;
-                            var camera = Camera.main;
+                            // Place arrow above the enemy (head position)
+                            Vector3 screenPos = camera.WorldToScreenPoint(enemyTransform.position + Vector3.up * 2); // Adjust offset
 
-                            if (IsEnemyVisible(enemyTransform, camera)) // Assuming you have visibility check
+                            // Increase the arrow height further when visible
+                            screenPos.y += 50f;  // Adjust Y-position for more height (adjust as needed)
+
+                            if (!_away.ContainsKey(character.Object))
                             {
-                                // Place arrow above the enemy (head position)
-                                Vector3 screenPos = camera.WorldToScreenPoint(enemyTransform.position + Vector3.up * 2); // Adjust offset
-
-                                // Increase the arrow height further when visible
-                                screenPos.y += 50f;  // Increase Y-position for more height (adjust as needed)
-
-                                if (!_away.ContainsKey(character.Object))
-                                {
-                                    var clone = GameObject.Instantiate(ArrowPrototype.gameObject);
-                                    clone.transform.SetParent(transform, false);
-                                    _away.Add(character.Object, clone);
-                                }
-
-                                var t = _away[character.Object].GetComponent<RectTransform>();
-                                t.gameObject.SetActive(true);
-                                t.position = new Vector3(screenPos.x, screenPos.y, t.position.z);
-                                t.eulerAngles = Vector3.zero;
-                            }
-                            else
-                            {
-                                // Increase the Y position to simulate the enemy's head or neck when it's not visible
-                                Vector3 viewportPos = camera.WorldToViewportPoint(enemyTransform.position);
-
-                                // Adjust position higher for non-visible enemies
-                                viewportPos.y += 0.1f;  // Increase Y position when not visible (adjust as needed)
-
-                                const float edgeThreshold = 0.05f;
-
-                                if (viewportPos.z < 0)
-                                {
-                                    viewportPos.x = 1 - viewportPos.x;
-                                    viewportPos.y = 1 - viewportPos.y;
-                                }
-
-                                float angle = 0;
-                                bool isLeft = viewportPos.x < edgeThreshold;
-                                bool isRight = viewportPos.x > 1 - edgeThreshold;
-                                bool isDown = viewportPos.y < edgeThreshold;
-                                bool isUp = viewportPos.y > 1 - edgeThreshold;
-
-                                if (isUp) angle = isLeft ? 45 : isRight ? -45 : 0;
-                                else if (isDown) angle = isLeft ? 135 : isRight ? -135 : 180;
-                                else angle = isLeft ? 90 : -90;
-
-                                if (isLeft) viewportPos.x = edgeThreshold;
-                                if (isDown) viewportPos.y = edgeThreshold;
-                                if (isRight) viewportPos.x = 1 - edgeThreshold;
-                                if (isUp) viewportPos.y = 1 - edgeThreshold;
-
-                                if (!_away.ContainsKey(character.Object))
-                                {
-                                    var clone = GameObject.Instantiate(ArrowPrototype.gameObject);
-                                    clone.transform.SetParent(transform, false);
-                                    _away.Add(character.Object, clone);
-                                }
-
-                                var t = _away[character.Object].GetComponent<RectTransform>();
-                                t.gameObject.SetActive(true);
-                                t.position = new Vector3(viewportPos.x * Screen.width, viewportPos.y * Screen.height, t.position.z);
-                                t.eulerAngles = new Vector3(t.eulerAngles.x, t.eulerAngles.y, angle);
+                                var clone = GameObject.Instantiate(ArrowPrototype.gameObject);
+                                clone.transform.SetParent(transform, false);
+                                _away.Add(character.Object, clone);
                             }
 
-                            _keep.Add(character.Object);
+                            var t = _away[character.Object].GetComponent<RectTransform>();
+                            t.gameObject.SetActive(true);
+                            t.position = new Vector3(screenPos.x, screenPos.y, t.position.z);
+                            t.eulerAngles = Vector3.zero;
                         }
+                        else
+                        {
+                            // Remove arrow if isVisible is false
+                            if (_away.ContainsKey(character.Object))
+                            {
+                                _away[character.Object].SetActive(false);
+                            }
+                        }
+
+                        _keep.Add(character.Object);
                     }
+                }
 
-                    // Cleanup unused arrows
-                    var toRemove = _away.Keys.Except(_keep).ToList();
-                    foreach (var key in toRemove)
-                    {
-                        GameObject.Destroy(_away[key]);
-                        _away.Remove(key);
-                    }
-
-
-
-
-
-
+                // Cleanup unused arrows
+                var toRemove = _away.Keys.Except(_keep).ToList();
+                foreach (var key in toRemove)
+                {
+                    GameObject.Destroy(_away[key]);
+                    _away.Remove(key);
                 }
             }
         }
+
     }
 
-        }
+}
