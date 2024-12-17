@@ -18,7 +18,7 @@ namespace CoverShooter
         float myFov;
         bool once=true;
         public float cameraOffset;
-        public bool changeView;
+       
      
         
         /// <summary>
@@ -323,10 +323,7 @@ namespace CoverShooter
 
         protected override void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                changeView = true;
-            }
+            
             base.Update();
             if (Target.ActiveWeapon.Gun !=null)
             {
@@ -755,12 +752,9 @@ namespace CoverShooter
 
             var currentHorizontalDifferene = Util.LerpAngle(0, _horizontalDifference, 6);
             var currentVerticalDifference = Util.LerpAngle(0, _verticalDifference, 6);
-            if (changeView)
-            {
+           
                 Horizontal += currentHorizontalDifferene;
                 _horizontalDifference -= currentHorizontalDifferene;
-            }
-          
 
             Vertical += currentVerticalDifference;
             _verticalDifference -= currentVerticalDifference;

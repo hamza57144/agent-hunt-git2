@@ -18,7 +18,7 @@ public class Nav_Movement : MonoBehaviour
     public static Nav_Movement Instance {  get; private set; }
     public float smoothness = 3f;
     public CoverPoint[] coverPoint;
-    public GameObject[] cover;
+    public Cover[] cover;
     private NavMeshAgent agent;
     private Animator animator;
     public float stoppingDistance = 0.1f; // Distance threshold to stop at cover
@@ -31,9 +31,8 @@ public class Nav_Movement : MonoBehaviour
     bool isInCover;
     bool wait = false;
     int totalEnemies = 0;
-    public event EventHandler PlayerRunning;
-    public event EventHandler PlayerStopped;
 
+    public bool SetCameraLeft;
     private void Awake()
     {
         CalculateEnemies();
@@ -81,22 +80,25 @@ public class Nav_Movement : MonoBehaviour
         {
             if (!agent.pathPending && agent.remainingDistance <= stoppingDistance && !isReached)
             {
+                GameManager.instance.PlayerStopped();
                 // Stop movement and transition to cover position
                 EnterCoverPosition();
             }
             else
             {
+                GameManager.instance.PlayerRunning();
                 UpdateAnimatorParameters();
                 UpdateAgentRotation();
             }
 
         }
-        else
+      /*  else
         {
 
             UpdateAnimatorParameters();
             UpdateAgentRotation();
-        }
+         
+        }*/
     }
 
     void SetNextMovePoint()
@@ -142,6 +144,14 @@ public class Nav_Movement : MonoBehaviour
         {
 
             agent.SetDestination(coverPoint[movPoint].gameObject.transform.position);
+            if (cover[movPoint].OpenLeft)
+            {
+                SetCameraLeft=true;
+            }
+            else if (cover[movPoint].OpenRight)
+            {
+                SetCameraLeft = false;
+            }
         }
 
     }
@@ -149,7 +159,7 @@ public class Nav_Movement : MonoBehaviour
 
     void UpdateAnimatorParameters()
     {
-       PlayerRunning?.Invoke(this,EventArgs.Empty);
+       
         // Calculate movement speed and direction
         float movementSpeed = agent.velocity.magnitude;
         Vector3 localVelocity = transform.InverseTransformDirection(agent.velocity);
@@ -164,7 +174,8 @@ public class Nav_Movement : MonoBehaviour
 
     void EnterCoverPosition()
     {
-        PlayerStopped?.Invoke(this,EventArgs.Empty);
+       
+        
         // Stop the agent
         agent.isStopped = true;
         isReached = true;

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
     public CharacterMotor player;
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
+    [SerializeField] GameObject gameCanvas;
+    [SerializeField] ThirdPersonCamera thirdPersonCamera;
     void Awake()
     {
         instance = this;
@@ -17,18 +19,28 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Nav_Movement.Instance.PlayerStopped += PlayerStopped;
-        Nav_Movement.Instance.PlayerRunning += PlayerRunning;
+       
     }
 
-    private void PlayerRunning(object sender, System.EventArgs e)
+    public void PlayerRunning()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Player Running");
+        gameCanvas.gameObject.SetActive(false);
     }
 
-    private void PlayerStopped(object sender, System.EventArgs e)
+    public void PlayerStopped()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Player Stopped");
+        gameCanvas.gameObject.SetActive(true);
+        if (Nav_Movement.Instance.SetCameraLeft)
+        {
+            thirdPersonCamera.Horizontal = -18f;
+        }
+        else
+        {
+            thirdPersonCamera.Horizontal = 13;
+        }
+
     }
 
 
