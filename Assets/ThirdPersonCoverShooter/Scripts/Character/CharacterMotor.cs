@@ -86,7 +86,7 @@ namespace CoverShooter
         {
             if (other.gameObject.CompareTag("Bullet"))
             {
-                Debug.Log("Trigger detected Class:BodypartDetectop");
+             
                 EnemyManager.instance.EnableAnimator();
                 CharacterHealth enemyHealth = GetComponent<CharacterHealth>();
 

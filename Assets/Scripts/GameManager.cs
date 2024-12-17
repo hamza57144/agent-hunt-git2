@@ -24,13 +24,12 @@ public class GameManager : MonoBehaviour
 
     public void PlayerRunning()
     {
-        Debug.Log("Player Running");
+     
         gameCanvas.gameObject.SetActive(false);
     }
 
     public void PlayerStopped()
     {
-        Debug.Log("Player Stopped");
         gameCanvas.gameObject.SetActive(true);
         if (Nav_Movement.Instance.SetCameraLeft)
         {

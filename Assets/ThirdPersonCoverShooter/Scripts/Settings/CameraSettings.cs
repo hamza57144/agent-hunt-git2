@@ -115,7 +115,7 @@ namespace CoverShooter
             states.Dead = CameraState.Dead();
             states.Zoom = CameraState.Zoom();
             states.LowCornerZoom = CameraState.LowCornerZoom();
-            states.TallCornerZoomScope = CameraState.TallCornerZoomScope();
+            states.TallCornerZoomScope = CameraState.TallCornerZoomRight();
             
     
             return states;
@@ -367,7 +367,7 @@ namespace CoverShooter
             return settings;
         }
 
-        public static CameraState TallCornerZoomScope()
+        public static CameraState TallCornerZoomRight()
         {
             var settings = new CameraState();
             settings.Pivot = Pivot.constant;

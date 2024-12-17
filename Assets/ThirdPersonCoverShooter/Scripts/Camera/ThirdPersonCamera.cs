@@ -209,7 +209,8 @@ namespace CoverShooter
             _shakeTarget = Vector3.zero;
         }
 
-        Vector3 TallCoverZoomOffset = new Vector3(0, 0, 0);
+        Vector3 TallCoverZoomLeftOffset = new Vector3(0, 0, 0);
+        Vector3 TallCoverZoomRightOffset = new Vector3(0, 0, 0);
         Vector3 TallCoverOffset = new Vector3(0, 0, 0);
         private void Awake()
         {
@@ -222,7 +223,8 @@ namespace CoverShooter
 
             _fader = GetComponent<CameraObjectFader>();
 
-            TallCoverZoomOffset = States.TallCornerZoom.Offset;
+            TallCoverZoomLeftOffset = States.TallCornerZoom.Offset;
+            TallCoverZoomRightOffset = States.TallCornerZoomScope.Offset;
             TallCoverOffset = States.TallCover.Offset;
 
 
@@ -489,18 +491,32 @@ namespace CoverShooter
                 {
                     if (Target.IsInTallCover )
                     {
+
                         _stateName = "TallCornerZoom";
-                       
                         if (Target.HasScope())
                         {
+
                             States.TallCornerZoom.Offset = States.TallCornerZoom.ScopeOffset;
-                         //   this.gameObject.transform.position=Target.ActiveWeapon.Gun.Aim.transform.position;
+
                         }
                         else if (!Target.HasScope())
                         {
-                            States.TallCornerZoom.Offset = TallCoverZoomOffset;
+                            if (Nav_Movement.Instance.SetCameraLeft)
+                            {
+                               
+                                States.TallCornerZoom.Offset = TallCoverZoomLeftOffset;
+
+                            }
+                            else
+                            {
+                                _stateName = "TallCornerZoomScope";
+                                
+                                States.TallCornerZoom.Offset = TallCoverZoomRightOffset;
+                            }
+                            // States.TallCornerZoom.Offset = TallCoverZoomLeftOffset;
                         }
-                       
+
+
                         state = States.TallCornerZoom;
                     }
                     /*else if(Target.IsInTallCover && Target.HasScope())
@@ -610,23 +626,35 @@ namespace CoverShooter
                     }
                     else if (!Target.HasScope())
                     {
-                        States.TallCornerZoom.Offset = TallCoverOffset;
+                        
+                            States.TallCornerZoom.Offset = TallCoverOffset;
+       
                     }
                     _stateName = "TallCornerZoom";
                     state = States.TallCornerZoom;
                 }
                 else if (controller.IsZooming)
                 {
-                    if (Target.HasScope())
-                    {
-                        States.TallCornerZoom.Offset = States.TallCornerZoom.ScopeOffset;
-                        this.gameObject.transform.position = Target.ActiveWeapon.Gun.Aim.transform.position;
-                    }
-                    else if (!Target.HasScope())
-                    {
-                        States.TallCornerZoom.Offset = TallCoverZoomOffset;
-                    }
-                    _stateName = "TallCornerZoom";
+                    /*  if (Target.HasScope())
+                      {
+                          States.TallCornerZoom.Offset = States.TallCornerZoom.ScopeOffset;
+                          this.gameObject.transform.position = Target.ActiveWeapon.Gun.Aim.transform.position;
+                      }
+                      else if (!Target.HasScope())
+                      {
+                          if (Nav_Movement.Instance.SetCameraLeft)
+                          {
+                              States.TallCornerZoom.Offset = TallCoverZoomLeftOffset;
+                          }
+                          else
+                          {
+                              States.TallCornerZoom.Offset = TallCoverZoomRightOffset;
+                          }
+
+                      }
+                      _stateName = "TallCornerZoom";*/
+
+                    SetAimView();
                     fov -= Zoom;
                     state = States.TallCornerZoom;
                 }
@@ -813,6 +841,27 @@ namespace CoverShooter
             return maxFix * forward;
         }
 
+        private void SetAimView()
+        {
+            if (Target.HasScope())
+            {
+                States.TallCornerZoom.Offset = States.TallCornerZoom.ScopeOffset;
+                this.gameObject.transform.position = Target.ActiveWeapon.Gun.Aim.transform.position;
+            }
+            else if (!Target.HasScope())
+            {
+                if (Nav_Movement.Instance.SetCameraLeft)
+                {
+                    States.TallCornerZoom.Offset = TallCoverZoomLeftOffset;
+                }
+                else
+                {
+                    States.TallCornerZoom.Offset = TallCoverZoomRightOffset;
+                }
+
+            }
+            _stateName = "TallCornerZoom";
+        }
         private void raycast(Vector3 origin, Vector3 forward, float distance, ref float maxFix)
         {
             var ray = new Ray(origin, -forward);
