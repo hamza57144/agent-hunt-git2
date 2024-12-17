@@ -81,6 +81,23 @@ namespace CoverShooter
             get { return _currentBodyTarget; }
         }
 
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.CompareTag("Bullet"))
+            {
+                Debug.Log("Trigger detected Class:BodypartDetectop");
+                EnemyManager.instance.EnableAnimator();
+                CharacterHealth enemyHealth = GetComponent<CharacterHealth>();
+
+                other.gameObject.GetComponent<Bullet>().ShootEnemy();
+                enemyHealth.Health = 0f;
+                 Die();
+
+            }
+        }
+        
+
         /// <summary>
         /// Position the body is told to aim at.
         /// </summary>

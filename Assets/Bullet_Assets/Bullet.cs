@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     private Vector3 direction;
     private Vector3 hitPoint;
 
+
+
     public void Launch(float shootingForce, Transform hitTransform, Vector3 hitPoint)
     {
         direction = (hitPoint - transform.position).normalized;
@@ -27,7 +29,7 @@ public class Bullet : MonoBehaviour
     {
         Move();
         Rotate();
-        CheckDistanceToEnemy();
+      //  CheckDistanceToEnemy();
     }
 
     private void Move()
