@@ -31,7 +31,7 @@ public class Nav_Movement : MonoBehaviour
     bool isInCover;
     bool wait = false;
     int totalEnemies = 0;
-
+    [HideInInspector]
     public bool SetCameraLeft;
     private void Awake()
     {

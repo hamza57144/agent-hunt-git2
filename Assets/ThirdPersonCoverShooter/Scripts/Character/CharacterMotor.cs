@@ -1952,6 +1952,8 @@ namespace CoverShooter
             {
                 healthBar.ShowHealthBar();
             }
+            if (isPlayer && !IsZooming)
+                return;
             var gotHit = true;
             var weapon = EquippedWeapon;
 
