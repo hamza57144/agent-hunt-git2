@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TrailMat2
-  m_Shader: {fileID: 101, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 0bf068526a8b4af48b092394026ec12b, type: 3}
   m_ShaderKeywords: TINTTEX_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -59,7 +59,6 @@ Material:
         m_Texture: {fileID: 2800000, guid: ea71d96e9d9968042b172591ec3d5528, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5

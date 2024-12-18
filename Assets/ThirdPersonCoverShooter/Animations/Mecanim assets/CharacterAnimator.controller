@@ -33786,8 +33786,8 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Walking
-  m_Speed: 1
-  m_CycleOffset: 0
+  m_Speed: 0.7
+  m_CycleOffset: 0.8
   m_Transitions:
   - {fileID: 1101435542388557420}
   m_StateMachineBehaviours:
@@ -33798,14 +33798,14 @@ AnimatorState:
   m_Mirror: 0
   m_SpeedParameterActive: 1
   m_MirrorParameterActive: 1
-  m_CycleOffsetParameterActive: 0
+  m_CycleOffsetParameterActive: 1
   m_TimeParameterActive: 0
   m_Motion: {fileID: 206595858771335616}
   m_Tag: 
   m_SpeedParameter: Speed
   m_MirrorParameter: IsMirrored
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_CycleOffsetParameter: MovementSpeed
+  m_TimeParameter: BodyValue2
 --- !u!1102 &1102252926686215284
 AnimatorState:
   serializedVersion: 6
@@ -36023,7 +36023,7 @@ AnimatorStateMachine:
     m_Position: {x: 444, y: 312, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102129577683932352}
-    m_Position: {x: 444, y: 216, z: 0}
+    m_Position: {x: 450, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102278466937255310}
     m_Position: {x: 444, y: 264, z: 0}
@@ -36044,7 +36044,7 @@ AnimatorStateMachine:
     m_Position: {x: 444, y: 72, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102252926686215284}
-    m_Position: {x: 108, y: 528, z: 0}
+    m_Position: {x: 110, y: 530, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102779448275789094}
     m_Position: {x: 444, y: 24, z: 0}
