@@ -327,7 +327,7 @@ namespace CoverShooter
                         ///Summary
                         ///To play back animation with delay, set time 
                         ///Summary
-                        Invoke(nameof(PlayBackAnimation), .5f);
+                        Invoke(nameof(PlayBackAnimation), .75f);
                         _controller.FireInput = true;
                         Fired?.Invoke(this, EventArgs.Empty);
 
