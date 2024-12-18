@@ -324,7 +324,10 @@ namespace CoverShooter
 
                     if (!EnemyManager.instance.finalShot)
                     {
-                        Invoke(nameof(PlayBackAnimation), 1.3f);
+                        ///Summary
+                        ///To play back animation with delay, set time 
+                        ///Summary
+                        Invoke(nameof(PlayBackAnimation), .5f);
                         _controller.FireInput = true;
                         Fired?.Invoke(this, EventArgs.Empty);
 
