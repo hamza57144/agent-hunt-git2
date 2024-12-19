@@ -11,12 +11,7 @@ namespace CoverShooter
     /// </summary>
     public class EnemyDisplayManager : MonoBehaviour
     {
-        /// <summary>
-        /// Prototype of a health bar to be shown on any visible enemy.
-        /// </summary>
-        [Tooltip("Prototype of a health bar to be shown on any visible enemy.")]
-        public RectTransform HealthPrototype;
-
+       
         /// <summary>
         /// Prototype of an arrow to be shown for any active enemy that is away.
         /// </summary>
@@ -69,10 +64,6 @@ namespace CoverShooter
             return false; // Occluded or off-screen
         }
 
-
-
-
-
         private void LateUpdate()
         {
 
@@ -88,6 +79,13 @@ namespace CoverShooter
                         {
                             var enemyTransform = character.Object.transform;
                             var camera = Camera.main;
+                            var characterMotor = character.Object.GetComponent<CharacterMotor>();
+                            if (characterMotor == null)
+                            {
+                                continue; // Skip this character if no CharacterMotor exists
+                            }
+
+                            bool isEnemyVisible = characterMotor.isVisible;
 
                             if (IsEnemyVisible(enemyTransform, camera)) // Assuming you have visibility check
                             {
@@ -97,13 +95,7 @@ namespace CoverShooter
                                 // Increase the arrow height further when visible
                                 screenPos.y += 50f;  // Increase Y-position for more height (adjust as needed)
                                                      // Access the CharacterMotor script of the enemy to check the visibility flag
-                                var characterMotor = character.Object.GetComponent<CharacterMotor>();
-                                if (characterMotor == null)
-                                {
-                                    continue; // Skip this character if no CharacterMotor exists
-                                }
 
-                                bool isEnemyVisible = characterMotor.isVisible;
                                 if (!_away.ContainsKey(character.Object))
                                 {
                                     var clone = GameObject.Instantiate(ArrowPrototype.gameObject);
@@ -151,13 +143,7 @@ namespace CoverShooter
                                 if (isDown) viewportPos.y = edgeThreshold;
                                 if (isRight) viewportPos.x = 1 - edgeThreshold;
                                 if (isUp) viewportPos.y = 1 - edgeThreshold;
-                                var characterMotor = character.Object.GetComponent<CharacterMotor>();
-                                if (characterMotor == null)
-                                {
-                                    continue; // Skip this character if no CharacterMotor exists
-                                }
 
-                                bool isEnemyVisible = characterMotor.isVisible;
                                 if (!_away.ContainsKey(character.Object))
                                 {
                                     var clone = GameObject.Instantiate(ArrowPrototype.gameObject);
@@ -187,12 +173,6 @@ namespace CoverShooter
                         GameObject.Destroy(_away[key]);
                         _away.Remove(key);
                     }
-
-
-
-
-
-
                 }
             }
         }

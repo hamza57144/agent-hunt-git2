@@ -86,18 +86,18 @@ namespace CoverShooter
         {
             if (other.gameObject.CompareTag("Bullet"))
             {
-             
+
                 EnemyManager.instance.EnableAnimator();
-                CharacterHealth enemyHealth = GetComponent<CharacterHealth>();
-                Bullet bullet=other.gameObject.GetComponent<Bullet>();
+                //CharacterHealth enemyHealth = GetComponent<CharacterHealth>();
+                Bullet bullet = other.gameObject.GetComponent<Bullet>();
                 bullet.ShootEnemy();
-                bullet.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                enemyHealth.Health = 0f;
-                 Die();
+                bullet.InstantiateBlood();
+                 bullet.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                //enemyHealth.Health = 0f;
+                Die();
 
             }
         }
-        
 
         /// <summary>
         /// Position the body is told to aim at.

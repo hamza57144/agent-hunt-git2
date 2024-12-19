@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     private float shootingForce;
     private Vector3 direction;
     private Vector3 hitPoint;
+    [SerializeField] private GameObject blood;
 
 
 
@@ -37,27 +38,10 @@ public class Bullet : MonoBehaviour
         transform.Translate(direction * shootingForce * Time.deltaTime, Space.World);
     }
 
-    private void CheckDistanceToEnemy()
+    public void InstantiateBlood()
     {
-        /*try
-        {*/
-            float distance = Vector3.Distance(transform.position, hitPoint);
-
-
-
-        // Enemy enemy = hitTransform.GetComponent<Enemy>();
-        /*if (distance <= 0.9 && !isEnemyShot)
-        {
-            ShootEnemy();
-
-        }*/
-      /*  }
-        catch (System.Exception)
-        {
-
-
-        }*/
-
+        var bloodEffect = Instantiate(blood);
+        bloodEffect.transform.position = hitPoint;
     }
 
     private void Rotate()
