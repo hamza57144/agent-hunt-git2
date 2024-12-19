@@ -89,8 +89,9 @@ namespace CoverShooter
              
                 EnemyManager.instance.EnableAnimator();
                 CharacterHealth enemyHealth = GetComponent<CharacterHealth>();
-
-                other.gameObject.GetComponent<Bullet>().ShootEnemy();
+                Bullet bullet=other.gameObject.GetComponent<Bullet>();
+                bullet.ShootEnemy();
+                bullet.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 enemyHealth.Health = 0f;
                  Die();
 

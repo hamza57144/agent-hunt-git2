@@ -124,6 +124,7 @@ public class Nav_Movement : MonoBehaviour
         }
         else
         {
+          
             Debug.Log("All cover points reached.");
         }
         isReached = false;
