@@ -3,6 +3,7 @@ using CoverShooter.AI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,6 +26,7 @@ public class Nav_Movement : MonoBehaviour
     private int point = 0;
     private bool isReached;
     private PlayerState state;
+  
     CharacterMotor characterMotor;
     Actor actor;
     public /*static*/ bool isInCoverAnim;
@@ -68,13 +70,19 @@ public class Nav_Movement : MonoBehaviour
     void Update()
     {
 
-      
-
-        if ((Input.GetKeyDown(KeyCode.T) || coverPoint[point].AreEnemiesCleared()) && !wait && !lastCoverPoint)
+        if ((Input.GetKeyDown(KeyCode.T) || coverPoint[point].AreEnemiesCleared()) && !wait )
         {
             coverPoint[point].DeleteEnemiesCovers();
             wait = true;
-            Invoke(nameof(SetNextMovePoint), 2.2f);
+            if(!lastCoverPoint)
+                Invoke(nameof(SetNextMovePoint), 2.2f);
+            else
+            {
+                Invoke(nameof(DestroyCoverPoint), .1f);
+                ThirdPersonInput.isUsingWeapon=false;
+            }
+               
+          
             //  SetNextMovePoint();
         }
         if (!isInCover)
@@ -105,7 +113,7 @@ public class Nav_Movement : MonoBehaviour
     void SetNextMovePoint()
     {
         wait = false;
-        Destroy(cover[point].gameObject);
+        DestroyCoverPoint();
         actor.InputLeaveCover();
         // Destroy(coverPoint[point].gameObject);
         isInCoverAnim = false;
@@ -132,7 +140,10 @@ public class Nav_Movement : MonoBehaviour
 
     }
 
-
+    void DestroyCoverPoint()
+    {
+        Destroy(cover[point].gameObject);
+    }
     void MoveToCover(int movPoint)
     {
         foreach (var enemyMotor in coverPoint[movPoint].enemies)
