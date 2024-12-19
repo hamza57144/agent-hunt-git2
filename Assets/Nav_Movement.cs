@@ -33,6 +33,7 @@ public class Nav_Movement : MonoBehaviour
     int totalEnemies = 0;
     [HideInInspector]
     public bool SetCameraLeft;
+    private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
     private void Awake()
     {
         CalculateEnemies();
@@ -69,7 +70,7 @@ public class Nav_Movement : MonoBehaviour
 
       
 
-        if ((Input.GetKeyDown(KeyCode.T) || coverPoint[point].AreEnemiesCleared()) && !wait)
+        if ((Input.GetKeyDown(KeyCode.T) || coverPoint[point].AreEnemiesCleared()) && !wait && !lastCoverPoint)
         {
             coverPoint[point].DeleteEnemiesCovers();
             wait = true;
@@ -109,7 +110,7 @@ public class Nav_Movement : MonoBehaviour
         // Destroy(coverPoint[point].gameObject);
         isInCoverAnim = false;
         // animator.SetBool("ISInCover", false);
-        if (point < coverPoint.Length - 1)
+        if (!lastCoverPoint)
         {
 
             point++;
@@ -147,11 +148,13 @@ public class Nav_Movement : MonoBehaviour
             agent.SetDestination(coverPoint[movPoint].gameObject.transform.position);
             if (cover[movPoint].OpenLeft)
             {
-                SetCameraLeft=true;
+               
+                 SetCameraLeft =true;
             }
             else if (cover[movPoint].OpenRight)
             {
-                SetCameraLeft = false;
+                
+                    SetCameraLeft = false;
             }
         }
 
