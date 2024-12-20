@@ -17,6 +17,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float minDistanceToPlayAnimation;
     [SerializeField] BulletTimeController bulletTimeController;
     [SerializeField] private float shootingForce;
+    [SerializeField] ThirdPersonCamera thirdPersonCamera;
+    private AIMovement aIMovement;
     private int enemyCount;
    
     public  bool finalShot;
@@ -29,6 +31,7 @@ public class EnemyManager : MonoBehaviour
     private bool isAiming;
 
     private Animator animator;
+
     
     private void Awake()
     {
@@ -63,9 +66,9 @@ public class EnemyManager : MonoBehaviour
             animator= enemy.gameObject.GetComponentInParent<Animator>();
             if (enemy != null)
             {
-                if (gameManager.GetPlayer().ActiveWeapon.Gun != null)
+                if (gameManager.GetPlayerMotor.ActiveWeapon.Gun != null)
                 {
-                    if (gameManager.GetPlayer().ActiveWeapon.Gun.myScope != null)
+                    if (gameManager.GetPlayerMotor.ActiveWeapon.Gun.myScope != null)
                     {
                         if (enemy.CheckHealth() < 75 || isHead)
                         {
@@ -80,6 +83,8 @@ public class EnemyManager : MonoBehaviour
 
                             if (shoot)
                             {
+                                enemy.gameObject.GetComponentInParent<AIMovement>().enabled=false;
+                              
                                 Shoot();
                             }
 
@@ -91,6 +96,9 @@ public class EnemyManager : MonoBehaviour
         }
         
     }
+    
+
+    
     private void DetectBodyParts()
     {
        
@@ -141,6 +149,7 @@ public class EnemyManager : MonoBehaviour
     public void Shoot()
     {
         animator.enabled = false;
+
         finalShot = false;
         shoot = false;
         bulletSpawnTransform = GameManager.instance.player.ActiveWeapon.Gun.Aim.transform;

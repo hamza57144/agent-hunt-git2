@@ -26,7 +26,7 @@ namespace CoverShooter
 
         private void Start()
         {
-            Player = GameManager.instance.GetPlayer().gameObject.GetComponent<BaseActor>();
+            Player = GameManager.instance.GetPlayerMotor.gameObject.GetComponent<BaseActor>();
         }
 
         /// <summary>

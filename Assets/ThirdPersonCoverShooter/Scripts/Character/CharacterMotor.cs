@@ -86,8 +86,9 @@ namespace CoverShooter
         {
             if (other.gameObject.CompareTag("Bullet"))
             {
-
-                EnemyManager.instance.EnableAnimator();
+                EnemyManager enemy = EnemyManager.instance;
+               
+                enemy.EnableAnimator();
                 //CharacterHealth enemyHealth = GetComponent<CharacterHealth>();
                 Bullet bullet = other.gameObject.GetComponent<Bullet>();
                 bullet.ShootEnemy();
