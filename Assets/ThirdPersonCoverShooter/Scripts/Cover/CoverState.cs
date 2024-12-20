@@ -311,7 +311,7 @@ namespace CoverShooter
         /// </summary>
         public void StandRight()
         {
-            Direction = 1;
+            Direction = Nav_Movement.Instance.coverDirection;
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace CoverShooter
         /// </summary>
         public void StandLeft()
         {
-            Direction = -1;
+            Direction = Nav_Movement.Instance.coverDirection;
         }
 
         /// <summary>

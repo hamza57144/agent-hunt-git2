@@ -36,6 +36,7 @@ public class Nav_Movement : MonoBehaviour
     [HideInInspector]
     public bool SetCameraLeft;
     private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
+    public int coverDirection { get { return cover[point].OpenLeft ? -1 : 1; } }
     private void Awake()
     {
         CalculateEnemies();
@@ -202,8 +203,8 @@ public class Nav_Movement : MonoBehaviour
         animator.SetFloat("MovementX", 0f);
         animator.SetFloat("MovementZ", 0f);
         actor.InputTakeCover();
-        // Trigger cover animation (assuming there's a parameter or trigger)
-        animator.SetBool("ISInCover", true); // Or use a trigger if preferred
+        /*// Trigger cover animation (assuming there's a parameter or trigger)
+        animator.SetBool("ISInCover", true); // Or use a trigger if preferred*/
     }
     void UpdateAgentRotation()
     {
