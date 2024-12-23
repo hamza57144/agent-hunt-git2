@@ -847,7 +847,7 @@ namespace CoverShooter
         {
             if (Target.HasScope())
             {
-                States.TallCornerZoom.Offset = States.TallCornerZoom.ScopeOffset;
+              //  States.TallCornerZoom.Offset = States.TallCornerZoom.ScopeOffset;
               //  this.gameObject.transform.position = Target.ActiveWeapon.Gun.Aim.transform.position;
             }
             else if (!Target.HasScope())
