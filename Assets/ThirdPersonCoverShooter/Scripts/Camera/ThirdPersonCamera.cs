@@ -315,7 +315,7 @@ namespace CoverShooter
            ///Summary
            ///Shaking Effect
            ///Summary
-           transform.localRotation *= Quaternion.Euler(_shake/10);
+           transform.localRotation *= Quaternion.Euler(_shake/9);
             cameraTarget = transform.position + transform.forward * magnitude;
         }
 
@@ -848,7 +848,7 @@ namespace CoverShooter
             if (Target.HasScope())
             {
                 States.TallCornerZoom.Offset = States.TallCornerZoom.ScopeOffset;
-                this.gameObject.transform.position = Target.ActiveWeapon.Gun.Aim.transform.position;
+              //  this.gameObject.transform.position = Target.ActiveWeapon.Gun.Aim.transform.position;
             }
             else if (!Target.HasScope())
             {
