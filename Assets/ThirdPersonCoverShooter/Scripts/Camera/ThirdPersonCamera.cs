@@ -312,8 +312,10 @@ namespace CoverShooter
             transform.LookAt(cameraTarget);
 
             var magnitude = Vector3.Distance(cameraPosition, cameraTarget);
-
-          //  transform.localRotation *= Quaternion.Euler(_shake);
+           ///Summary
+           ///Shaking Effect
+           ///Summary
+           transform.localRotation *= Quaternion.Euler(_shake/10);
             cameraTarget = transform.position + transform.forward * magnitude;
         }
 
