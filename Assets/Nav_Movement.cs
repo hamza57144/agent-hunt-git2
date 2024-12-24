@@ -16,7 +16,7 @@ public enum PlayerState
 
 public class Nav_Movement : MonoBehaviour
 {
-    public static Nav_Movement Instance {  get; private set; }
+    public static Nav_Movement Instance { get; private set; }
     public float smoothness = 3f;
     public CoverPoint[] coverPoint;
     public Cover[] cover;
@@ -26,17 +26,19 @@ public class Nav_Movement : MonoBehaviour
     private int point = 0;
     private bool isReached;
     private PlayerState state;
-  
+
     CharacterMotor characterMotor;
     Actor actor;
-    public /*static*/ bool isInCoverAnim;
+    public bool isInCoverAnim;
     bool isInCover;
     bool wait = false;
     int totalEnemies = 0;
-    [HideInInspector]
-    public bool SetCameraLeft;
-    private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
-    public int coverDirection { get { return cover[point].OpenLeft ? -1 : 1; } }
+    #region Properties
+        public bool SetCameraLeft { get { return cover[point].OpenLeft; } }//To set Camera left or right 
+        private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
+        public int coverDirection { get { return SetCameraLeft ? -1 : 1; } }//Direction for player to look left or right
+        public int TotalEnemies { get { return totalEnemies; } }
+    #endregion
     private void Awake()
     {
         CalculateEnemies();
@@ -158,16 +160,7 @@ public class Nav_Movement : MonoBehaviour
         {
 
             agent.SetDestination(coverPoint[movPoint].gameObject.transform.position);
-            if (cover[movPoint].OpenLeft)
-            {
-               
-                 SetCameraLeft =true;
-            }
-            else if (cover[movPoint].OpenRight)
-            {
-                
-                    SetCameraLeft = false;
-            }
+          
         }
 
     }
@@ -218,7 +211,7 @@ public class Nav_Movement : MonoBehaviour
 
     public bool GetCover() { return isInCoverAnim; }
 
-    public int TotalEnemies {  get { return totalEnemies; } }
+   
    
    
 }

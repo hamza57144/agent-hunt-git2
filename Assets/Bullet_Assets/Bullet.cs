@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
     {
         Move();
         Rotate();
-      //  CheckDistanceToEnemy();
+      
     }
 
     private void Move()
@@ -52,8 +52,7 @@ public class Bullet : MonoBehaviour
     public void ShootEnemy()
     {
         isEnemyShot = true;
-       // Rigidbody shotRB = hitTransform.GetComponent<Rigidbody>();
-       // enemy.OnEnemyShot(transform.forward, shotRB);
+      
     }
 
     public float GetBulletSpeed()

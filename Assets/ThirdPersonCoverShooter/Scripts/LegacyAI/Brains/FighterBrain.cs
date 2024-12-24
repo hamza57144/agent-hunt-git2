@@ -1846,7 +1846,11 @@ namespace CoverShooter
                         Message("ToOpenFire");
                     }
                     else
+                    {
                         Message("ToFaceWalkDirection");
+                       
+                    }
+                        
 
                     alarm();
 
@@ -1927,6 +1931,7 @@ namespace CoverShooter
                             Message("ToHideFlashlight");
                             Message("ToArm");
                             Message("ToOpenFire");
+                            Debug.Log("Enemy seen");
                         }
 
                         Message("ToInvestigatePosition", LastKnownThreatPosition);
@@ -2483,6 +2488,7 @@ namespace CoverShooter
 
         private void setThreat(bool isVisible, bool isHeard, bool isVisibleByFriends, bool isActual, BaseActor threat, Vector3 position, Cover threatCover, float time)
         {
+             
             var previousThreat = Threat;
             var wasVisible = CanSeeTheThreat;
 
