@@ -9,10 +9,11 @@ public class GameManager : MonoBehaviour
     
     public static GameManager instance { get; private set; }
     public CharacterMotor player;
-     public CharacterMotor GetPlayerMotor { get { return player; } }
+    
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
+    public CharacterMotor PlayerMotor { get { return player; } }
     void Awake()
     {
         instance = this;

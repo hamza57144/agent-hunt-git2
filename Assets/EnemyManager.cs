@@ -65,9 +65,9 @@ public class EnemyManager : MonoBehaviour
             animator= enemy.gameObject.GetComponentInParent<Animator>();
             if (enemy != null)
             {
-                if (gameManager.GetPlayerMotor.ActiveWeapon.Gun != null)
+                if (gameManager.PlayerMotor.ActiveWeapon.Gun != null)
                 {
-                    if (gameManager.GetPlayerMotor.ActiveWeapon.Gun.myScope != null)
+                    if (gameManager.PlayerMotor.ActiveWeapon.Gun.myScope != null)
                     {
                         if (enemy.CheckHealth() < 75 || isHead)
                         {
