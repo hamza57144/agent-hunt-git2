@@ -193,9 +193,9 @@ namespace CoverShooter
             var motor = Characters[index].GetComponent<CharacterMotor>();
 
             if (topDownCamera != null) topDownCamera.Target = motor;
-            if (strategyCamera != null) strategyCamera.Target = motor;
-            if (thirdPersonCamera != null) thirdPersonCamera.Target = motor;
-            if (mobileCamera != null) mobileCamera.Target = motor;
+            if (strategyCamera != null) strategyCamera.GetTarget = motor;
+            if (thirdPersonCamera != null) thirdPersonCamera.GetTarget = motor;
+            if (mobileCamera != null) mobileCamera.GetTarget = motor;
         }
     }
 }

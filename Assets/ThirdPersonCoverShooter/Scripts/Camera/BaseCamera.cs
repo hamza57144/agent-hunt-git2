@@ -17,8 +17,10 @@ namespace CoverShooter
         {
             get { return GameManager.instance.PlayerMotor; }
         }
-
-
+        //Use this variable where we can not use Property directly
+        public CharacterMotor GetTarget;
+       
+        
         /// <summary>
         /// Executed on every camera target change.
         /// </summary>
@@ -47,6 +49,7 @@ namespace CoverShooter
 
         protected virtual void Update()
         {
+            GetTarget = Target;
             if (Target != _cachedTarget)
                 updateTarget();
         }
