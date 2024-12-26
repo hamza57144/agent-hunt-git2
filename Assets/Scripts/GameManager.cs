@@ -6,14 +6,28 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+  
     public static GameManager instance { get; private set; }
-    public CharacterMotor player;
-    
+    public List<CharacterMotor> players;
+
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
-    public CharacterMotor PlayerMotor { get { return player; } }
+    public CharacterMotor PlayerMotor
+    {
+        get
+        {
+            foreach (var player in players)
+            {
+                if (player.gameObject.activeInHierarchy)
+                {
+                    return player;
+                }
+            }
+            return null; 
+        }
+    }
+
     void Awake()
     {
         instance = this;
@@ -21,12 +35,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
     }
 
     public void PlayerRunning()
     {
-     
+
         gameCanvas.gameObject.SetActive(false);
     }
 
@@ -49,16 +63,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public  bool HasScope()
+   /* public bool HasScope()
     {
         return player.HasScope();
-    }
-   
+    }*/
 
-   
+
+
     public void HideArrow()
     {
         enemyDisplayManager.gameObject.SetActive(false);

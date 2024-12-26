@@ -151,7 +151,7 @@ public class EnemyManager : MonoBehaviour
 
         finalShot = false;
         shoot = false;
-        bulletSpawnTransform = GameManager.instance.player.ActiveWeapon.Gun.Aim.transform;
+        bulletSpawnTransform = GameManager.instance.PlayerMotor.ActiveWeapon.Gun.Aim.transform;
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
         {

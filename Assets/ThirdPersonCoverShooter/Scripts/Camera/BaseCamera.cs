@@ -12,8 +12,12 @@ namespace CoverShooter
         /// <summary>
         /// Target character motor.
         /// </summary>
-        [Tooltip("Target character motor.")]
-        public CharacterMotor Target;
+       
+        public CharacterMotor Target
+        {
+            get { return GameManager.instance.PlayerMotor; }
+        }
+
 
         /// <summary>
         /// Executed on every camera target change.
