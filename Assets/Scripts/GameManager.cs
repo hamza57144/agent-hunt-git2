@@ -62,6 +62,5 @@ public class GameManager : MonoBehaviour
     public void HideArrow()
     {
         enemyDisplayManager.gameObject.SetActive(false);
-    
     }
 }
