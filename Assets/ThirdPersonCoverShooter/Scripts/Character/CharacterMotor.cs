@@ -3272,11 +3272,8 @@ namespace CoverShooter
 
         private void Awake()
         {
-            if (isPlayer)
-            {
-                playerMotor=GetComponent<Nav_Movement>();
-            }
-            else
+            playerMotor = Nav_Movement.Instance;
+            if (!isPlayer)
             {
                 playerMotor = null; 
                 enemy = GetComponentInChildren<Enemy>();
@@ -4154,7 +4151,7 @@ namespace CoverShooter
 
         private void updateAngles()
         {
-            if (isPlayer && !playerMotor.isInCoverAnim)
+            if (isPlayer && !Nav_Movement.Instance.isInCoverAnim)
                 return;
             var vector = _bodyTarget - VirtualHead;
             _horizontalAngle = Util.HorizontalAngle(vector);

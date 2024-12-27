@@ -17,40 +17,44 @@ public enum PlayerState
 public class Nav_Movement : MonoBehaviour
 {
     public static Nav_Movement Instance { get; private set; }
+    [SerializeField] LevelManager levelManager;
     public float smoothness = 3f;
-    public CoverPoint[] coverPoint;
-    public Cover[] cover;
+    private CoverPoint[] coverPoint;
+    private Cover[] covers;
     private NavMeshAgent agent;
     private Animator animator;
     public float stoppingDistance = 0.1f; // Distance threshold to stop at cover
     private int point = 0;
     private bool isReached;
     private PlayerState state;
+    //For optimization
+    private GameObject player;
 
-    CharacterMotor characterMotor;
+   
     Actor actor;
     public bool isInCoverAnim;
     bool isInCover;
     bool wait = false;
     int totalEnemies = 0;
     #region Properties
-        public bool SetCameraLeft { get { return cover[point].OpenLeft; } }//To set Camera left or right 
+        public bool SetCameraLeft { get { return covers[point].OpenLeft; } }//To set Camera left or right 
         private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
         public int coverDirection { get { return SetCameraLeft ? -1 : 1; } }//Direction for player to look left or right
         public int TotalEnemies { get { return totalEnemies; } }
     #endregion
     private void Awake()
     {
+        coverPoint = levelManager.GetCoverPoints();
+        covers = levelManager.GetCovers();
         CalculateEnemies();
         Instance = this;
     }
     void Start()
     {
-       
-        characterMotor = GetComponent<CharacterMotor>();
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        actor = GetComponent<Actor>();
+        player = GameManager.instance.PlayerMotor.gameObject;  
+        agent = player.GetComponent<NavMeshAgent>();
+        animator = player.GetComponent<Animator>();
+        actor = player.GetComponent<Actor>();
         foreach (var item in coverPoint)
         {
             foreach(var enemyMotor in item.enemies)
@@ -145,7 +149,7 @@ public class Nav_Movement : MonoBehaviour
 
     void DestroyCoverPoint()
     {
-        Destroy(cover[point].gameObject);
+        Destroy(covers[point].gameObject);
     }
     void MoveToCover(int movPoint)
     {
@@ -209,8 +213,7 @@ public class Nav_Movement : MonoBehaviour
         }
     }
 
-    public bool GetCover() { return isInCoverAnim; }
-
+   
    
    
    
