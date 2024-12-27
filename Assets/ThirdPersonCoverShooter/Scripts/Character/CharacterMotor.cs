@@ -909,7 +909,7 @@ namespace CoverShooter
                    !_isGettingHit &&
                    !IsSprinting &&
                    IsGunScopeReady &&
-                   !HasGrenadeInHand && playerMotor.isInCoverAnim)
+                   !HasGrenadeInHand && Nav_Movement.Instance.isInCoverAnim)
                     {
                         if (_coverAim.IsAiming || wantsToAim || ThirdPersonInput.isUsingWeapon)
                             return true;
@@ -6024,7 +6024,7 @@ namespace CoverShooter
                 {
                     if (_cover.In && !_isClimbing)
                     {
-                        if (!IsAimingGun || !playerMotor.isInCoverAnim)
+                        if (!IsAimingGun || !Nav_Movement.Instance.isInCoverAnim)
                             isInCover = true;
                         else
                             isInCover = false;

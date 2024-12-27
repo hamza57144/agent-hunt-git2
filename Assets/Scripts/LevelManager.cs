@@ -7,22 +7,23 @@ public class LevelManager : MonoBehaviour
 {
     public LevelManager Instance { get; set; }
     public int levelIndex = 0;
+    [SerializeField] GameManager gameManager;
 
     [System.Serializable]
     public class Level
     {
         public string levelName;
-        public GameObject levelPrefab;
+        public GameObject level;
         public Transform PlayerPosition;
         #region Note
         /// <summary > 
         /// Note
-        /// Sequense is important.  Assign Cover Point in sequence,
+        /// Sequense is important.  Assign Cover Points in sequence,
         /// means first cover point must be assigned in 0 index and second
         /// in index 1 and vice versa
         /// </summary>        
         [Tooltip("Note:Sequense is important. " +
-            "Assign Cover Point in sequence, means first cover point must be assigned in 0 index and second in index 1 and vice versa")]
+            "Assign Cover Points in sequence, means first cover point must be assigned in 0 index and second in index 1 and vice versa")]
         #endregion
         public CoverPoint[] coverPoints;
         #region Note
@@ -51,5 +52,14 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+    private void Start()
+    {
+        SetPlayerPosition();
+    }
+    private void SetPlayerPosition()
+    {
+        gameManager.PlayerMotor.gameObject.transform.rotation = levels[levelIndex].PlayerPosition.rotation;
+        gameManager.PlayerMotor.gameObject.transform.position = levels[levelIndex].PlayerPosition.position;
     }
 }
