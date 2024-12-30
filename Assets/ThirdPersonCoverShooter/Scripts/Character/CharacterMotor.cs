@@ -1926,6 +1926,7 @@ namespace CoverShooter
                     
                 }        
                 EnemyDie?.Invoke(this, EventArgs.Empty);
+                
             }
             if (!IsAlive)
                 return;

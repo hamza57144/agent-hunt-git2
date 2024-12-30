@@ -7,17 +7,26 @@ public class CoverPoint : MonoBehaviour
     public CharacterMotor[] enemies;
     public GameObject[] enemiesCovers;
     public int TotalEnemies { get { return enemies.Length; } }
+    bool areEnemiesAlerted;
 
    
     private void Start()
     {
         AIAlerts.OnEnemyAlert += AIAlerts_OnEnemyAlert;
+        CharacterMotor.EnemyDie += CharacterMotor_EnemyDie;
         
     }
-
+    //If one of the enemy in cover point will die, all enemies in the cover point will get alerted
+    private void CharacterMotor_EnemyDie(object sender, System.EventArgs e)
+    {
+        if (!areEnemiesAlerted)
+             AlertAllEnemies();
+    } 
+    //If one of the the enemy got shot by player, all enemies will get alerted
     private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
     {
-        AllEnemyAlert();
+        if(!areEnemiesAlerted) 
+           AlertAllEnemies();
     }
 
     public bool AreEnemiesCleared()
@@ -42,11 +51,11 @@ public class CoverPoint : MonoBehaviour
             Destroy(enemy);
         }
     }
-    public void AllEnemyAlert()
+    public void AlertAllEnemies()
     {
-       
+        areEnemiesAlerted =true;
         foreach (CharacterMotor item in enemies)
-        {
+        {            
             item.gameObject.GetComponent<AISight>().enabled = true;
         }
     }
