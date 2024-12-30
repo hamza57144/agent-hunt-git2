@@ -12,6 +12,16 @@ public class CoverPoint : MonoBehaviour
         totalEnemies=enemies.Length;
         
     }
+    private void Start()
+    {
+        AIAlerts.OnEnemyAlert += AIAlerts_OnEnemyAlert;
+    }
+
+    private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
+    {
+        AllEnemyAlert();
+    }
+
     public bool AreEnemiesCleared()
     {
         foreach (CharacterMotor enemy in enemies)
@@ -34,7 +44,14 @@ public class CoverPoint : MonoBehaviour
             Destroy(enemy);
         }
     }
-
+    public void AllEnemyAlert()
+    {
+       
+        foreach (CharacterMotor item in enemies)
+        {
+            item.gameObject.GetComponent<AISight>().enabled = true;
+        }
+    }
     public int TotalEnemies {  get { return totalEnemies; } }
     
    

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace CoverShooter
@@ -9,7 +10,7 @@ namespace CoverShooter
     [RequireComponent(typeof(BaseActor))]
     public class AIAlerts : MonoBehaviour
     {
-        public AISight[] aISights;
+        public static event EventHandler OnEnemyAlert;
         public bool isAlerted;
 
         public Transform target;
@@ -61,15 +62,12 @@ namespace CoverShooter
         /// </summary>
         public void OnAlerted()
         {
-           
-            isAlerted = true;
+            OnEnemyAlert?.Invoke(this,EventArgs.Empty);
+             isAlerted = true;
             if (_actor.IsAlive && Alert > float.Epsilon)
                 Alerts.Broadcast(transform.position, Alert, AlertType.Chat, _actor, true);
-            this.gameObject.GetComponent<AISight>().enabled = true;
-            foreach (AISight item in aISights)
-            {
-                item.enabled = true;
-            }
+            
+           
 
         }
 
