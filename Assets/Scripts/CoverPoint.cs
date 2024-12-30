@@ -3,18 +3,16 @@ using UnityEngine;
 
 public class CoverPoint : MonoBehaviour
 {
-    int totalEnemies=0;
+ 
     public CharacterMotor[] enemies;
     public GameObject[] enemiesCovers;
-    
-    void Awake()
-    {
-        totalEnemies=enemies.Length;
-        
-    }
+    public int TotalEnemies { get { return enemies.Length; } }
+
+   
     private void Start()
     {
         AIAlerts.OnEnemyAlert += AIAlerts_OnEnemyAlert;
+        
     }
 
     private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
@@ -52,7 +50,7 @@ public class CoverPoint : MonoBehaviour
             item.gameObject.GetComponent<AISight>().enabled = true;
         }
     }
-    public int TotalEnemies {  get { return totalEnemies; } }
+    
     
    
 }

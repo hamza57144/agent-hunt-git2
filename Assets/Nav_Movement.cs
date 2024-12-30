@@ -47,6 +47,7 @@ public class Nav_Movement : MonoBehaviour
         coverPoint = levelManager.GetCoverPoints();
         covers = levelManager.GetCovers();
         CalculateEnemies();
+        
         Instance = this;
     }
     void Start()
