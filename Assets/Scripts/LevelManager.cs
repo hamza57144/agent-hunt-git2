@@ -45,8 +45,8 @@ public class LevelManager : MonoBehaviour
     {
         return levels[levelIndex].coverPoints;
     }
-    public Cover[] GetCovers() 
-    { 
+    public Cover[] GetCovers()
+    {
         return levels[levelIndex].covers;
     }
     private void Awake()
@@ -59,7 +59,11 @@ public class LevelManager : MonoBehaviour
     }
     private void SetPlayerPosition()
     {
-        gameManager.PlayerMotor.gameObject.transform.rotation = levels[levelIndex].PlayerPosition.rotation;
-        gameManager.PlayerMotor.gameObject.transform.position = levels[levelIndex].PlayerPosition.position;
+        gameManager.PlayerMotor.gameObject.transform.localRotation = levels[levelIndex].PlayerPosition.rotation;
+        gameManager.PlayerMotor.gameObject.transform.localPosition = levels[levelIndex].PlayerPosition.position;
     }
+
+   
+   
+       
 }

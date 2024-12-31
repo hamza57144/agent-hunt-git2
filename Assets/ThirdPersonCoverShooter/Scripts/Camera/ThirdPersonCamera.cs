@@ -329,10 +329,14 @@ namespace CoverShooter
         {
             
             base.Update();
-            if (Target.ActiveWeapon.Gun !=null)
+            if(Target != null)
             {
-                myScope.sprite = Target.ActiveWeapon.Gun.myScope;
+                if (Target.ActiveWeapon.Gun != null)
+                {
+                    myScope.sprite = Target.ActiveWeapon.Gun.myScope;
+                }
             }
+            
             //  
             if (_shakeTime > float.Epsilon)
             {

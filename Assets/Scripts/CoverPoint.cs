@@ -16,19 +16,32 @@ public class CoverPoint : MonoBehaviour
         CharacterMotor.EnemyDie += CharacterMotor_EnemyDie;
         
     }
-    //If one of the enemy in cover point will die, all enemies in the cover point will get alerted
+    /// <summary>
+    /// If one of the enemy in cover point will die,
+    /// all enemies in the cover point will get alerted
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CharacterMotor_EnemyDie(object sender, System.EventArgs e)
     {
         if (!areEnemiesAlerted)
              AlertAllEnemies();
     } 
-    //If one of the the enemy got hit, all enemies will get alerted
+    /// <summary>
+    /// If one of the the enemy got hit, all enemies will get alerted
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
     {
         if(!areEnemiesAlerted) 
            AlertAllEnemies();
     }
-
+    /// <summary>
+    /// Check if enemies in this cover point 
+    /// are defeated or not
+    /// </summary>
+    /// <returns></returns>
     public bool AreEnemiesCleared()
     {
         foreach (CharacterMotor enemy in enemies)
@@ -44,7 +57,10 @@ public class CoverPoint : MonoBehaviour
         return true; // All enemies are defeated
         
     }
-    //Delete the covers which  block the player and prevents the player to move 
+    /// <summary>
+    /// Delete the covers which  block the player and
+    /// prevents the player to move 
+    /// </summary>
     public void DeleteEnemiesCovers()
     {
         foreach (GameObject enemy in enemiesCovers)

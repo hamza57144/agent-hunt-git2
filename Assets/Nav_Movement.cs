@@ -208,7 +208,7 @@ public class Nav_Movement : MonoBehaviour
     {
         if (agent.velocity.sqrMagnitude > 0.01f)
         {
-            // Rotate the agent to face the movement direction
+            // Rotate the player to face the movement direction
             Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smoothness);
         }
