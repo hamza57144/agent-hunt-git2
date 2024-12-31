@@ -22,7 +22,7 @@ public class CoverPoint : MonoBehaviour
         if (!areEnemiesAlerted)
              AlertAllEnemies();
     } 
-    //If one of the the enemy got shot by player, all enemies will get alerted
+    //If one of the the enemy got hit, all enemies will get alerted
     private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
     {
         if(!areEnemiesAlerted) 
@@ -44,6 +44,7 @@ public class CoverPoint : MonoBehaviour
         return true; // All enemies are defeated
         
     }
+    //Delete the covers which  block the player and prevents the player to move 
     public void DeleteEnemiesCovers()
     {
         foreach (GameObject enemy in enemiesCovers)
