@@ -7,6 +7,7 @@ public static class GameData
    
     public static int SelectedPlayerIndex { get; private set; }
     public static int SelectedLevelIndex { get; private set; }
+    public static int SelectedWeaponIndex { get; private set; }
     public static void SaveSelectedPlayer(int index)
     {
         SelectedPlayerIndex = index;
@@ -30,6 +31,25 @@ public static class GameData
     {
         SelectedLevelIndex = PlayerPrefs.GetInt("SelectedLevel", 0); // Default to 0
         Debug.Log($"Loaded Selected Level: {SelectedLevelIndex}");
+    }
+    public static void SaveSelectedWeapon(int index)
+    {
+        SelectedWeaponIndex = index;
+        PlayerPrefs.SetInt("SelectedWeapon", index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Selected Weapon: {index}");
+    }
+    public static void LoadSelectedWeapon()
+    {
+        SelectedWeaponIndex = PlayerPrefs.GetInt("SelectedWeapon", 1); // Default to 0
+        Debug.Log($"Loaded Selected Weapon: {SelectedWeaponIndex}");
+    }
+
+    public static void LoadGameData()
+    {
+        LoadSelectedPlayer();
+        LoadSelectedLevel();
+        LoadSelectedWeapon();
     }
 
 

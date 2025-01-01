@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        GameData.LoadSelectedPlayer();
+        GameData.LoadGameData();
         players[GameData.SelectedPlayerIndex].gameObject.SetActive(true);
         instance = this;
     }

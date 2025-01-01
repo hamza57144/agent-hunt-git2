@@ -14,12 +14,12 @@ namespace CoverShooter
         private void Awake()
         {
             var motor = GetComponent<CharacterMotor>();
-
+            
             for (int i = 0; i < Weapons.Length; i++)
             {
                 var weapon = Weapons[i];
-               
 
+               
                 if (weapon.RightItem != null && (!motor.IsEquipped || motor.Weapon.RightItem != weapon.RightItem)) weapon.RightItem.SetActive(false);
                 if (weapon.RightHolster != null && (!motor.IsEquipped || motor.Weapon.RightHolster != weapon.RightHolster)) weapon.RightHolster.SetActive(true);
 

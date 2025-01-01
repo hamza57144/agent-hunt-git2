@@ -375,35 +375,6 @@ namespace CoverShooter
         {
             isUsingWeapon = false;
         }
-        //private IEnumerator DelayedZoomOut()
-        //{
-        //    yield return new WaitForSeconds(3f); // Wait for 3 seconds
-
-        //    // Set ZoomInput to false to stop zooming
-        //    _controller.ZoomInput = false;
-
-        //    // Adjust the camera's FOV here if needed
-        //    var thirdPersonCamera = Camera;
-        //    if (thirdPersonCamera != null)
-        //    {
-        //        // Access the Unity Camera component attached to ThirdPersonCamera
-        //        var _DelayCamera = thirdPersonCamera.GetComponent<Camera>();
-        //        if (_DelayCamera != null)
-        //        {
-        //            _DelayCamera.fieldOfView = thirdPersonCamera.StateFOV; // Reset FOV to the default or desired value
-        //            Debug.Log("CAM Delay");
-        //        }
-        //    }
-        //}
-
-
-
-
-
-
-
-
-
         protected virtual void UpdateRolling()
         {
             if (_timeW > 0) _timeW -= Time.deltaTime;
@@ -496,9 +467,9 @@ namespace CoverShooter
             else if (ControlFreak2.CF2Input.mouseScrollDelta.y > 0)
             {
                 if (_inventory != null && currentWeapon == _inventory.Weapons.Length)
-                    inputWeapon(0);
+                    inputWeapon(GameData.SelectedWeaponIndex + 1);
                 else
-                    inputWeapon(currentWeapon + 1);
+                    inputWeapon(GameData.SelectedWeaponIndex );
             }
         }
 

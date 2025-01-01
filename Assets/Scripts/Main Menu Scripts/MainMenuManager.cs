@@ -70,6 +70,10 @@ public class MainMenuManager : MonoBehaviour
         StartCoroutine(LoadSceneWithProgress());
 
     }
+    public void SelectWeapon(int index)
+    {
+        GameData.SaveSelectedWeapon(index);
+    }
     private IEnumerator LoadSceneWithProgress()
     {
         // Wait for the specified splash screen delay
