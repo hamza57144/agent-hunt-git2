@@ -34,4 +34,17 @@ public static class GameData
 
 
 }
+public  class TagsHandler
+{
+    public static string Player { get { return "Player"; } }
+    public static string Enemy { get { return "Enemy"; } }
+    public static string BodyPart { get { return "BodyPart"; } }
+    public static string Bullet { get { return "Bullet"; } }
 
+}
+public class SceneHandler
+{
+    public static string MainMenu { get { return "MainMenu"; } }
+    public static string GamePlayScene { get { return "Gameplay Scene"; } }
+
+}

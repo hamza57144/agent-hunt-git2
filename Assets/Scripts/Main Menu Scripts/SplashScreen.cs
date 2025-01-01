@@ -1,49 +1,61 @@
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
+using TMPro;
 
 public class SplashScreen : MonoBehaviour
 {
-    [SerializeField] private float delayBeforeLoading = 3f; // Optional delay in seconds
-    [SerializeField] private string mainMenuSceneName = "MainMenu"; // Scene name
-    [SerializeField] private Slider progressBar; // Reference to the UI slider
-    [SerializeField] private float simulatedLoadingTime = 5f; // Total time for the slider to fill
+    // References to UI elements
+    public Slider progressBar;
+    public TextMeshProUGUI progressText;
 
-    private async void Start()
+ 
+    // Time to wait before starting to load the scene (e.g., splash screen delay)
+    public float waitTime = 3f;
+
+    // Total loading time for the scene (how long it will take to fill the progress bar)
+    public float loadingTime = 5f;
+
+    private void Start()
     {
-        // Optional: Wait for the delay before starting the loading process
-        await Task.Delay((int)(delayBeforeLoading * 1000));
-
-        // Load the main menu scene asynchronously
-        await LoadMainMenuWithSimulatedProgress();
+        StartCoroutine(LoadSceneWithProgress());
     }
 
-    private async Task LoadMainMenuWithSimulatedProgress()
+    private IEnumerator LoadSceneWithProgress()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mainMenuSceneName);
-        asyncLoad.allowSceneActivation = false; // Prevent automatic activation
+        // Wait for the specified splash screen delay
+        yield return new WaitForSeconds(waitTime);
 
-        float elapsedTime = 0f;
+        // Start loading the scene asynchronously
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneHandler.MainMenu);
 
-        while (!asyncLoad.isDone)
+        // Don't allow the scene to activate immediately
+        asyncOperation.allowSceneActivation = false;
+
+        // Variable to track the simulated progress
+        float simulatedProgress = 0f;
+
+        // Gradually update the progress bar over the set loading time
+        while (!asyncOperation.isDone)
         {
-            // Simulate progress based on time
-            elapsedTime += Time.deltaTime;
-            float simulatedProgress = Mathf.Clamp01(elapsedTime / simulatedLoadingTime);
+            // Increase the simulated progress over time (based on loadingTime)
+            simulatedProgress += Time.deltaTime / loadingTime;
 
-            // Update the slider
+            // Ensure progress is capped at 1 (100%)
+            simulatedProgress = Mathf.Clamp01(simulatedProgress);
+
+            // Update the progress bar and text
             progressBar.value = simulatedProgress;
+            progressText.text = Mathf.RoundToInt(simulatedProgress * 100) + "%";
 
-            Debug.Log($"Simulated Progress: {simulatedProgress}");
-
-            // Allow the scene to activate when the slider is full
-            if (simulatedProgress >= 1f)
+            // Once the scene is almost loaded (90%), allow activation
+            if (simulatedProgress >= 0.9f)
             {
-                asyncLoad.allowSceneActivation = true;
+                asyncOperation.allowSceneActivation = true;
             }
 
-            await Task.Yield(); // Wait for the next frame
+            yield return null;
         }
     }
 }
