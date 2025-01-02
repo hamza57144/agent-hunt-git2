@@ -51,6 +51,15 @@ public class LevelManager : MonoBehaviour
     }
     private void Awake()
     {
+        for (int i = 0; i < levels.Count; i++)
+        {
+            if(i== GameData.SelectedLevelIndex)
+            {
+                Debug.Log("SelectedLevelIndex is :"+GameData.SelectedLevelIndex+" and i is "+i);
+                levels[i].level.gameObject.SetActive(true);
+            }
+            
+        }
         Instance = this;
     }
     private void Start()
@@ -61,9 +70,5 @@ public class LevelManager : MonoBehaviour
     {
         gameManager.PlayerMotor.gameObject.transform.localRotation = levels[levelIndex].PlayerPosition.rotation;
         gameManager.PlayerMotor.gameObject.transform.localPosition = levels[levelIndex].PlayerPosition.position;
-    }
-
-   
-   
-       
+    }    
 }

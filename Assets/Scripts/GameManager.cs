@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
   
     public static GameManager instance { get; private set; }
     public List<CharacterMotor> players;
-
+    public int currentLevelIndex;
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+
+        currentLevelIndex = GameData.SelectedLevelIndex;
         GameData.LoadGameData();
         players[GameData.SelectedPlayerIndex].gameObject.SetActive(true);
         instance = this;

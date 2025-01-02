@@ -14,7 +14,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject weaponsSelectionPanel;
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
-
+    public List<Button> levelButtons;
     /// <summary>
     /// Temporay using this approach for loading Scenes,will replace this later and manage scene loading by static classes
     /// and may be a separate scene for loading if needed
@@ -62,17 +62,34 @@ public class MainMenuManager : MonoBehaviour
     }
     public void SelectPlayer(int index)
     {
-        loadingScreen.SetActive(true);
         playerSelectionPanel.SetActive(false );
-
-        GameData.SaveSelectedPlayer(index);
-        
-        StartCoroutine(LoadSceneWithProgress());
-
+        levelSelectionPanel.SetActive(true );
+        GameData.SaveSelectedPlayer(index);    
     }
     public void SelectWeapon(int index)
     {
         GameData.SaveSelectedWeapon(index);
+    }
+    public void SelectLevel(int index)
+    {
+        levelSelectionPanel.SetActive(false);
+        loadingScreen.SetActive(true);
+        GameData.SaveSelectedLevel(index);
+        StartCoroutine(LoadSceneWithProgress());
+    }
+    private void LevelButtonActivation()
+    {
+        for (int i = 0; i < levelButtons.Count; i++)
+        {
+            if(i >= GameManager.instance.currentLevelIndex)
+            {
+                levelButtons[i].interactable = true;
+            }
+             else
+            {
+                levelButtons[i].interactable = false;
+            }
+        }
     }
     private IEnumerator LoadSceneWithProgress()
     {
