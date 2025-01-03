@@ -358,7 +358,6 @@ namespace CoverShooter
             var weapon = new WeaponDescription();
             weapon.IsDualWielding = true;
             weapon.PreferSwapping = true;
-
             return weapon;
         }
     }

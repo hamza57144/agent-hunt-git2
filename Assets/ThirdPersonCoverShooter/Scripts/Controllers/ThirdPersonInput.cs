@@ -171,7 +171,7 @@ namespace CoverShooter
         {
             if (_inventory != null && _inventory.Weapons.Length > 0)
             {
-                inputWeapon(1);  // Assuming 1 represents the index for the first weapon
+                inputWeapon(currentWeapon+1);  // Assuming 1 represents the index for the first weapon
             }
         }
         private void Update()
@@ -442,14 +442,35 @@ namespace CoverShooter
                     _timeD = DoubleTapDelay;
             }
         }
-
+        bool switchWeapon;
+        private bool SwitchWeapon()
+        {
+            switchWeapon = !switchWeapon;
+            return switchWeapon;
+        }
         protected virtual void UpdateWeapons()
         {
             if (currentWeapon == 0)
             {
                 EquipDefaultWeapon();
             }
-
+            if(Input.GetKeyDown(KeyCode.H))
+            {
+                _motor.InputCancelGrenade();
+                if (switchWeapon)
+                {
+                    inputWeapon(currentWeapon+1);
+                   switchWeapon = false;
+                    Debug.Log($"P is {switchWeapon}");
+                }
+                else
+                {
+                    inputWeapon(currentWeapon);
+                    switchWeapon= true;
+                    Debug.Log($"P is {switchWeapon}");
+                }
+                
+            }
             // Weapon selection by number keys
             if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha1)) { _motor.InputCancelGrenade(); inputWeapon(0); }
             if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha2)) { _motor.InputCancelGrenade(); inputWeapon(1); }
@@ -459,32 +480,23 @@ namespace CoverShooter
             // Scroll to cycle through weapons
             if (ControlFreak2.CF2Input.mouseScrollDelta.y < 0)
             {
-                if (currentWeapon == 0 && _inventory != null)
-                    inputWeapon(_inventory.Weapons.Length);
-                else
-                    inputWeapon(currentWeapon - 1);
+                SwitchWeapon();
             }
             else if (ControlFreak2.CF2Input.mouseScrollDelta.y > 0)
             {
-                if (_inventory != null && currentWeapon == _inventory.Weapons.Length)
-                    inputWeapon(GameData.SelectedWeaponIndex + 1);
-                else
-                    inputWeapon(GameData.SelectedWeaponIndex );
+                SwitchWeapon();
             }
         }
-
+      
         private int currentWeapon
         {
             get
             {
                 if (_inventory == null || !_motor.IsEquipped)
                     return 0;
+                
+                    return MainMenuManager.CurrentWeaponindex;
 
-                for (int i = 0; i < _inventory.Weapons.Length; i++)
-                    if (_inventory.Weapons[i].IsTheSame(ref _motor.Weapon))
-                        return i + 1;
-
-                return 0;
             }
         }
 
@@ -496,7 +508,18 @@ namespace CoverShooter
             if (index <= 0 || (_inventory != null && index > _inventory.Weapons.Length))
                 _controller.InputUnequip();
             else if (_inventory != null && index <= _inventory.Weapons.Length)
-                _controller.InputEquip(_inventory.Weapons[index - 1]);
+            {
+                if (switchWeapon)
+                {
+                    _controller.InputEquip(_inventory.Weapons[currentWeapon + 1]);
+                }
+                else 
+                {
+                    _controller.InputEquip(_inventory.Weapons[currentWeapon]);
+                    
+                }
+            }
+              
         }
 
         protected virtual void UpdateReload()

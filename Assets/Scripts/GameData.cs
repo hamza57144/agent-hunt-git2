@@ -1,60 +1,97 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public static class GameData
 {
-   
     public static int SelectedPlayerIndex { get; private set; }
+    public static int UnlockedPlayerIndex { get; private set; }
+    public static int CompletedLevelIndex { get; private set; }
     public static int SelectedLevelIndex { get; private set; }
-    public static int SelectedWeaponIndex { get; private set; }
+    public static int SelectedWeapon_Pistol_Index { get; private set; }
+    public static int SelectedWeapon_Gun_Index { get; private set; }
     public static void SaveSelectedPlayer(int index)
     {
         SelectedPlayerIndex = index;
-        PlayerPrefs.SetInt("SelectedPlayer", index);
+        PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedPlayer, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Player: {index}");
     }
     public static void LoadSelectedPlayer()
     {
-        SelectedPlayerIndex = PlayerPrefs.GetInt("SelectedPlayer", 0); 
+        SelectedPlayerIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedPlayer, 0); 
         Debug.Log($"Loaded Selected Player: {SelectedPlayerIndex}");
+    }
+    public static void SaveUnlockedPlayer(int index)
+    {
+        UnlockedPlayerIndex = index;
+        PlayerPrefs.SetInt(PlayerPrefsHandler.UnlockedPlayerIndex, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Selected Player: {index}");
+    }
+    public static void LoadUnlockedPlayer()
+    {
+        SelectedPlayerIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedPlayerIndex, 0);
+        Debug.Log($"Loaded Selected Player: {SelectedPlayerIndex}");
+    }
+    public static void SaveCompletedLevel(int index)
+    {
+        CompletedLevelIndex = index;
+        PlayerPrefs.SetInt(PlayerPrefsHandler.CompletedLevel, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Selected Level: {index}");
+    }
+    public static void LoadCompletedLevel()
+    {
+        CompletedLevelIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.CompletedLevel, 0); // Default to 0
+        Debug.Log($"Loaded Selected Level: {CompletedLevelIndex}");
+    }
+    public static void SaveSelectedWeapon_Pistol(int index)
+    {
+        SelectedWeapon_Pistol_Index = index;
+        PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedWeaponPistol, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Selected Weapon: {index}");
+    }
+    public static void LoadSelectedWeaponPistol()
+    {
+        SelectedWeapon_Pistol_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponPistol, 1); // Default to 1
+        Debug.Log($"Loaded Selected Weapon: {SelectedWeapon_Pistol_Index}");
+    }
+    public static void SaveSelectedWeapon_Gun(int index)
+    {
+        SelectedWeapon_Gun_Index = index;
+        PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedWeaponGun, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Selected Weapon: {index}");
+    }
+    public static void LoadSelectedWeaponGun()
+    {
+        SelectedWeapon_Gun_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponGun, 2); // Default to 1
+        Debug.Log($"Loaded Selected Weapon: {SelectedWeapon_Gun_Index}");
     }
     public static void SaveSelectedLevel(int index)
     {
         SelectedLevelIndex = index;
-        PlayerPrefs.SetInt("SelectedLevel", index);
+        PlayerPrefs.SetInt(PlayerPrefsHandler.UnlockedLevel, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Level: {index}");
     }
     public static void LoadSelectedLevel()
     {
-        SelectedLevelIndex = PlayerPrefs.GetInt("SelectedLevel", 0); // Default to 0
-        Debug.Log($"Loaded Selected Level: {SelectedLevelIndex}");
+        SelectedLevelIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedLevel, 0); // Default to 0
+        Debug.Log($"Unlocked Level: {SelectedLevelIndex}");
     }
-    public static void SaveSelectedWeapon(int index)
-    {
-        SelectedWeaponIndex = index;
-        PlayerPrefs.SetInt("SelectedWeapon", index);
-        PlayerPrefs.Save();
-        Debug.Log($"Saved Selected Weapon: {index}");
-    }
-    public static void LoadSelectedWeapon()
-    {
-        SelectedWeaponIndex = PlayerPrefs.GetInt("SelectedWeapon", 1); // Default to 0
-        Debug.Log($"Loaded Selected Weapon: {SelectedWeaponIndex}");
-    }
-
     public static void LoadGameData()
     {
         LoadSelectedPlayer();
+        LoadCompletedLevel();
+        LoadSelectedWeaponPistol();
         LoadSelectedLevel();
-        LoadSelectedWeapon();
+        LoadUnlockedPlayer();
+        LoadSelectedWeaponGun();
     }
-
-
 }
-public  class TagsHandler
+public struct TagsHandler
 {
     public static string Player { get { return "Player"; } }
     public static string Enemy { get { return "Enemy"; } }
@@ -62,9 +99,19 @@ public  class TagsHandler
     public static string Bullet { get { return "Bullet"; } }
 
 }
-public class SceneHandler
+public struct SceneHandler
 {
     public static string MainMenu { get { return "MainMenu"; } }
     public static string GamePlayScene { get { return "Gameplay Scene"; } }
+
+}
+public struct PlayerPrefsHandler
+{   
+    public static string CompletedLevel = "CompletedLevel";
+    public static string UnlockedLevel = "UnlockedLevel";
+    public static string SelectedWeaponPistol = "SelectedWeaponPistol";
+    public static string SelectedWeaponGun = "SelectedWeaponGun";
+    public static string SelectedPlayer = "SelectedPlayer";
+    public static string UnlockedPlayerIndex = "UnlockedPlayerIndex";
 
 }

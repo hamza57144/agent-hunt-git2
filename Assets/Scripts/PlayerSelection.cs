@@ -8,8 +8,10 @@ public  class PlayerSelection :MonoBehaviour
     [SerializeField] GameObject PlayerSelectionPanel;
    public   void  SelectPlayer(int index)
     {
+        GameData.SaveSelectedPlayer(index);
+        Debug.Log($"Selected Player index is {GameData.SelectedPlayerIndex}");
         GameManager.instance.RestartGame();
-       GameData.SaveSelectedPlayer(index);
+     
        
     }
   public void OnSelectPlayerButtonClick()

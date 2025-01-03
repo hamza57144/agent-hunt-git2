@@ -15,10 +15,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
     public List<Button> levelButtons;
+    public static int CurrentWeaponindex { get; private set; }
+    #region Reminder
     /// <summary>
-    /// Temporay using this approach for loading Scenes,will replace this later and manage scene loading by static classes
-    /// and may be a separate scene for loading if needed
+    /// it's not a best approach for loading scene, temporary using this approach for loading Scenes,
+    /// will replace this later and manage scene loading by static classes
+    /// and may be a separate scene for loading scene  if needed
     /// </summary>
+    #endregion
     public Slider progressBar;
     public TextMeshProUGUI progressText;
 
@@ -30,7 +34,11 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
+        CurrentWeaponindex = GameData.SelectedWeapon_Pistol_Index;
+        GameData.LoadGameData();
         UnlockCursor();
+        LevelButtonActivation();
+
     }
     void UnlockCursor()
     {
@@ -64,11 +72,19 @@ public class MainMenuManager : MonoBehaviour
     {
         playerSelectionPanel.SetActive(false );
         levelSelectionPanel.SetActive(true );
-        GameData.SaveSelectedPlayer(index);    
+        if (IsPlayerLocked(index))
+        {
+            GameData.SaveUnlockedPlayer(index);
+        }
+        GameData.SaveSelectedPlayer(index);
+        Debug.Log($"Selected player index is {GameData.SelectedPlayerIndex} ");
     }
     public void SelectWeapon(int index)
     {
-        GameData.SaveSelectedWeapon(index);
+        if(index %2  != 0) 
+          GameData.SaveSelectedWeapon_Pistol(index);
+        else
+          GameData.SaveSelectedWeapon_Gun(index);
     }
     public void SelectLevel(int index)
     {
@@ -81,14 +97,12 @@ public class MainMenuManager : MonoBehaviour
     {
         for (int i = 0; i < levelButtons.Count; i++)
         {
-            if(i >= GameManager.instance.currentLevelIndex)
+            if(i <= GameData.CompletedLevelIndex)
             {
+               
                 levelButtons[i].interactable = true;
             }
-             else
-            {
-                levelButtons[i].interactable = false;
-            }
+             
         }
     }
     private IEnumerator LoadSceneWithProgress()
@@ -126,6 +140,10 @@ public class MainMenuManager : MonoBehaviour
 
             yield return null;
         }
+    }
+    private bool IsPlayerLocked(int index)
+    {
+        return GameData.UnlockedPlayerIndex <= index;
     }
 
 }

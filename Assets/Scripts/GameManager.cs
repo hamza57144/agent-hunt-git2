@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour
   
     public static GameManager instance { get; private set; }
     public List<CharacterMotor> players;
-    public int currentLevelIndex;
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
+    int ind;
     public (Vector3 playerPostion, Vector3 playerRotation) GetPlayerPosition
     {
         get { return (PlayerMotor.gameObject.transform.localPosition, PlayerMotor.gameObject.transform.eulerAngles); }
@@ -22,25 +22,28 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            
             return players[GameData.SelectedPlayerIndex]; 
         }
     }
 
     void Awake()
     {
-
-        currentLevelIndex = GameData.SelectedLevelIndex;
+        ind = GameData.CompletedLevelIndex;
         GameData.LoadGameData();
         players[GameData.SelectedPlayerIndex].gameObject.SetActive(true);
         instance = this;
     }
     // Start is called before the first frame update
-    void Start()
+
+    private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ind++;
+            GameData.SaveCompletedLevel(ind);
+            Debug.Log($"GameData.SelectedLevelIndex {GameData.CompletedLevelIndex} and i is {ind} GameManager");
+        } 
     }
-
     public void PlayerRunning()
     {
 
