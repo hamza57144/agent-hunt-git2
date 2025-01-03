@@ -91,27 +91,25 @@ public static class GameData
         LoadSelectedWeaponGun();
     }
 }
-public struct TagsHandler
+public static class TagsHandler
 {
-    public static string Player { get { return "Player"; } }
-    public static string Enemy { get { return "Enemy"; } }
-    public static string BodyPart { get { return "BodyPart"; } }
-    public static string Bullet { get { return "Bullet"; } }
-
+    public const  string Player = "Player";
+    public const string Enemy = "Enemy";
+    public const string BodyPart = "BodyPart";
+    public const string Bullet = "Bullet";
 }
-public struct SceneHandler
+public static class SceneHandler
 {
-    public static string MainMenu { get { return "MainMenu"; } }
-    public static string GamePlayScene { get { return "Gameplay Scene"; } }
-
+    public const string MainMenu = "MainMenu";
+    public const string GameplayScene = "Gameplay Scene";
 }
-public struct PlayerPrefsHandler
+public static class PlayerPrefsHandler
 {   
-    public static string CompletedLevel = "CompletedLevel";
-    public static string UnlockedLevel = "UnlockedLevel";
-    public static string SelectedWeaponPistol = "SelectedWeaponPistol";
-    public static string SelectedWeaponGun = "SelectedWeaponGun";
-    public static string SelectedPlayer = "SelectedPlayer";
-    public static string UnlockedPlayerIndex = "UnlockedPlayerIndex";
+    public const string CompletedLevel = "CompletedLevel";
+    public const string UnlockedLevel = "UnlockedLevel";
+    public const string SelectedWeaponPistol = "SelectedWeaponPistol";
+    public const string SelectedWeaponGun = "SelectedWeaponGun";
+    public const string SelectedPlayer = "SelectedPlayer";
+    public const string UnlockedPlayerIndex = "UnlockedPlayerIndex";
 
 }

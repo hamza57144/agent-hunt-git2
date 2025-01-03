@@ -111,7 +111,7 @@ public class MainMenuManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         // Start loading the scene asynchronously
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneHandler.GamePlayScene);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneHandler.GameplayScene);
 
         // Don't allow the scene to activate immediately
         asyncOperation.allowSceneActivation = false;

@@ -40,6 +40,7 @@ namespace CoverShooter
         public static event EventHandler Fired;
         public static bool zoomIn;
         public static bool zoomOut;
+        bool switchWeapon;
 
         /// <summary>
         /// Camera moved by this input component.
@@ -442,11 +443,11 @@ namespace CoverShooter
                     _timeD = DoubleTapDelay;
             }
         }
-        bool switchWeapon;
-        private bool SwitchWeapon()
+   
+        private void SwitchWeapon()
         {
             switchWeapon = !switchWeapon;
-            return switchWeapon;
+          
         }
         protected virtual void UpdateWeapons()
         {
