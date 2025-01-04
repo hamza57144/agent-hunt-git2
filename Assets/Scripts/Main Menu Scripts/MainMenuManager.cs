@@ -18,7 +18,7 @@ public class MainMenuManager : MonoBehaviour
     public static int CurrentWeaponindex { get; private set; }
     #region Reminder
     /// <summary>
-    /// it's not a best approach for loading scene, temporary using this approach for loading Scenes,
+    /// it's not a best approach for loading scene, temporary using this approach for loading gameplay,
     /// will replace this later and manage scene loading by static classes
     /// and may be a separate scene for loading scene  if needed
     /// </summary>
@@ -78,6 +78,7 @@ public class MainMenuManager : MonoBehaviour
         }
         GameData.SaveSelectedPlayer(index);
         Debug.Log($"Selected player index is {GameData.SelectedPlayerIndex} ");
+       
     }
     public void SelectWeapon(int index)
     {
@@ -143,7 +144,7 @@ public class MainMenuManager : MonoBehaviour
     }
     private bool IsPlayerLocked(int index)
     {
-        return GameData.UnlockedPlayerIndex <= index;
+        return GameData.UnlockedPlayerIndex < index;
     }
 
 }

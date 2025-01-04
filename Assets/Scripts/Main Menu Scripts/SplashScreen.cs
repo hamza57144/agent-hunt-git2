@@ -7,18 +7,23 @@ using TMPro;
 public class SplashScreen : MonoBehaviour
 {
     // References to UI elements
-    public Slider progressBar;
-    public TextMeshProUGUI progressText;
-
- 
+    public Image progressBar; // Progress bar image
+    public TextMeshProUGUI progressText; // Text for progress percentage
+    public RectTransform bulletImage; // Reference to the bullet image (UI element)
+    private float offset = 0.019f;
     // Time to wait before starting to load the scene (e.g., splash screen delay)
     public float waitTime = 3f;
 
     // Total loading time for the scene (how long it will take to fill the progress bar)
     public float loadingTime = 5f;
 
+    private RectTransform progressBarRect; // RectTransform of the progress bar
+
     private void Start()
     {
+        // Cache the RectTransform of the progress bar
+        progressBarRect = progressBar.GetComponent<RectTransform>();
+
         StartCoroutine(LoadSceneWithProgress());
     }
 
@@ -36,7 +41,7 @@ public class SplashScreen : MonoBehaviour
         // Variable to track the simulated progress
         float simulatedProgress = 0f;
 
-        // Gradually update the progress bar over the set loading time
+        // Gradually update the progress bar and bullet movement over the set loading time
         while (!asyncOperation.isDone)
         {
             // Increase the simulated progress over time (based on loadingTime)
@@ -45,9 +50,12 @@ public class SplashScreen : MonoBehaviour
             // Ensure progress is capped at 1 (100%)
             simulatedProgress = Mathf.Clamp01(simulatedProgress);
 
-            // Update the progress bar and text
-            progressBar.value = simulatedProgress;
+            // Update the progress bar fill amount and progress text
+            progressBar.fillAmount = simulatedProgress;
             progressText.text = Mathf.RoundToInt(simulatedProgress * 100) + "%";
+
+            // Move the bullet to match the edge of the filled area
+            UpdateBulletPosition(simulatedProgress- offset);
 
             // Once the scene is almost loaded (90%), allow activation
             if (simulatedProgress >= 0.9f)
@@ -58,4 +66,20 @@ public class SplashScreen : MonoBehaviour
             yield return null;
         }
     }
+
+    private void UpdateBulletPosition(float progress)
+    {
+        // Get the width of the progress bar in world units
+        float barWidth = progressBarRect.rect.width * progressBarRect.lossyScale.x;
+
+        // Calculate the world position of the bullet
+        float bulletWorldX = progressBarRect.position.x - (barWidth / 2) + (progress * barWidth);
+
+        // Add a small offset to decrease the distance between the bullet and the filled bar
+        float offset = -5f; // Adjust this value as needed (negative values bring the bullet closer)
+
+        // Update the bullet's position, maintaining its original Y and Z coordinates
+        bulletImage.position = new Vector3(bulletWorldX + offset, bulletImage.position.y, bulletImage.position.z);
+    }
+
 }
