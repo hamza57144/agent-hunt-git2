@@ -9,11 +9,42 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+ 
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject playerSelectionPanel;
     [SerializeField] GameObject weaponsSelectionPanel;
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
+    #region Weapons Selection
+    [SerializeField] List<GameObject> weapons;
+    [SerializeField] WeaponData weaponData;
+    [SerializeField] TextMeshProUGUI weaponhealthText;     
+    [SerializeField] TextMeshProUGUI weaponHidingText;
+    [SerializeField] TextMeshProUGUI weaponReloadText;
+    [SerializeField] Image healthBar;        
+    [SerializeField] Image hidingBar;         
+    [SerializeField] Image reloadBar;
+    [SerializeField] List<Button> gunButtons;
+    [SerializeField] GameObject weaponAnimator;
+    private GameObject currentWeaponInstance;
+    public Transform weaponSpawnPoint;
+    /*    public RawImage weaponDisplay; // Raw Image for displaying the Render Texture
+        public Transform weaponDisplayParent; // Parent object for spawning weapon prefabs*/
+    #endregion
+    #region Player Selection
+
+    [SerializeField] PlayerData playerData;
+    [SerializeField] List<GameObject> players;
+    [SerializeField] TextMeshProUGUI playerhealthText;
+    [SerializeField] TextMeshProUGUI playerHidingText;
+    [SerializeField] TextMeshProUGUI playerReloadText;
+    [SerializeField] Image playerHealthBar;
+    [SerializeField] Image playerHidingBar;
+    [SerializeField] Image playerReloadBar;
+    /*[SerializeField] List<Button> gunButtons;
+    [SerializeField] GameObject weaponAnimator;*/
+
+    #endregion
     public List<Button> levelButtons;
     public static int CurrentWeaponindex { get; private set; }
     #region Reminder
@@ -38,6 +69,7 @@ public class MainMenuManager : MonoBehaviour
         GameData.LoadGameData();
         UnlockCursor();
         LevelButtonActivation();
+        DisplayWeapon(CurrentWeaponindex);
 
     }
     void UnlockCursor()
@@ -82,10 +114,9 @@ public class MainMenuManager : MonoBehaviour
     }
     public void SelectWeapon(int index)
     {
-        if(index %2  != 0) 
-          GameData.SaveSelectedWeapon_Pistol(index);
-        else
-          GameData.SaveSelectedWeapon_Gun(index);
+        CurrentWeaponindex = index;
+        DisplayWeapon(CurrentWeaponindex+1);
+
     }
     public void SelectLevel(int index)
     {
@@ -93,6 +124,13 @@ public class MainMenuManager : MonoBehaviour
         loadingScreen.SetActive(true);
         GameData.SaveSelectedLevel(index);
         StartCoroutine(LoadSceneWithProgress());
+    }
+    public void OnUpgrageWeaponButtonClick()
+    {
+        if (CurrentWeaponindex % 2 != 0)
+            GameData.SaveSelectedWeapon_Pistol(CurrentWeaponindex);
+        else
+            GameData.SaveSelectedWeapon_Gun(CurrentWeaponindex);
     }
     private void LevelButtonActivation()
     {
@@ -146,5 +184,63 @@ public class MainMenuManager : MonoBehaviour
     {
         return GameData.UnlockedPlayerIndex < index;
     }
+    private void ActivateWeapon()
+    {
+        weaponAnimator.SetActive(true);
+        weaponAnimator.GetComponent<Animator>().SetTrigger("Rotate");
+    }
+    private void DisplayWeapon(int index)
+    {
+        // Get the currently selected weapon
+        WeaponData.Weapon currentWeapon = weaponData.weaponList[index];
+        weaponAnimator.SetActive(false);
+        Invoke(nameof(ActivateWeapon), 0.25f);
+        
+        weapons[index].SetActive(true);
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if(i!=index)
+            {
+                weapons[i].SetActive(false);
+            }
+        }
 
+        /* // Instantiate the new weapon prefab at the spawn point's position and rotation
+         currentWeaponInstance = Instantiate(currentWeapon.weaponPrefab, weaponSpawnPoint.position, weaponSpawnPoint.rotation);
+
+         // Set the new weapon as a child of the spawn point
+         currentWeaponInstance.transform.SetParent(weaponSpawnPoint);
+
+         // Reset the local position, rotation, and scale to ensure it's aligned with the spawn point
+         currentWeaponInstance.transform.localPosition = Vector3.zero;
+         currentWeaponInstance.transform.localRotation = Quaternion.identity;
+         currentWeaponInstance.transform.localScale = Vector3.one;*/
+
+        // Update the UI elements with the weapon's data
+        weaponhealthText.text = currentWeapon.health.ToString() + "%";
+        weaponHidingText.text = currentWeapon.hiding.ToString() + "%";
+        weaponReloadText.text = currentWeapon.reloadTime.ToString() + "%";
+
+        healthBar.fillAmount = Mathf.Clamp01(currentWeapon.health / 100f);
+        hidingBar.fillAmount = Mathf.Clamp01(currentWeapon.hiding / 100f);
+        reloadBar.fillAmount = Mathf.Clamp01(currentWeapon.reloadTime / 100f);
+
+      
+        GunButtonActivation();
+    }
+
+   
+    private void GunButtonActivation()
+    {
+        for (int i = 0; i < gunButtons.Count; i++)
+        {
+            if (i <= GameData.SelectedWeapon_Pistol_Index)
+            {
+
+                gunButtons[i].interactable = true;
+            }
+
+        }
+    }
+    
 }
