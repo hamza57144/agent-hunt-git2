@@ -26,6 +26,8 @@ public class EnemyManager : MonoBehaviour
     public bool shoot;
     private bool isHead;
     public bool lastEnemy { get { return enemyCount==1; } }
+    public bool levelCompleted { get { return enemyCount == 0; } }
+    bool once;
     
     public LayerMask layerMask;
     private bool isAiming;
@@ -55,7 +57,11 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if (levelCompleted && !once)
+        {
+            Invoke(nameof(LevelComplete),5f);   
+            once = true;
+        }
         if (lastEnemy)
         {
          
@@ -95,8 +101,11 @@ public class EnemyManager : MonoBehaviour
         }
         
     }
-    
 
+    private void LevelComplete()
+    {
+        gameManager.LevelComplete();
+    }
     
     private void DetectBodyParts()
     {

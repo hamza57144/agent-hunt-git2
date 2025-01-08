@@ -15,6 +15,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject weaponsSelectionPanel;
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
+    public RectTransform bulletImage;
     #region Weapons Selection
     [SerializeField] List<GameObject> weapons;
     [SerializeField] WeaponData weaponData;
@@ -57,14 +58,16 @@ public class MainMenuManager : MonoBehaviour
     /// and may be a separate scene for loading scene  if needed
     /// </summary>
     #endregion
-    public Slider progressBar;
-    public TextMeshProUGUI progressText;
-
+    #region Loading Bar
+    public Image progressBar;   
+    private float offset = 0.019f;
+    private RectTransform progressBarRect;
     // Time to wait before starting to load the scene (e.g., splash screen delay)
     public float waitTime = 3f;
 
     // Total loading time for the scene (how long it will take to fill the progress bar)
     public float loadingTime = 5f;
+    #endregion
 
     private void Awake()
     {
@@ -78,6 +81,9 @@ public class MainMenuManager : MonoBehaviour
         PlayerButtonsLockUnlock();
 
     }
+   
+       
+   
     void UnlockCursor()
     {
         //If cursor get lock due to scene loading,unlock it
@@ -90,6 +96,7 @@ public class MainMenuManager : MonoBehaviour
         playerSelectionPanel.SetActive(false);
         weaponsSelectionPanel.SetActive(false);
         levelSelectionPanel.SetActive(false);
+        progressBarRect = progressBar.GetComponent<RectTransform>();
     }
     public void OnSelectPlayerBtnClick()
     {
@@ -191,7 +198,7 @@ public class MainMenuManager : MonoBehaviour
         // Variable to track the simulated progress
         float simulatedProgress = 0f;
 
-        // Gradually update the progress bar over the set loading time
+        // Gradually update the progress bar and bullet movement over the set loading time
         while (!asyncOperation.isDone)
         {
             // Increase the simulated progress over time (based on loadingTime)
@@ -200,9 +207,12 @@ public class MainMenuManager : MonoBehaviour
             // Ensure progress is capped at 1 (100%)
             simulatedProgress = Mathf.Clamp01(simulatedProgress);
 
-            // Update the progress bar and text
-            progressBar.value = simulatedProgress;
-            progressText.text = Mathf.RoundToInt(simulatedProgress * 100) + "%";
+            // Update the progress bar fill amount and progress text
+            progressBar.fillAmount = simulatedProgress;
+           /* progressText.text = Mathf.RoundToInt(simulatedProgress * 100) + "%";*/
+
+            // Move the bullet to match the edge of the filled area
+            UpdateBulletPosition(simulatedProgress - offset);
 
             // Once the scene is almost loaded (90%), allow activation
             if (simulatedProgress >= 0.9f)
@@ -212,6 +222,21 @@ public class MainMenuManager : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private void UpdateBulletPosition(float progress)
+    {
+        // Get the width of the progress bar in world units
+        float barWidth = progressBarRect.rect.width * progressBarRect.lossyScale.x;
+
+        // Calculate the world position of the bullet
+        float bulletWorldX = progressBarRect.position.x - (barWidth / 2) + (progress * barWidth);
+
+        // Add a small offset to decrease the distance between the bullet and the filled bar
+        float offset = -5f; // Adjust this value as needed (negative values bring the bullet closer)
+
+        // Update the bullet's position, maintaining its original Y and Z coordinates
+        bulletImage.position = new Vector3(bulletWorldX + offset, bulletImage.position.y, bulletImage.position.z);
     }
     private bool IsPlayerLocked(int index)
     {

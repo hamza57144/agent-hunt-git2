@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
+    [SerializeField] GameObject levelCompleteCanvas;
+    [SerializeField] GameObject levelFailCanvas;
     int ind;
     public (Vector3 playerPostion, Vector3 playerRotation) GetPlayerPosition
     {
@@ -33,16 +35,29 @@ public class GameManager : MonoBehaviour
         players[GameData.SelectedPlayerIndex].gameObject.SetActive(true);
         instance = this;
     }
-    // Start is called before the first frame update
-
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ind++;
-            GameData.SaveCompletedLevel(ind);
-            Debug.Log($"GameData.SelectedLevelIndex {GameData.CompletedLevelIndex} and i is {ind} GameManager");
-        } 
+        CharacterMotor.OnPlayerDie += CharacterMotor_OnPlayerDie;
+    }
+
+    private void CharacterMotor_OnPlayerDie(object sender, System.EventArgs e)
+    {
+        Invoke(nameof(LevelFailed), 2f);
+    }
+
+    // Start is called before the first frame update
+    public void LevelComplete()
+    {
+        gameCanvas.SetActive(false);
+        levelCompleteCanvas.SetActive(true);
+        ind++;
+        GameData.SaveCompletedLevel(ind);
+        Debug.Log($"GameData.SelectedLevelIndex {GameData.CompletedLevelIndex} and i is {ind} GameManager");
+    }
+    public void LevelFailed()
+    {
+        gameCanvas.SetActive(true);
+        levelFailCanvas.SetActive(true);
     }
     public void PlayerRunning()
     {

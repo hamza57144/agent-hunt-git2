@@ -64,6 +64,7 @@ namespace CoverShooter
     public class CharacterMotor : MonoBehaviour
     {
         public static event EventHandler EnemyDie;
+        public static event EventHandler OnPlayerDie;
         private Nav_Movement playerMotor;
         public bool isPlayer;
         private static bool hasScope;
@@ -1926,7 +1927,11 @@ namespace CoverShooter
                     
                 }        
                 EnemyDie?.Invoke(this, EventArgs.Empty);
-                
+
+            }
+            else
+            {
+                OnPlayerDie?.Invoke(this, EventArgs.Empty);
             }
             if (!IsAlive)
                 return;
