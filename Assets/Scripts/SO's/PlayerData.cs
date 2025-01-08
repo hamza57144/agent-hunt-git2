@@ -15,5 +15,5 @@ public class PlayerData : ScriptableObject
         public float reloadTime;
        
     }
-    public List<Player> weaponList;
+    public List<Player> playerList;
 }

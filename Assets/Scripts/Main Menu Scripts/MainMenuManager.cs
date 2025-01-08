@@ -32,10 +32,13 @@ public class MainMenuManager : MonoBehaviour
         public Transform weaponDisplayParent; // Parent object for spawning weapon prefabs*/
     #endregion
     #region Player Selection
-
+    private int currentPlayerIndex;
     [SerializeField] PlayerData playerData;
     [SerializeField] List<GameObject> players;
-    [SerializeField] TextMeshProUGUI playerhealthText;
+    [SerializeField] List<Button> playerButtons;
+    [SerializeField] Sprite unlockedSprite;
+    [SerializeField] Sprite lockedSprite;
+    [SerializeField] TextMeshProUGUI playerHealthText;
     [SerializeField] TextMeshProUGUI playerHidingText;
     [SerializeField] TextMeshProUGUI playerReloadText;
     [SerializeField] Image playerHealthBar;
@@ -66,10 +69,13 @@ public class MainMenuManager : MonoBehaviour
     private void Awake()
     {
         CurrentWeaponindex = GameData.SelectedWeapon_Pistol_Index;
+        currentPlayerIndex  = GameData.UnlockedPlayerIndex;
         GameData.LoadGameData();
         UnlockCursor();
         LevelButtonActivation();
         DisplayWeapon(CurrentWeaponindex);
+        DisplayPlayer(GameData.SelectedPlayerIndex);
+        PlayerButtonsLockUnlock();
 
     }
     void UnlockCursor()
@@ -95,21 +101,21 @@ public class MainMenuManager : MonoBehaviour
         mainMenu.SetActive(false);
         weaponsSelectionPanel.SetActive(true);
     }
-    public void OnSelectLevelBtnClick()
+    public void OnPlayBtnClick()
     {
-        mainMenu.SetActive(false);
-        levelSelectionPanel.SetActive(true);
+        loadingScreen.SetActive(true);
+        StartCoroutine(LoadSceneWithProgress());
     }
     public void SelectPlayer(int index)
     {
-        playerSelectionPanel.SetActive(false );
-        levelSelectionPanel.SetActive(true );
-        if (IsPlayerLocked(index))
+        
+        /*if (IsPlayerLocked(index))
         {
             GameData.SaveUnlockedPlayer(index);
-        }
-        GameData.SaveSelectedPlayer(index);
-        Debug.Log($"Selected player index is {GameData.SelectedPlayerIndex} ");
+        }*/
+        currentPlayerIndex=index;
+        DisplayPlayer(index);
+       
        
     }
     public void SelectWeapon(int index)
@@ -118,6 +124,7 @@ public class MainMenuManager : MonoBehaviour
         DisplayWeapon(CurrentWeaponindex+1);
 
     }
+  
     public void SelectLevel(int index)
     {
         levelSelectionPanel.SetActive(false);
@@ -132,6 +139,10 @@ public class MainMenuManager : MonoBehaviour
         else
             GameData.SaveSelectedWeapon_Gun(CurrentWeaponindex);
     }
+    public void OnUpgragePlayerButtonClick()
+    {
+        GameData.SaveUnlockedPlayer(currentPlayerIndex);
+    }
     private void LevelButtonActivation()
     {
         for (int i = 0; i < levelButtons.Count; i++)
@@ -142,6 +153,28 @@ public class MainMenuManager : MonoBehaviour
                 levelButtons[i].interactable = true;
             }
              
+        }
+    }
+    private void PlayerButtonsLockUnlock()
+    {
+        for (int i = 0; i < playerButtons.Count; i++)
+        {
+            Image buttonImage = playerButtons[i].GetComponent<Image>();
+            if (!IsPlayerLocked(i)) 
+            {
+
+                    playerButtons[i].interactable = true;
+                    buttonImage.sprite = unlockedSprite;                   
+
+            }
+            else
+            {
+                playerButtons[i].interactable = false;
+                buttonImage.sprite = lockedSprite;
+                buttonImage.SetNativeSize();
+
+            }
+
         }
     }
     private IEnumerator LoadSceneWithProgress()
@@ -229,7 +262,29 @@ public class MainMenuManager : MonoBehaviour
         GunButtonActivation();
     }
 
-   
+    private void DisplayPlayer(int index)
+    {
+        PlayerButtonsLockUnlock();
+        PlayerData.Player currentPlayer = playerData.playerList[index];
+        players[index].SetActive(true);
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (i != index)
+            {
+                players[i].SetActive(false);
+            }
+        }
+
+        // Update the UI elements with the weapon's data
+        playerHealthText.text = currentPlayer.health.ToString() + "%";
+        playerHidingText.text = currentPlayer.hiding.ToString() + "%";
+        playerReloadText.text = currentPlayer.reloadTime.ToString() + "%";
+
+        playerHealthBar.fillAmount = Mathf.Clamp01(currentPlayer.health / 100f);
+        playerHidingBar.fillAmount = Mathf.Clamp01(currentPlayer.hiding / 100f);
+        playerReloadBar.fillAmount = Mathf.Clamp01(currentPlayer.reloadTime / 100f);
+
+    }
     private void GunButtonActivation()
     {
         for (int i = 0; i < gunButtons.Count; i++)
