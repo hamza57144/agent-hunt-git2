@@ -41,6 +41,7 @@ namespace CoverShooter
         public static bool zoomIn;
         public static bool zoomOut;
         bool switchWeapon;
+        public static int totalTries { get; private set; } = 0;
 
         /// <summary>
         /// Camera moved by this input component.
@@ -322,7 +323,7 @@ namespace CoverShooter
                 // Check if player is in cover or not, and allow firing in both cases
                 if (_motor.IsInCover)
                 {
-
+                    totalTries++;
                     if (!EnemyManager.instance.finalShot)
                     {
                         ///Summary

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CoverShooter
@@ -6,6 +7,12 @@ namespace CoverShooter
     /// <summary>
     /// Acts similarly to Character Health, but passed the taken damage to a first found Character Health component in the hierarchy.
     /// </summary>
+
+    public enum Body
+    {
+        Lower,
+        Uper,
+    }
     public class BodyPartHealth : MonoBehaviour
     {
         
@@ -17,7 +24,10 @@ namespace CoverShooter
         {
             get { return TargetOveride == null ? _target : TargetOveride; }
         }
-
+       
+        public Body body;
+        public static event EventHandler OnHeadShot;
+        public static event EventHandler OnBodyShot;
         /// <summary>
         /// By default target is the first found parent object with CharacterHealth. Setting TargetOverride overrides it.
         /// </summary>
@@ -73,6 +83,14 @@ namespace CoverShooter
         /// </summary>
         public void OnHit(Hit hit)
         {
+            if(body == Body.Uper)
+            {
+               OnHeadShot?.Invoke(this,EventArgs.Empty);
+            }
+            else
+            {
+                OnBodyShot?.Invoke(this, EventArgs.Empty);
+            }
             var target = TargetOveride;
 
             if (target == null)

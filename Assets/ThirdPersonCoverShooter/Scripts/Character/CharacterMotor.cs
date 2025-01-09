@@ -71,7 +71,7 @@ namespace CoverShooter
         private Enemy enemy;
         private HealthBar healthBar;
         public bool isVisible;
-
+        public float GetHealth { get { return this.gameObject.GetComponent<CharacterHealth>().GetHealth; } }
         #region Properties
 
         /// <summary>

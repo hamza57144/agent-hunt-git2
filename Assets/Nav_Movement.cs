@@ -17,6 +17,7 @@ public enum PlayerState
 public class Nav_Movement : MonoBehaviour
 {
     public static Nav_Movement Instance { get; private set; }
+    public int ActiveCoverPoint { get; set; }
     [SerializeField] LevelManager levelManager;
     public float smoothness = 3f;
     private CoverPoint[] coverPoint;
@@ -52,6 +53,7 @@ public class Nav_Movement : MonoBehaviour
     }
     void Start()
     {
+        ActiveCoverPoint = 0;
         player = GameManager.instance.PlayerMotor.gameObject;  
         agent = player.GetComponent<NavMeshAgent>();
         animator = player.GetComponent<Animator>();
@@ -154,6 +156,7 @@ public class Nav_Movement : MonoBehaviour
     }
     void MoveToCover(int movPoint)
     {
+        ActiveCoverPoint++;
         foreach (var enemyMotor in coverPoint[movPoint].enemies)
         {
             enemyMotor.isVisible = true;

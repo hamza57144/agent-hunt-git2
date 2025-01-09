@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class CoverPoint : MonoBehaviour
 {
- 
+    [Tooltip("Number in placement")]
+    public int coverNumber ;
     public CharacterMotor[] enemies;
     public GameObject[] enemiesCovers;
     public int TotalEnemies { get { return enemies.Length; } }
@@ -71,12 +72,15 @@ public class CoverPoint : MonoBehaviour
     public void AlertAllEnemies()
     {
         areEnemiesAlerted =true;
-        foreach (CharacterMotor item in enemies)
-        {            
-            item.gameObject.GetComponent<AISight>().enabled = true;
+        if (coverNumber == Nav_Movement.Instance.ActiveCoverPoint)
+        {
+            foreach (CharacterMotor item in enemies)
+            {
+                item.gameObject.GetComponent<AISight>().enabled = true;
+                Debug.Log("Total enemies " + TotalEnemies);
+            }
         }
+       
     }
-    
-    
    
 }

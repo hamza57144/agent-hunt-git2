@@ -19,7 +19,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float shootingForce;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
     private AIMovement aIMovement;
-    private int enemyCount;
+    [HideInInspector]
+    public int enemyCount;
    
     public  bool finalShot;
     
@@ -59,7 +60,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (levelCompleted && !once)
         {
-            Invoke(nameof(LevelComplete),5f);   
+            Invoke(nameof(LevelComplete),3f);   
             once = true;
         }
         if (lastEnemy)
