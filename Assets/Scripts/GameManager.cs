@@ -26,9 +26,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI headShotText;
     [SerializeField] TextMeshProUGUI accuracyText;
     [SerializeField] TextMeshProUGUI healthText;
-
+    private int enemies;
     private int totalShots { get {  return headShot+bodyShot; } }
-   
+
+    #region To Be replaced later
+    public GameObject loadingCanvas;
+    // References to UI elements
+    public Image progressBar; // Progress bar image   
+    public RectTransform bulletImage; // Reference to the bullet image (UI element)
+    private float offset = 0.019f;
+    // Time to wait before starting to load the scene (e.g., splash screen delay)
+    public float waitTime = 3f;
+
+    // Total loading time for the scene (how long it will take to fill the progress bar)
+    public float loadingTime = 5f;
+
+    private RectTransform progressBarRect; // RectTransform of the progress bar
+    #endregion
+
     public (Vector3 playerPostion, Vector3 playerRotation) GetPlayerPosition
     {
         get { return (PlayerMotor.gameObject.transform.localPosition, PlayerMotor.gameObject.transform.eulerAngles); }
@@ -43,8 +58,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        ind = GameData.CompletedLevelIndex;
         GameData.LoadGameData();
+        ind = GameData.CompletedLevelIndex;
         Player.gameObject.SetActive(true);
         instance = this;
     }
@@ -53,7 +68,8 @@ public class GameManager : MonoBehaviour
         CharacterMotor.OnPlayerDie += CharacterMotor_OnPlayerDie;
         BodyPartHealth.OnBodyShot += BodyPartHealth_OnBodyShot;
         BodyPartHealth.OnHeadShot += BodyPartHealth_OnHeadShot;
-
+        enemies = EnemyManager.instance.enemyCount;
+        progressBarRect = progressBar.GetComponent<RectTransform>();
     }
 
     private void BodyPartHealth_OnHeadShot(object sender, System.EventArgs e)
@@ -79,10 +95,9 @@ public class GameManager : MonoBehaviour
     {
         gameCanvas.SetActive(false);
         levelCompleteCanvas.SetActive(true);
-        ind++;
-        GameData.SaveCompletedLevel(ind);
-        headShotText.text = headShot.ToString()+"/"+EnemyManager.instance.enemyCount;
-        healthText.text = Player.GetHealth.ToString("0")+"%";
+       
+        headShotText.text = headShot.ToString()+"/"+enemies.ToString();
+        healthText.text = ((Player.GetHealth)/5).ToString("0")+"%";
         accuracyText.text = CalculateAccuracy().ToString()+"%";
         Debug.Log($"GameData.SelectedLevelIndex {GameData.CompletedLevelIndex} and i is {ind} GameManager");
     }
@@ -117,13 +132,79 @@ public class GameManager : MonoBehaviour
     }
      public void RestartGame()
      {
+        levelFailCanvas.SetActive(false);
+        loadingCanvas.SetActive(true);
+        GameData.SaveCompletedLevel(ind);
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-     }
-  /*  public void SetPlayerPosition()
+        StartCoroutine(LoadSceneWithProgress());
+    }
+    public void OnNextButtonClicked()
     {
-        players[GameData.SelectedPlayerIndex].gameObject.transform.localPosition= GetPlayerPosition.playerPostion;
-        players[GameData.SelectedPlayerIndex].gameObject.transform.localRotation = Quaternion.Euler(GetPlayerPosition.playerRotation);
-        players[GameData.SelectedPlayerIndex].gameObject.SetActive(true) ;
-    }*/
+        levelCompleteCanvas.SetActive(false );
+        loadingCanvas.SetActive(true);
+
+        ind++;
+        GameData.SaveCompletedLevel(ind);
+        Time.timeScale = 1f;
+        StartCoroutine(LoadSceneWithProgress());
+    }
+    private IEnumerator LoadSceneWithProgress()
+    {
+        // Wait for the specified splash screen delay
+        yield return new WaitForSeconds(waitTime);
+
+        // Start loading the scene asynchronously
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneHandler.GameplayScene);
+
+        // Don't allow the scene to activate immediately
+        asyncOperation.allowSceneActivation = false;
+
+        // Variable to track the simulated progress
+        float simulatedProgress = 0f;
+
+        // Gradually update the progress bar and bullet movement over the set loading time
+        while (!asyncOperation.isDone)
+        {
+            // Increase the simulated progress over time (based on loadingTime)
+            simulatedProgress += Time.deltaTime / loadingTime;
+
+            // Ensure progress is capped at 1 (100%)
+            simulatedProgress = Mathf.Clamp01(simulatedProgress);
+
+            // Update the progress bar fill amount and progress text
+            progressBar.fillAmount = simulatedProgress;          
+
+            // Move the bullet to match the edge of the filled area
+            UpdateBulletPosition(simulatedProgress - offset);
+
+            // Once the scene is almost loaded (90%), allow activation
+            if (simulatedProgress >= 0.9f)
+            {
+                asyncOperation.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+    }
+
+    private void UpdateBulletPosition(float progress)
+    {
+        // Get the width of the progress bar in world units
+        float barWidth = progressBarRect.rect.width * progressBarRect.lossyScale.x;
+
+        // Calculate the world position of the bullet
+        float bulletWorldX = progressBarRect.position.x - (barWidth / 2) + (progress * barWidth);
+
+        // Add a small offset to decrease the distance between the bullet and the filled bar
+        float offset = -5f; // Adjust this value as needed (negative values bring the bullet closer)
+
+        // Update the bullet's position, maintaining its original Y and Z coordinates
+        bulletImage.position = new Vector3(bulletWorldX + offset, bulletImage.position.y, bulletImage.position.z);
+    }
+    /*  public void SetPlayerPosition()
+      {
+          players[GameData.SelectedPlayerIndex].gameObject.transform.localPosition= GetPlayerPosition.playerPostion;
+          players[GameData.SelectedPlayerIndex].gameObject.transform.localRotation = Quaternion.Euler(GetPlayerPosition.playerRotation);
+          players[GameData.SelectedPlayerIndex].gameObject.SetActive(true) ;
+      }*/
 }

@@ -51,7 +51,7 @@ public class LevelManager : MonoBehaviour
     }
     private void Awake()
     {
-        
+        GameData.LoadGameData();
          EnableSelectedLevel();
          Instance = this;
     }

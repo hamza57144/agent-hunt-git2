@@ -9,13 +9,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
- 
+    [Header("Main Menu")]
     [SerializeField] GameObject mainMenu;
+    [SerializeField] List<GameObject> MainMenuPlayers;
     [SerializeField] GameObject playerSelectionPanel;
     [SerializeField] GameObject weaponsSelectionPanel;
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
     public RectTransform bulletImage;
+    [Header("Weapon Selection")]
     #region Weapons Selection
     [SerializeField] List<GameObject> weapons;
     [SerializeField] WeaponData weaponData;
@@ -32,6 +34,7 @@ public class MainMenuManager : MonoBehaviour
     /*    public RawImage weaponDisplay; // Raw Image for displaying the Render Texture
         public Transform weaponDisplayParent; // Parent object for spawning weapon prefabs*/
     #endregion
+    [Header("Player Selection")]
     #region Player Selection
     private int currentPlayerIndex;
     [SerializeField] PlayerData playerData;
@@ -92,11 +95,17 @@ public class MainMenuManager : MonoBehaviour
     }
     private void Start()
     {
-        mainMenu.SetActive(true);
+        // Players.gameObject.transform.position = position2.transform.position;
+        DisplayMainMenu();
         playerSelectionPanel.SetActive(false);
         weaponsSelectionPanel.SetActive(false);
         levelSelectionPanel.SetActive(false);
         progressBarRect = progressBar.GetComponent<RectTransform>();
+    }
+    void DisplayMainMenu()
+    {
+        mainMenu.SetActive(true);
+        MainMenuPlayers[GameData.UnlockedPlayerIndex].SetActive(true);
     }
     public void OnSelectPlayerBtnClick()
     {
@@ -107,9 +116,11 @@ public class MainMenuManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         weaponsSelectionPanel.SetActive(true);
+       // Players.gameObject.transform.position = position1.transform.position;
     }
     public void OnPlayBtnClick()
     {
+        mainMenu.SetActive(false);
         loadingScreen.SetActive(true);
         StartCoroutine(LoadSceneWithProgress());
     }
@@ -170,13 +181,13 @@ public class MainMenuManager : MonoBehaviour
             if (!IsPlayerLocked(i)) 
             {
 
-                    playerButtons[i].interactable = true;
+                  
                     buttonImage.sprite = unlockedSprite;                   
 
             }
             else
             {
-                playerButtons[i].interactable = false;
+               
                 buttonImage.sprite = lockedSprite;
                 buttonImage.SetNativeSize();
 
@@ -322,5 +333,10 @@ public class MainMenuManager : MonoBehaviour
 
         }
     }
-    
+    public void OnPlayerSelectionBackButtonClick()
+    {
+        playerSelectionPanel.SetActive(false);
+        DisplayMainMenu();
+       
+    }
 }
