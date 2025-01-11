@@ -41,6 +41,8 @@ namespace CoverShooter
         public static bool zoomIn;
         public static bool zoomOut;
         bool switchWeapon;
+        public static event EventHandler ButtonDown;
+        public static event EventHandler ButtonUp;
         public static int totalTries { get; private set; } = 0;
 
         /// <summary>
@@ -304,7 +306,7 @@ namespace CoverShooter
                 _controller.ZoomInput = true;     // Start zooming
                 _controller.FireInput = false;    // Prevent immediate firing
 
-
+               
 
             }
             if (ControlFreak2.CF2Input.GetButtonDown("Fire"))
@@ -312,14 +314,16 @@ namespace CoverShooter
                 zoomIn = true;
                 zoomOut = false;
                 isUsingWeapon = true;
+                ButtonDown?.Invoke(this, EventArgs.Empty);
 
             }
             if (ControlFreak2.CF2Input.GetButtonUp("Fire"))
             {
+                ButtonUp?.Invoke(this, EventArgs.Empty);
                 zoomIn = false;
                 zoomOut = true;
-
-
+               
+                
                 // Check if player is in cover or not, and allow firing in both cases
                 if (_motor.IsInCover)
                 {

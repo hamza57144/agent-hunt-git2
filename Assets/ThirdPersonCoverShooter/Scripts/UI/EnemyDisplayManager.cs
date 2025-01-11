@@ -11,7 +11,7 @@ namespace CoverShooter
     /// </summary>
     public class EnemyDisplayManager : MonoBehaviour
     {
-       
+
         /// <summary>
         /// Prototype of an arrow to be shown for any active enemy that is away.
         /// </summary>

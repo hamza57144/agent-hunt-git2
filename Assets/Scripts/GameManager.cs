@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 {
   
     public static GameManager instance { get; private set; }
+    [SerializeField] GameObject Hand;
     public List<CharacterMotor> players;
     public CharacterMotor Player { get { return players[GameData.SelectedPlayerIndex]; } }
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
     [SerializeField] GameObject levelCompleteCanvas;
     [SerializeField] GameObject levelFailCanvas;
+    [SerializeField] GameObject[] controllerButtons;
     int ind;
     private int headShot;
     private int bodyShot;
@@ -29,6 +31,24 @@ public class GameManager : MonoBehaviour
     private int enemies;
     private int totalShots { get {  return headShot+bodyShot; } }
 
+   private void DisableHand()
+    {
+        Hand.SetActive(false);
+    }
+   private void HideControllerButtons()
+    {
+        foreach (var item in controllerButtons)
+        {
+            item.gameObject.SetActive(false);
+        }
+    }
+    private void ShowControllerButtons()
+    {
+        foreach (var item in controllerButtons)
+        {
+            item.gameObject.SetActive(true);
+        }
+    }
     #region To Be replaced later
     public GameObject loadingCanvas;
     // References to UI elements
@@ -65,11 +85,32 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        if (GameData.CompletedLevelIndex == 0)
+        {
+            Hand.SetActive(true );
+        }
         CharacterMotor.OnPlayerDie += CharacterMotor_OnPlayerDie;
         BodyPartHealth.OnBodyShot += BodyPartHealth_OnBodyShot;
         BodyPartHealth.OnHeadShot += BodyPartHealth_OnHeadShot;
+        ThirdPersonInput.ButtonDown += ThirdPersonInput_ButtonDown;
+        ThirdPersonInput.ButtonUp += ThirdPersonInput_ButtonUp;
         enemies = EnemyManager.instance.enemyCount;
         progressBarRect = progressBar.GetComponent<RectTransform>();
+    }
+
+    private void ThirdPersonInput_ButtonUp(object sender, EventArgs e)
+    {
+       
+        ShowControllerButtons();
+    }
+
+    private void ThirdPersonInput_ButtonDown(object sender, EventArgs e)
+    {
+        if (GameData.CompletedLevelIndex == 0)
+        {
+            DisableHand();
+        }
+        HideControllerButtons();
     }
 
     private void BodyPartHealth_OnHeadShot(object sender, System.EventArgs e)

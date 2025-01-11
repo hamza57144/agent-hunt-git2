@@ -6,7 +6,12 @@ using UnityEngine.UI;
 
 using UnityEngine.SceneManagement;
 
-
+public enum Items
+{
+    player,
+    pistols,
+    snipers,
+}
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Main Menu")]
@@ -17,9 +22,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
     public RectTransform bulletImage;
+   
     [Header("Weapon Selection")]
     #region Weapons Selection
-    [SerializeField] List<GameObject> weapons;
+    [SerializeField] List<GameObject> pistols;
+    [SerializeField] List<GameObject> snipers;
+    [SerializeField] GameObject sniperPanel;
+    [SerializeField] GameObject pistolPanel;
+    bool isPistolPanelOpened;
     [SerializeField] WeaponData weaponData;
     [SerializeField] TextMeshProUGUI weaponhealthText;     
     [SerializeField] TextMeshProUGUI weaponHidingText;
@@ -27,7 +37,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Image healthBar;        
     [SerializeField] Image hidingBar;         
     [SerializeField] Image reloadBar;
-    [SerializeField] List<Button> gunButtons;
+    [SerializeField] List<Button> sniperButtons;
+    [SerializeField] List<Button> pistolButtons;
+    [SerializeField] Sprite pistolLockedSprite;
+    [SerializeField] Sprite pistolUnlockedSprite;
+    [SerializeField] Sprite sniperLockedSprite;
+    [SerializeField] Sprite sniperUnlockedSprite;
     [SerializeField] GameObject weaponAnimator;
     private GameObject currentWeaponInstance;
     public Transform weaponSpawnPoint;
@@ -36,18 +51,20 @@ public class MainMenuManager : MonoBehaviour
     #endregion
     [Header("Player Selection")]
     #region Player Selection
+    [Tooltip("Player Selection")]
     private int currentPlayerIndex;
     [SerializeField] PlayerData playerData;
     [SerializeField] List<GameObject> players;
     [SerializeField] List<Button> playerButtons;
-    [SerializeField] Sprite unlockedSprite;
-    [SerializeField] Sprite lockedSprite;
+    [SerializeField] Sprite PlayerUnlockedSprite;
+    [SerializeField] Sprite PlayerLockedSprite;
     [SerializeField] TextMeshProUGUI playerHealthText;
     [SerializeField] TextMeshProUGUI playerHidingText;
     [SerializeField] TextMeshProUGUI playerReloadText;
     [SerializeField] Image playerHealthBar;
     [SerializeField] Image playerHidingBar;
     [SerializeField] Image playerReloadBar;
+    [SerializeField] Button UpgradePlayerButton;
     /*[SerializeField] List<Button> gunButtons;
     [SerializeField] GameObject weaponAnimator;*/
 
@@ -79,9 +96,9 @@ public class MainMenuManager : MonoBehaviour
         GameData.LoadGameData();
         UnlockCursor();
         LevelButtonActivation();
-        DisplayWeapon(CurrentWeaponindex);
+        DisplayWeapons(CurrentWeaponindex,pistols,Items.pistols);
         DisplayPlayer(GameData.SelectedPlayerIndex);
-        PlayerButtonsLockUnlock();
+        //PlayerButtonsLockUnlock();
 
     }
    
@@ -136,13 +153,35 @@ public class MainMenuManager : MonoBehaviour
        
        
     }
+    /// <summary>
+    /// For pistol buttons, give index odd and for snipers, assign even index
+    /// </summary>
+    /// <param name="index"></param>
+
+    [Tooltip("For pistol buttons, give index odd and for snipers, assign even index")]
     public void SelectWeapon(int index)
     {
         CurrentWeaponindex = index;
-        DisplayWeapon(CurrentWeaponindex+1);
+        if(isPistolPanelOpened)
+           DisplayWeapons(CurrentWeaponindex+1,pistols,Items.pistols);
+        else
+            DisplayWeapons(CurrentWeaponindex + 1, snipers, Items.snipers);
 
     }
-  
+    public void OnPistolButtonClick()
+    {
+        AudioManager.Instane.PlaySound(SoundName.buttonClick);
+        sniperPanel.SetActive(false);
+        pistolPanel.SetActive(true);
+        DisplayWeapons(GameData.SelectedWeapon_Pistol_Index, pistols, Items.pistols);
+    }
+    public void OnSniperButtonClick()
+    {
+        AudioManager.Instane.PlaySound(SoundName.buttonClick);
+        pistolPanel.SetActive(false);
+        sniperPanel.SetActive(true);       
+        DisplayWeapons(GameData.SelectedWeapon_Gun_Index, snipers, Items.snipers);
+    }
     public void SelectLevel(int index)
     {
         levelSelectionPanel.SetActive(false);
@@ -152,6 +191,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OnUpgrageWeaponButtonClick()
     {
+        AudioManager.Instane.PlaySound(SoundName.buttonClick);
         if (CurrentWeaponindex % 2 != 0)
             GameData.SaveSelectedWeapon_Pistol(CurrentWeaponindex);
         else
@@ -173,16 +213,16 @@ public class MainMenuManager : MonoBehaviour
              
         }
     }
-    private void PlayerButtonsLockUnlock()
+    private void SpriteChanger(List<Button> buttons,Sprite unlockedSprite,Sprite lockedSprite,Items item)
     {
-        for (int i = 0; i < playerButtons.Count; i++)
+        for (int i = 0; i < buttons.Count; i++)
         {
-            Image buttonImage = playerButtons[i].GetComponent<Image>();
-            if (!IsPlayerLocked(i)) 
+            Image buttonImage = buttons[i].GetComponent<Image>();
+            if (!IsItemLocked(i,item)) 
             {
-
-                  
-                    buttonImage.sprite = unlockedSprite;                   
+   
+                buttonImage.sprite = unlockedSprite;
+                buttonImage.SetNativeSize();
 
             }
             else
@@ -195,6 +235,30 @@ public class MainMenuManager : MonoBehaviour
 
         }
     }
+   /* private void PlistolButtonsSpriteChange()
+    {
+        for (int i = 0; i < pistolButtons.Count; i++)
+        {
+            Image buttonImage = pistolButtons[i].GetComponent<Image>();
+            if (!IsItemLocked(i,Items.pistols))
+            {
+
+                buttonImage.sprite = unlockedSprite;
+                buttonImage.SetNativeSize();
+
+            }
+            else
+            {
+
+                buttonImage.sprite = lockedSprite;
+                buttonImage.SetNativeSize();
+
+
+
+            }
+
+        }
+    }*/
     private IEnumerator LoadSceneWithProgress()
     {
         // Wait for the specified splash screen delay
@@ -249,22 +313,46 @@ public class MainMenuManager : MonoBehaviour
         // Update the bullet's position, maintaining its original Y and Z coordinates
         bulletImage.position = new Vector3(bulletWorldX + offset, bulletImage.position.y, bulletImage.position.z);
     }
-    private bool IsPlayerLocked(int index)
+    private bool IsItemLocked(int index,Items status)
     {
-        return GameData.UnlockedPlayerIndex < index;
+       if(status == Items.player)
+            return GameData.UnlockedPlayerIndex < index;
+       else if(status == Items.snipers)
+            return GameData.SelectedWeapon_Gun_Index < index+2;
+        else if(status == Items.pistols)
+            return GameData.SelectedWeapon_Pistol_Index < index;
+       return false;
+    }
+    private bool IsPistolLocked(int index)
+    {
+        return GameData.SelectedWeapon_Pistol_Index < index;
+    }
+    private bool IsSniperLocked(int index)
+    {
+        return GameData.SelectedWeapon_Gun_Index < index;
     }
     private void ActivateWeapon()
     {
         weaponAnimator.SetActive(true);
         weaponAnimator.GetComponent<Animator>().SetTrigger("Rotate");
     }
-    private void DisplayWeapon(int index)
+    private void DisplayWeapons(int index,List<GameObject> weapons,Items item)
     {
+     //   if(IsPistolLocked(index)) 
+
         // Get the currently selected weapon
+       /* if(item==Items.snipers)
+        {
+            SpriteChanger(sniperButtons,sniperUnlockedSprite,sniperLockedSprite,Items.pistols);
+        }
+        else if (item == Items.pistols)
+        {
+            SpriteChanger(sniperButtons, pistolUnlockedSprite, pistolLockedSprite, Items.snipers);
+        }*/
         WeaponData.Weapon currentWeapon = weaponData.weaponList[index];
         weaponAnimator.SetActive(false);
         Invoke(nameof(ActivateWeapon), 0.25f);
-        
+
         weapons[index].SetActive(true);
         for (int i = 0; i < weapons.Count; i++)
         {
@@ -295,20 +383,30 @@ public class MainMenuManager : MonoBehaviour
         reloadBar.fillAmount = Mathf.Clamp01(currentWeapon.reloadTime / 100f);
 
       
-        GunButtonActivation();
+        
     }
 
     private void DisplayPlayer(int index)
     {
-        PlayerButtonsLockUnlock();
+        if (IsItemLocked(index,Items.player))
+        {
+            UpgradePlayerButton.interactable = false;
+        }
+        else
+        {
+            UpgradePlayerButton.interactable = true;
+        }
+        SpriteChanger(playerButtons, PlayerUnlockedSprite,PlayerLockedSprite,Items.player);
         PlayerData.Player currentPlayer = playerData.playerList[index];
         players[index].SetActive(true);
         for (int i = 0; i < players.Count; i++)
         {
             if (i != index)
             {
+                
                 players[i].SetActive(false);
             }
+            
         }
 
         // Update the UI elements with the weapon's data
@@ -321,7 +419,7 @@ public class MainMenuManager : MonoBehaviour
         playerReloadBar.fillAmount = Mathf.Clamp01(currentPlayer.reloadTime / 100f);
 
     }
-    private void GunButtonActivation()
+  /*  private void GunButtonActivation()
     {
         for (int i = 0; i < gunButtons.Count; i++)
         {
@@ -332,7 +430,7 @@ public class MainMenuManager : MonoBehaviour
             }
 
         }
-    }
+    }*/
     public void OnPlayerSelectionBackButtonClick()
     {
         playerSelectionPanel.SetActive(false);
