@@ -52,7 +52,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         GameData.LoadGameData();
-       
+       levelIndex=GameData.CompletedLevelIndex;
          Instance = this;
     }
     private void Start()

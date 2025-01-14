@@ -22,6 +22,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
     public RectTransform bulletImage;
+    public static Transform weapon { get; set; }
    
     [Header("Weapon Selection")]
     #region Weapons Selection
@@ -65,6 +66,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Image playerHidingBar;
     [SerializeField] Image playerReloadBar;
     [SerializeField] Button UpgradePlayerButton;
+
+    public string playStoreURL = "https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games";
     /*[SerializeField] List<Button> gunButtons;
     [SerializeField] GameObject weaponAnimator;*/
 
@@ -354,6 +357,7 @@ public class MainMenuManager : MonoBehaviour
         Invoke(nameof(ActivateWeapon), 0.25f);
 
         weapons[index].SetActive(true);
+        weapon = weapons[index].transform;
         for (int i = 0; i < weapons.Count; i++)
         {
             if(i!=index)
@@ -436,5 +440,28 @@ public class MainMenuManager : MonoBehaviour
         playerSelectionPanel.SetActive(false);
         DisplayMainMenu();
        
+    }
+    public void OnQuitButtonClick()
+    {
+#if UNITY_EDITOR
+       
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+            
+            Application.Quit();
+#endif
+    }
+    public void OpenMoreGames()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games"); // Open the URL
+    }
+    public void RateGame()
+    {
+#if UNITY_ANDROID
+        // Open the Play Store page for your app (use your actual package name)
+        Application.OpenURL(playStoreURL);
+#else
+            Debug.Log("Rate Us is only available on Android platform.");
+#endif
     }
 }

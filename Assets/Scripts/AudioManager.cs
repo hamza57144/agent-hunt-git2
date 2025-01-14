@@ -100,6 +100,7 @@ public class AudioManager : MonoBehaviour
         GameData.SaveMusicSettings(1);
         GameData.LoadGameData();
         MusicButtonsEnable(isMusicOn);
+        PlayBgMusic(true);
     }
     public void OnMusicOffButtonClick()
     {
@@ -107,6 +108,7 @@ public class AudioManager : MonoBehaviour
         GameData.SaveMusicSettings(0);
         GameData.LoadGameData();
         MusicButtonsEnable(isMusicOn);
+        PlayBgMusic(false);
     }
     public void ONSoundOnButtonClick()
     {
