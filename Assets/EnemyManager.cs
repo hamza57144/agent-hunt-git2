@@ -39,6 +39,7 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+       
     }
     private void Start()
     {
@@ -191,7 +192,11 @@ public class EnemyManager : MonoBehaviour
     {
         enemyCount--;
     }
- 
+    private void OnDisable()
+    {
+        // Unsubscribe from the event to avoid issues
+        CharacterMotor.EnemyDie -= OnEnemyDie;
+    }
     public void EnableAnimator()
     {
         if (animator!=null)

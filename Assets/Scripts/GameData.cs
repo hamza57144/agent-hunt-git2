@@ -9,6 +9,33 @@ public static class GameData
     public static int SelectedLevelIndex { get; private set; }
     public static int SelectedWeapon_Pistol_Index { get; private set; }
     public static int SelectedWeapon_Gun_Index { get; private set; }
+    public static int SoundSettingsIndex { get; private set; }
+    public static int MusicSettingsIndex { get; private set; }
+
+    public static void SaveSoundSetting(int index)
+    {
+       
+        PlayerPrefs.SetInt(PlayerPrefsHandler.SoundSettings, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Music Settings: ");
+    }
+    public static void LoadSoundSettings()
+    {
+        SoundSettingsIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.SoundSettings, 1);
+        
+    }
+    public static void SaveMusicSettings(int index)
+    {
+       
+        PlayerPrefs.SetInt(PlayerPrefsHandler.MusicSettings, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Music Settingswerwerer: {index}");
+    }
+    public static void LoadMusicSettings()
+    {
+        MusicSettingsIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.MusicSettings, 1);
+
+    }
     public static void SaveSelectedPlayer(int index)
     {
         SelectedPlayerIndex = index;
@@ -89,6 +116,8 @@ public static class GameData
         LoadSelectedLevel();
         LoadUnlockedPlayer();
         LoadSelectedWeaponGun();
+        LoadMusicSettings();
+        LoadSoundSettings();
     }
 }
 public static class TagsHandler
@@ -102,6 +131,7 @@ public static class SceneHandler
 {
     public const string MainMenu = "MainMenu";
     public const string GameplayScene = "Gameplay Scene";
+    public const string LoadingScene = "LoadingScene";
 }
 public static class PlayerPrefsHandler
 {   
@@ -111,5 +141,8 @@ public static class PlayerPrefsHandler
     public const string SelectedWeaponGun = "SelectedWeaponGun";
     public const string SelectedPlayer = "SelectedPlayer";
     public const string UnlockedPlayerIndex = "UnlockedPlayerIndex";
+    public const string SoundSettings = "SoundSettings";
+    public const string MusicSettings = "MusicSettings";
+
 
 }

@@ -109,7 +109,7 @@ namespace CoverShooter
                                 {
                                     t.gameObject.SetActive(true);
                                     t.position = new Vector3(screenPos.x, screenPos.y, t.position.z);
-                                    t.eulerAngles = Vector3.zero;
+                                    t.eulerAngles = new Vector3(0, 0, -180);
                                 }
 
                             }
@@ -157,7 +157,7 @@ namespace CoverShooter
                                 {
                                     t.gameObject.SetActive(true);
                                     t.position = new Vector3(viewportPos.x * Screen.width, viewportPos.y * Screen.height, t.position.z);
-                                    t.eulerAngles = new Vector3(t.eulerAngles.x, t.eulerAngles.y, angle);
+                                    t.eulerAngles = new Vector3(t.eulerAngles.x, t.eulerAngles.y, angle );
                                 }
 
                             }

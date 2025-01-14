@@ -52,12 +52,13 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         GameData.LoadGameData();
-         EnableSelectedLevel();
+       
          Instance = this;
     }
     private void Start()
     {
         SetPlayerPosition();
+        EnableSelectedLevel();
     }
     private void SetPlayerPosition()
     {
@@ -66,11 +67,12 @@ public class LevelManager : MonoBehaviour
     }    
     private void EnableSelectedLevel()
     {
+        
         for (int i = 0; i < levels.Count; i++)
         {
-            if (i == GameData.SelectedLevelIndex)
+            if (i == GameData.CompletedLevelIndex)
             {
-                Debug.Log($"SelectedLevelIndex is {GameData.SelectedPlayerIndex} and i is {i}");
+                Debug.Log($"SelectedLevelIndex is {GameData.CompletedLevelIndex} and i is {i}");
                 levels[i].level.gameObject.SetActive(true);
             }
             else

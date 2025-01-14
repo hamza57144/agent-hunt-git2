@@ -174,8 +174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f1d73d7df63ed498a4222670d91c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonClick: {fileID: 0}
+  buttonClick: {fileID: 4269949214598309276}
   audioSource: {fileID: 0}
+  bgMusic: {fileID: 6980788666733023130}
   vicotryAudioClip: {fileID: 0}
 --- !u!82 &6980788666733023130
 AudioSource:
@@ -188,7 +189,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 40f9e84cd5b16f4439efb5ca27053302, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.73
   m_Pitch: 1
   Loop: 1

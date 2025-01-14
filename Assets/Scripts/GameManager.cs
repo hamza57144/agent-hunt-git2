@@ -28,25 +28,31 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI headShotText;
     [SerializeField] TextMeshProUGUI accuracyText;
     [SerializeField] TextMeshProUGUI healthText;
+    
+    [SerializeField] GameObject PausePanel;
+
     private int enemies;
     private int totalShots { get {  return headShot+bodyShot; } }
 
-   private void DisableHand()
+    private void DisableHand()
     {
+        if(Hand != null)
         Hand.SetActive(false);
     }
-   private void HideControllerButtons()
+    private void HideControllerButtons()
     {
         foreach (var item in controllerButtons)
         {
-            item.gameObject.SetActive(false);
+            if (item.gameObject != null)
+                item.gameObject.SetActive(false);
         }
     }
     private void ShowControllerButtons()
     {
         foreach (var item in controllerButtons)
         {
-            item.gameObject.SetActive(true);
+            if(item.gameObject!=null)
+             item.gameObject.SetActive(true);
         }
     }
     #region To Be replaced later
@@ -80,6 +86,7 @@ public class GameManager : MonoBehaviour
     {
         GameData.LoadGameData();
         ind = GameData.CompletedLevelIndex;
+       
         Player.gameObject.SetActive(true);
         instance = this;
     }
@@ -96,6 +103,7 @@ public class GameManager : MonoBehaviour
         ThirdPersonInput.ButtonUp += ThirdPersonInput_ButtonUp;
         enemies = EnemyManager.instance.enemyCount;
         progressBarRect = progressBar.GetComponent<RectTransform>();
+       
     }
 
     private void ThirdPersonInput_ButtonUp(object sender, EventArgs e)
@@ -184,8 +192,11 @@ public class GameManager : MonoBehaviour
         levelCompleteCanvas.SetActive(false );
         loadingCanvas.SetActive(true);
 
-        ind++;
-        GameData.SaveCompletedLevel(ind);
+       //   ind++;
+         GameData.SaveCompletedLevel(ind);
+        
+        GameData.LoadGameData();
+        Debug.Log($"SelectedLevelIndex is {GameData.SelectedPlayerIndex} and  ind is {ind}");
         Time.timeScale = 1f;
         StartCoroutine(LoadSceneWithProgress());
     }
@@ -219,7 +230,7 @@ public class GameManager : MonoBehaviour
             UpdateBulletPosition(simulatedProgress - offset);
 
             // Once the scene is almost loaded (90%), allow activation
-            if (simulatedProgress >= 0.9f)
+            if (simulatedProgress >= 1f)
             {
                 asyncOperation.allowSceneActivation = true;
             }
@@ -241,6 +252,18 @@ public class GameManager : MonoBehaviour
 
         // Update the bullet's position, maintaining its original Y and Z coordinates
         bulletImage.position = new Vector3(bulletWorldX + offset, bulletImage.position.y, bulletImage.position.z);
+    }
+
+    
+    public void OnPauseButtonClick()
+    {
+        Time.timeScale = 0;
+        PausePanel.SetActive(true);
+    }
+    public void OnResumeButtonClick()
+    {
+        Time.timeScale = 1;
+        PausePanel.SetActive(false);
     }
     /*  public void SetPlayerPosition()
       {

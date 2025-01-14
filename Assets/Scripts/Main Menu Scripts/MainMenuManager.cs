@@ -170,14 +170,14 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OnPistolButtonClick()
     {
-        AudioManager.Instane.PlaySound(SoundName.buttonClick);
+        AudioManager.Instane.PlaySound(SoundName.ButtonClick);
         sniperPanel.SetActive(false);
         pistolPanel.SetActive(true);
         DisplayWeapons(GameData.SelectedWeapon_Pistol_Index, pistols, Items.pistols);
     }
     public void OnSniperButtonClick()
     {
-        AudioManager.Instane.PlaySound(SoundName.buttonClick);
+        AudioManager.Instane.PlaySound(SoundName.ButtonClick);
         pistolPanel.SetActive(false);
         sniperPanel.SetActive(true);       
         DisplayWeapons(GameData.SelectedWeapon_Gun_Index, snipers, Items.snipers);
@@ -191,7 +191,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OnUpgrageWeaponButtonClick()
     {
-        AudioManager.Instane.PlaySound(SoundName.buttonClick);
+        AudioManager.Instane.PlaySound(SoundName.ButtonClick);
         if (CurrentWeaponindex % 2 != 0)
             GameData.SaveSelectedWeapon_Pistol(CurrentWeaponindex);
         else
