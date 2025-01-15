@@ -298,27 +298,31 @@ namespace CoverShooter
 
         protected virtual void UpdateAttack()
         {
-
+           
+               
 
             // Use single button for zooming and shooting with Control Freak 2
-            if (ControlFreak2.CF2Input.GetButtonDown("Fire") || _motor.IsInCover && _canZoom)
+            if (ControlFreak2.CF2Input.GetButtonDown("Fire") || _motor.IsInCover && _canZoom )
             {
+               
                 _controller.ZoomInput = true;     // Start zooming
                 _controller.FireInput = false;    // Prevent immediate firing
 
                
 
             }
-            if (ControlFreak2.CF2Input.GetButtonDown("Fire"))
+            if (ControlFreak2.CF2Input.GetButtonDown("Fire") )
             {
+                
                 zoomIn = true;
                 zoomOut = false;
                 isUsingWeapon = true;
                 ButtonDown?.Invoke(this, EventArgs.Empty);
 
             }
-            if (ControlFreak2.CF2Input.GetButtonUp("Fire"))
+            if (ControlFreak2.CF2Input.GetButtonUp("Fire") )
             {
+                
                 ButtonUp?.Invoke(this, EventArgs.Empty);
                 zoomIn = false;
                 zoomOut = true;
@@ -333,6 +337,8 @@ namespace CoverShooter
                         ///Summary
                         ///To play back animation with delay, set time 
                         ///Summary
+                        
+                        
                         Invoke(nameof(PlayBackAnimation), .75f);
                         _controller.FireInput = true;
                         Fired?.Invoke(this, EventArgs.Empty);

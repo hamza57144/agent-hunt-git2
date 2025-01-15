@@ -1,4 +1,5 @@
 using CoverShooter;
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
 {
   
     public static GameManager instance { get; private set; }
+    public LevelManager levelManager;
     [SerializeField] GameObject Hand;
     public List<CharacterMotor> players;
     public CharacterMotor Player { get { return players[GameData.SelectedPlayerIndex]; } }
@@ -30,9 +32,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI healthText;
     
     [SerializeField] GameObject PausePanel;
+    [SerializeField] Image healthBarFill;
 
     private int enemies;
     private int totalShots { get {  return headShot+bodyShot; } }
+    public int amo;
+    [SerializeField] TextMeshProUGUI bulletsText;
 
     private void DisableHand()
     {
@@ -103,12 +108,20 @@ public class GameManager : MonoBehaviour
         ThirdPersonInput.ButtonUp += ThirdPersonInput_ButtonUp;
         enemies = EnemyManager.instance.enemyCount;
         progressBarRect = progressBar.GetComponent<RectTransform>();
+        amo = levelManager.GetLevel.bullets;
        
     }
-
+    private void Update()
+    {
+        if (Player != null && healthBarFill != null)
+        {
+            healthBarFill.fillAmount = Player.GetHealth / 500f; 
+        }
+        Amo();
+    }
     private void ThirdPersonInput_ButtonUp(object sender, EventArgs e)
     {
-       
+        amo--;
         ShowControllerButtons();
     }
 
@@ -258,7 +271,14 @@ public class GameManager : MonoBehaviour
         bulletImage.position = new Vector3(bulletWorldX + offset, bulletImage.position.y, bulletImage.position.z);
     }
 
-    
+    private void OnDisable()
+    {
+        CharacterMotor.OnPlayerDie -= CharacterMotor_OnPlayerDie;
+        BodyPartHealth.OnBodyShot -= BodyPartHealth_OnBodyShot;
+        BodyPartHealth.OnHeadShot -= BodyPartHealth_OnHeadShot;
+        ThirdPersonInput.ButtonDown -= ThirdPersonInput_ButtonDown;
+        ThirdPersonInput.ButtonUp -= ThirdPersonInput_ButtonUp;
+    }
     public void OnPauseButtonClick()
     {
         Time.timeScale = 0;
@@ -268,6 +288,14 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         PausePanel.SetActive(false);
+    }
+    private void Amo()
+    {
+        
+        
+            Player.gameObject.GetComponent<ThirdPersonInput>().enabled = !(amo<=0);
+           bulletsText.text = $"{amo.ToString()}/{levelManager.GetLevel.bullets}";
+        
     }
     /*  public void SetPlayerPosition()
       {

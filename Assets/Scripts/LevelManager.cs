@@ -37,10 +37,12 @@ public class LevelManager : MonoBehaviour
          )]
         #endregion
         public Cover[] covers;
+        public int bullets=15;
 
     }
 
     public List<Level> levels = new List<Level>();
+    public Level GetLevel { get { return levels[levelIndex]; } }
     public CoverPoint[] GetCoverPoints()
     {
         return levels[levelIndex].coverPoints;

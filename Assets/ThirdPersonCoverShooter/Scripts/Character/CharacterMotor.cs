@@ -3121,6 +3121,7 @@ namespace CoverShooter
         /// </summary>
         public void InputFire()
         {
+            
             var weapon = EquippedWeapon;
 
             if (weapon.IsNull)

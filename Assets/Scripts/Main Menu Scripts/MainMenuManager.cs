@@ -341,17 +341,17 @@ public class MainMenuManager : MonoBehaviour
     }
     private void DisplayWeapons(int index,List<GameObject> weapons,Items item)
     {
-     //   if(IsPistolLocked(index)) 
+        //   if(IsPistolLocked(index)) 
 
         // Get the currently selected weapon
-       /* if(item==Items.snipers)
+        if (item == Items.snipers)
         {
-            SpriteChanger(sniperButtons,sniperUnlockedSprite,sniperLockedSprite,Items.pistols);
+            SpriteChanger(sniperButtons, sniperUnlockedSprite, sniperLockedSprite, Items.pistols);
         }
         else if (item == Items.pistols)
         {
             SpriteChanger(sniperButtons, pistolUnlockedSprite, pistolLockedSprite, Items.snipers);
-        }*/
+        }
         WeaponData.Weapon currentWeapon = weaponData.weaponList[index];
         weaponAnimator.SetActive(false);
         Invoke(nameof(ActivateWeapon), 0.25f);

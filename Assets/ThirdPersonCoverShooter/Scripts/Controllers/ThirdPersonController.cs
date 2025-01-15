@@ -341,7 +341,8 @@ namespace CoverShooter
         /// </summary>
         public void InputAim()
         {
-            _wantsToAim = true;
+           
+               _wantsToAim = true;
         }
 
         /// <summary>
