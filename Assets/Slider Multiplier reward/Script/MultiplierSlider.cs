@@ -20,7 +20,8 @@ public class MultiplierSlider : MonoBehaviour
     [SerializeField] private GameObject post;
 
     public static MultiplierSlider Instance;
-
+    [SerializeField]
+    private float limit0;
     [SerializeField] private float limit1;
     [SerializeField] private float limit2;
     [SerializeField] private float limit3;
@@ -89,7 +90,7 @@ public class MultiplierSlider : MonoBehaviour
 
 
         float currentX = rectTransform.anchoredPosition.x;
-        UpdateTextAppearance(x2Text, currentX > 0 && currentX < limit1);
+        UpdateTextAppearance(x2Text, currentX > limit0 && currentX < limit1);
         UpdateTextAppearance(x3Text, currentX > limit1 && currentX < limit2);
         UpdateTextAppearance(x4Text, currentX > limit2 && currentX < limit3);
         UpdateTextAppearance(x5Text, currentX > limit3 && currentX < limit4);
@@ -106,7 +107,7 @@ public class MultiplierSlider : MonoBehaviour
     {
         float currentX = rectTransform.anchoredPosition.x;
 
-        bool isX2Active = currentX > 0 && currentX < limit1;
+        bool isX2Active = currentX > limit0 && currentX < limit1;
         bool isX3Active = currentX > limit1 && currentX < limit2;
         bool isX4Active = currentX > limit2 && currentX < limit3;
         bool isX5Active = currentX > limit3 && currentX < limit4;
@@ -174,10 +175,10 @@ public class MultiplierSlider : MonoBehaviour
 
         float currentX = rectTransform.anchoredPosition.x;
 
-        bool isX2Active = currentX == -1500.751 /*currentX > 0 && currentX > limit1*/;
-        bool isX3Active = currentX < limit1 && currentX > limit2;
-        bool isX4Active = currentX < limit2 && currentX > limit3;
-        bool isX5Active = currentX < limit3 && currentX > limit4;
+        bool isX2Active = currentX > limit0 && currentX < limit1;
+        bool isX3Active = currentX > limit1 && currentX < limit2;
+        bool isX4Active = currentX > limit2 && currentX < limit3;
+        bool isX5Active = currentX > limit3 && currentX < limit4;
 
         if (isX2Active)
         {

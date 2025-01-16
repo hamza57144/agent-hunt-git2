@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
         loadingCanvas.SetActive(true);
         GameData.SaveCompletedLevel(ind);
         Time.timeScale = 1f;
-        StartCoroutine(LoadSceneWithProgress());
+        StartCoroutine(LoadSceneWithProgress(SceneHandler.GameplayScene));
     }
     public void OnNextButtonClicked()
     {
@@ -215,15 +215,23 @@ public class GameManager : MonoBehaviour
         GameData.LoadGameData();
         Debug.Log($"SelectedLevelIndex is {GameData.SelectedPlayerIndex} and  ind is {ind}");
         Time.timeScale = 1f;
-        StartCoroutine(LoadSceneWithProgress());
+        StartCoroutine(LoadSceneWithProgress(SceneHandler.GameplayScene));
     }
-    private IEnumerator LoadSceneWithProgress()
+    public void OnHomeBtnClick()
+    {
+        DisableCrossHair(false);
+        levelCompleteCanvas.SetActive(false);
+        loadingCanvas.SetActive(true);
+        Time.timeScale = 1f;
+        StartCoroutine(LoadSceneWithProgress(SceneHandler.MainMenu));
+    }
+    private IEnumerator LoadSceneWithProgress(string levelName)
     {
         // Wait for the specified splash screen delay
         yield return new WaitForSeconds(waitTime);
 
         // Start loading the scene asynchronously
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneHandler.GameplayScene);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(levelName);
 
         // Don't allow the scene to activate immediately
         asyncOperation.allowSceneActivation = false;
