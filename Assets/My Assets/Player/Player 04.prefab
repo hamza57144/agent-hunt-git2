@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weapons:
-  - RightItem: {fileID: 6379994623843503602}
-    LeftItem: {fileID: 6379994624110698384}
+  - RightItem: {fileID: 0}
+    LeftItem: {fileID: 0}
     RightHolster: {fileID: 0}
     LeftHolster: {fileID: 0}
     Shield: {fileID: 0}
@@ -562,81 +562,6 @@ MonoBehaviour:
   IsTakingDamage: 1
   IsRegisteringHits: 0
   _motor: {fileID: 0}
---- !u!1001 &6379994623843601234
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8309768195336789800}
-    m_Modifications:
-    - target: {fileID: 100000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_Name
-      value: 9mm Automatic Pistol (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.12873107
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.16281
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.12409363
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.04347608
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.17105186
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.06264534
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6820379
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.31711572
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6570195
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.05086682
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -173.426
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -93.879
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -732.864
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
---- !u!1 &6379994623843503602 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 2f85f6620a7ce904faf23d8c70c70a82,
-    type: 3}
-  m_PrefabInstance: {fileID: 6379994623843601234}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6379994623943888185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -706,96 +631,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26b37dac67d4a394a80ac4e2ff0245f9, type: 3}
---- !u!4 &8309768195336789800 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3159399844149236241, guid: 26b37dac67d4a394a80ac4e2ff0245f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 6379994623943888185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8309768195336789812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3159399844149236237, guid: 26b37dac67d4a394a80ac4e2ff0245f9,
     type: 3}
   m_PrefabInstance: {fileID: 6379994623943888185}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8309768195336789873 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3159399844149236296, guid: 26b37dac67d4a394a80ac4e2ff0245f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 6379994623943888185}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &6379994624110663984
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8309768195336789873}
-    m_Modifications:
-    - target: {fileID: 100000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_Name
-      value: 9mm Automatic Pistol
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.12872688
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.16280565
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.12409117
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.014
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1386
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.0364
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.6746991
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.28977665
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6717205
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.097991094
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -148.488
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -85.26599
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -557.55
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2f85f6620a7ce904faf23d8c70c70a82, type: 3}
---- !u!1 &6379994624110698384 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 2f85f6620a7ce904faf23d8c70c70a82,
-    type: 3}
-  m_PrefabInstance: {fileID: 6379994624110663984}
   m_PrefabAsset: {fileID: 0}

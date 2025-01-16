@@ -174,10 +174,10 @@ public class MultiplierSlider : MonoBehaviour
 
         float currentX = rectTransform.anchoredPosition.x;
 
-        bool isX2Active = currentX > 0 && currentX < limit1;
-        bool isX3Active = currentX > limit1 && currentX < limit2;
-        bool isX4Active = currentX > limit2 && currentX < limit3;
-        bool isX5Active = currentX > limit3 && currentX < limit4;
+        bool isX2Active = currentX == -1500.751 /*currentX > 0 && currentX > limit1*/;
+        bool isX3Active = currentX < limit1 && currentX > limit2;
+        bool isX4Active = currentX < limit2 && currentX > limit3;
+        bool isX5Active = currentX < limit3 && currentX > limit4;
 
         if (isX2Active)
         {
