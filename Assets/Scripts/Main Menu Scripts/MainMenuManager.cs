@@ -23,20 +23,20 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject loadingScreen;
     public RectTransform bulletImage;
     public static Transform weapon { get; set; }
-   
+
     [Header("Weapon Selection")]
     #region Weapons Selection
     [SerializeField] List<GameObject> pistols;
     [SerializeField] List<GameObject> snipers;
     [SerializeField] GameObject sniperPanel;
     [SerializeField] GameObject pistolPanel;
-    bool isPistolPanelOpened;
+    bool isPistolPanelOpened = true;
     [SerializeField] WeaponData weaponData;
-    [SerializeField] TextMeshProUGUI weaponhealthText;     
+    [SerializeField] TextMeshProUGUI weaponhealthText;
     [SerializeField] TextMeshProUGUI weaponHidingText;
     [SerializeField] TextMeshProUGUI weaponReloadText;
-    [SerializeField] Image healthBar;        
-    [SerializeField] Image hidingBar;         
+    [SerializeField] Image healthBar;
+    [SerializeField] Image hidingBar;
     [SerializeField] Image reloadBar;
     [SerializeField] List<Button> sniperButtons;
     [SerializeField] List<Button> pistolButtons;
@@ -45,8 +45,15 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Sprite sniperLockedSprite;
     [SerializeField] Sprite sniperUnlockedSprite;
     [SerializeField] GameObject weaponAnimator;
+    [SerializeField] Button WeaponUnlockedBtn;
+    [SerializeField] Button weaponLockedBtn;
+    [SerializeField] Text weaponPrice;
     private GameObject currentWeaponInstance;
     public Transform weaponSpawnPoint;
+    [SerializeField] Sprite weaponSelectedSprite;
+    [SerializeField] Sprite weaponDefualtSprite;
+    [SerializeField] Image pistolBtn;
+    [SerializeField] Image sniperBtn;
     /*    public RawImage weaponDisplay; // Raw Image for displaying the Render Texture
         public Transform weaponDisplayParent; // Parent object for spawning weapon prefabs*/
     #endregion
@@ -65,7 +72,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Image playerHealthBar;
     [SerializeField] Image playerHidingBar;
     [SerializeField] Image playerReloadBar;
-    [SerializeField] Button UpgradePlayerButton;
+    [SerializeField] Button buyAgentButtonSelected;
+    [SerializeField] Button buyAgentButtonLocked;
+    [SerializeField] Text agentPriceText;
 
     public string playStoreURL = "https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games";
     /*[SerializeField] List<Button> gunButtons;
@@ -121,6 +130,7 @@ public class MainMenuManager : MonoBehaviour
         weaponsSelectionPanel.SetActive(false);
         levelSelectionPanel.SetActive(false);
         progressBarRect = progressBar.GetComponent<RectTransform>();
+        SpriteChanger(pistolBtn, sniperBtn, weaponSelectedSprite, weaponDefualtSprite);
     }
     void DisplayMainMenu()
     {
@@ -164,26 +174,30 @@ public class MainMenuManager : MonoBehaviour
     [Tooltip("For pistol buttons, give index odd and for snipers, assign even index")]
     public void SelectWeapon(int index)
     {
-        CurrentWeaponindex = index;
+       // CurrentWeaponindex = index;
         if(isPistolPanelOpened)
-           DisplayWeapons(CurrentWeaponindex+1,pistols,Items.pistols);
+           DisplayWeapons(index, pistols,Items.pistols);
         else
-            DisplayWeapons(CurrentWeaponindex + 1, snipers, Items.snipers);
+            DisplayWeapons(index, snipers, Items.snipers);
 
     }
     public void OnPistolButtonClick()
     {
+        SpriteChanger(pistolBtn, sniperBtn, weaponSelectedSprite, weaponDefualtSprite);
+        isPistolPanelOpened=true;
         AudioManager.Instane.PlaySound(SoundName.ButtonClick);
         sniperPanel.SetActive(false);
         pistolPanel.SetActive(true);
-        DisplayWeapons(GameData.SelectedWeapon_Pistol_Index, pistols, Items.pistols);
+        DisplayWeapons(GameData.SelectedWeapon_Pistol_Index-1, pistols, Items.pistols);
     }
     public void OnSniperButtonClick()
     {
+        SpriteChanger(sniperBtn, pistolBtn, weaponSelectedSprite, weaponDefualtSprite);
+        isPistolPanelOpened = false;
         AudioManager.Instane.PlaySound(SoundName.ButtonClick);
         pistolPanel.SetActive(false);
         sniperPanel.SetActive(true);       
-        DisplayWeapons(GameData.SelectedWeapon_Gun_Index, snipers, Items.snipers);
+        DisplayWeapons(GameData.SelectedWeapon_Gun_Index-2, snipers, Items.snipers);
     }
     public void SelectLevel(int index)
     {
@@ -195,10 +209,10 @@ public class MainMenuManager : MonoBehaviour
     public void OnUpgrageWeaponButtonClick()
     {
         AudioManager.Instane.PlaySound(SoundName.ButtonClick);
-        if (CurrentWeaponindex % 2 != 0)
+      /*  if (CurrentWeaponindex % 2 != 0)
             GameData.SaveSelectedWeapon_Pistol(CurrentWeaponindex);
         else
-            GameData.SaveSelectedWeapon_Gun(CurrentWeaponindex);
+            GameData.SaveSelectedWeapon_Gun(CurrentWeaponindex);*/
     }
     public void OnUpgragePlayerButtonClick()
     {
@@ -316,15 +330,15 @@ public class MainMenuManager : MonoBehaviour
         // Update the bullet's position, maintaining its original Y and Z coordinates
         bulletImage.position = new Vector3(bulletWorldX + offset, bulletImage.position.y, bulletImage.position.z);
     }
-    private bool IsItemLocked(int index,Items status)
+    private bool IsItemLocked(int index,Items item)
     {
-       if(status == Items.player)
+       if(item == Items.player)
             return GameData.UnlockedPlayerIndex < index;
-       else if(status == Items.snipers)
-            return GameData.SelectedWeapon_Gun_Index < index+2;
-        else if(status == Items.pistols)
-            return GameData.SelectedWeapon_Pistol_Index < index;
-       return false;
+       else if(item == Items.snipers)
+            return GameData.SelectedWeapon_Gun_Index < index+2;//+2 bcz defualt unlocked gun index is 2
+        else if(item == Items.pistols)
+            return GameData.SelectedWeapon_Pistol_Index < index+1;//+1 bcz defualt unlocked pistol index is 2
+        return false;
     }
     private bool IsPistolLocked(int index)
     {
@@ -341,18 +355,21 @@ public class MainMenuManager : MonoBehaviour
     }
     private void DisplayWeapons(int index,List<GameObject> weapons,Items item)
     {
+        
+        ButtonChanger(index, item, weaponLockedBtn, WeaponUnlockedBtn);
         //   if(IsPistolLocked(index)) 
 
         // Get the currently selected weapon
         if (item == Items.snipers)
         {
-            SpriteChanger(sniperButtons, sniperUnlockedSprite, sniperLockedSprite, Items.pistols);
+            SpriteChanger(sniperButtons, sniperUnlockedSprite, sniperLockedSprite, Items.snipers);
         }
         else if (item == Items.pistols)
         {
-            SpriteChanger(sniperButtons, pistolUnlockedSprite, pistolLockedSprite, Items.snipers);
+            SpriteChanger(pistolButtons, pistolUnlockedSprite, pistolLockedSprite, Items.pistols);
         }
         WeaponData.Weapon currentWeapon = weaponData.weaponList[index];
+        weaponPrice.text = currentWeapon.price.ToString();
         weaponAnimator.SetActive(false);
         Invoke(nameof(ActivateWeapon), 0.25f);
 
@@ -360,7 +377,7 @@ public class MainMenuManager : MonoBehaviour
         weapon = weapons[index].transform;
         for (int i = 0; i < weapons.Count; i++)
         {
-            if(i!=index)
+            if (i != index)
             {
                 weapons[i].SetActive(false);
             }
@@ -392,16 +409,18 @@ public class MainMenuManager : MonoBehaviour
 
     private void DisplayPlayer(int index)
     {
-        if (IsItemLocked(index,Items.player))
-        {
-            UpgradePlayerButton.interactable = false;
-        }
-        else
-        {
-            UpgradePlayerButton.interactable = true;
-        }
+        /*  if (IsItemLocked(index,Items.player))
+          {
+              buyAgentButtonSelected.interactable = false;
+          }
+          else
+          {
+              buyAgentButtonSelected.interactable = true;
+          }*/
+        ButtonChanger(index, Items.player,buyAgentButtonLocked, buyAgentButtonSelected);
         SpriteChanger(playerButtons, PlayerUnlockedSprite,PlayerLockedSprite,Items.player);
         PlayerData.Player currentPlayer = playerData.playerList[index];
+        agentPriceText.text = currentPlayer.price.ToString();
         players[index].SetActive(true);
         for (int i = 0; i < players.Count; i++)
         {
@@ -463,5 +482,16 @@ public class MainMenuManager : MonoBehaviour
 #else
             Debug.Log("Rate Us is only available on Android platform.");
 #endif
+    }
+    private void ButtonChanger(int index,Items item,Button LockedBtn,Button UnlockedBtn)
+    {
+        UnlockedBtn.gameObject.SetActive(!(IsItemLocked(index, item)));
+        LockedBtn.gameObject.SetActive(IsItemLocked(index, item));
+      
+    }
+    private void SpriteChanger(Image ThisImage,Image OtherImage, Sprite ThisSprites,Sprite OhterSprite) 
+    {
+       ThisImage.sprite = ThisSprites;
+        OtherImage.sprite = OhterSprite;
     }
 }

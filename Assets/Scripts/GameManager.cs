@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Time.timeScale = 1f;
         GameData.LoadGameData();
         ind = GameData.CompletedLevelIndex;
        
@@ -155,6 +156,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public void LevelComplete()
     {
+        DisableCrossHair(false);
         gameCanvas.SetActive(false);
         levelCompleteCanvas.SetActive(true);
        
@@ -165,6 +167,7 @@ public class GameManager : MonoBehaviour
     }
     public void LevelFailed()
     {
+        Time.timeScale = 0f;
         gameCanvas.SetActive(true);
         levelFailCanvas.SetActive(true);
     }
@@ -202,14 +205,11 @@ public class GameManager : MonoBehaviour
     }
     public void OnNextButtonClicked()
     {
+        DisableCrossHair(false);
         levelCompleteCanvas.SetActive(false );
         loadingCanvas.SetActive(true);
-
-          
-        
-        
             ind++;
-        if (ind < 2)
+        if (ind < 1)
             GameData.SaveCompletedLevel(ind);
         
         GameData.LoadGameData();
@@ -293,9 +293,13 @@ public class GameManager : MonoBehaviour
     {
         
         
-            Player.gameObject.GetComponent<ThirdPersonInput>().enabled = !(amo<=0);
+          //  Player.gameObject.GetComponent<ThirdPersonInput>().enabled = !(amo<=0);
            bulletsText.text = $"{amo.ToString()}/{levelManager.GetLevel.bullets}";
         
+    }
+    void DisableCrossHair(bool enable)
+    {
+        thirdPersonCamera.gameObject.GetComponent<Crosshair>().enabled = enable;
     }
     /*  public void SetPlayerPosition()
       {

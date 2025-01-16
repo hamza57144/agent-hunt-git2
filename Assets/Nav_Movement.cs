@@ -88,7 +88,7 @@ public class Nav_Movement : MonoBehaviour
                 Invoke(nameof(SetNextMovePoint), 2.2f);
             else
             {
-                Invoke(nameof(DestroyCoverPoint), .1f);
+               // Invoke(nameof(DestroyCoverPoint), 2.1f);
                 ThirdPersonInput.isUsingWeapon=false;
             }
                
@@ -216,7 +216,7 @@ public class Nav_Movement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smoothness);
         }
     }
-
+    
    
    
    

@@ -93,7 +93,7 @@ public static class GameData
     }
     public static void LoadSelectedWeaponGun()
     {
-        SelectedWeapon_Gun_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponGun, 2); // Default to 1
+        SelectedWeapon_Gun_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponGun, 2); 
         Debug.Log($"Loaded Selected Weapon: {SelectedWeapon_Gun_Index}");
     }
     public static void SaveSelectedLevel(int index)
