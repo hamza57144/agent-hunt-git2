@@ -216,9 +216,5 @@ public class Nav_Movement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smoothness);
         }
     }
-    
-   
-   
-   
-   
+
 }

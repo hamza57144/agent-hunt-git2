@@ -118,5 +118,6 @@ namespace CoverShooter
                                hit,
                                SendMessageOptions.DontRequireReceiver);
         }
+       
     }
 }
