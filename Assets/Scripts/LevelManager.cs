@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
         #endregion
         public Cover[] covers;
         public int bullets=15;
-
+        
     }
 
     public List<Level> levels = new List<Level>();
@@ -47,13 +47,13 @@ public class LevelManager : MonoBehaviour
     {
         return levels[levelIndex].coverPoints;
     }
+    
     public Cover[] GetCovers()
     {
         return levels[levelIndex].covers;
     }
     private void Awake()
-    {
-        GameData.LoadGameData();
+    {        
        levelIndex=GameData.CompletedLevelIndex;
          Instance = this;
     }

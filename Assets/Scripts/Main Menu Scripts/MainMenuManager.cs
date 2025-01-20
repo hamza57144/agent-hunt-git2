@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using CoverShooter.AI;
+using System.Runtime.InteropServices;
 
 public enum Items
 {
@@ -14,18 +17,23 @@ public enum Items
 }
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("Main Menu")]
-    [SerializeField] GameObject mainMenu;
-    [SerializeField] List<GameObject> MainMenuPlayers;
-    [SerializeField] GameObject playerSelectionPanel;
-    [SerializeField] GameObject weaponsSelectionPanel;
-    [SerializeField] GameObject levelSelectionPanel;
-    [SerializeField] GameObject loadingScreen;
-    public RectTransform bulletImage;
-    public static Transform weapon { get; set; }
 
-    [Header("Weapon Selection")]
+    #region Main Menu Panels
+
+       [Header("Main Menu Panels"),Space(25)]
+        [SerializeField] GameObject mainMenu;
+        [SerializeField] List<GameObject> MainMenuPlayers;
+        [SerializeField] GameObject playerSelectionPanel;
+        [SerializeField] GameObject weaponsSelectionPanel;
+        [SerializeField] GameObject levelSelectionPanel;
+        [SerializeField] GameObject loadingScreen;
+    #endregion
+
     #region Weapons Selection
+    [Space(25)]
+    [Hamza(1, 1, 1, 7)]
+    [Header("Weapon Selection"), Space(25)]
+   
     [SerializeField] List<GameObject> pistols;
     [SerializeField] List<GameObject> snipers;
     [SerializeField] GameObject sniperPanel;
@@ -54,13 +62,17 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Sprite weaponDefualtSprite;
     [SerializeField] Image pistolBtn;
     [SerializeField] Image sniperBtn;
+    public static Transform weapon { get; set; }
     /*    public RawImage weaponDisplay; // Raw Image for displaying the Render Texture
         public Transform weaponDisplayParent; // Parent object for spawning weapon prefabs*/
     #endregion
-    [Header("Player Selection")]
+
     #region Player Selection
-    [Tooltip("Player Selection")]
-    private int currentPlayerIndex;
+    [Space(25)]
+    [Hamza(1, 1, 1, 7)]
+    [Header("Player Selection"), Space(25)]
+    
+   
     [SerializeField] PlayerData playerData;
     [SerializeField] List<GameObject> players;
     [SerializeField] List<Button> playerButtons;
@@ -75,6 +87,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Button buyAgentButtonSelected;
     [SerializeField] Button buyAgentButtonLocked;
     [SerializeField] Text agentPriceText;
+    PlayerData.Player currentPlayer;
+    [SerializeField] GameObject NotEnoughCoins;
+    private int currentPlayerIndex;
 
     public string playStoreURL = "https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games";
     /*[SerializeField] List<Button> gunButtons;
@@ -91,7 +106,11 @@ public class MainMenuManager : MonoBehaviour
     /// </summary>
     #endregion
     #region Loading Bar
-    public Image progressBar;   
+    [Space(25)]
+    [Hamza(1, 1, 1, 7)]
+    [Header("Loading Screen"),Space(25)]
+    public Image progressBar;
+    public RectTransform bulletImage;
     private float offset = 0.019f;
     private RectTransform progressBarRect;
     // Time to wait before starting to load the scene (e.g., splash screen delay)
@@ -100,22 +119,43 @@ public class MainMenuManager : MonoBehaviour
     // Total loading time for the scene (how long it will take to fill the progress bar)
     public float loadingTime = 5f;
     #endregion
-
+    private AudioManager audioManager;
     private void Awake()
     {
         CurrentWeaponindex = GameData.SelectedWeapon_Pistol_Index;
-        currentPlayerIndex  = GameData.UnlockedPlayerIndex;
-        GameData.LoadGameData();
+        currentPlayerIndex  = GameData.UnlockedPlayerIndex;        
         UnlockCursor();
         LevelButtonActivation();
         DisplayWeapons(CurrentWeaponindex,pistols,Items.pistols);
-        DisplayPlayer(GameData.SelectedPlayerIndex);
+        DisplayPlayer(currentPlayerIndex);
         //PlayerButtonsLockUnlock();
 
     }
    
-       
-   
+    public void AnimationChanger(List<GameObject> animators,int idx)
+    {
+        
+        for (int i=0;i<animators.Count;i++)
+        {
+            animators[i].GetComponent<Animator>().SetInteger(AnimationHandler.MainMenuPlayerAnimation, idx);
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            AnimationChanger(players, idx);
+            AnimationChanger(MainMenuPlayers, idx);
+            ResetIdx();
+        }
+    }
+    int idx = 1;
+    public int totalAnimations;
+    private void ResetIdx()
+    {
+        idx++;
+        if (idx > totalAnimations) { idx = 1; }
+    }
     void UnlockCursor()
     {
         //If cursor get lock due to scene loading,unlock it
@@ -124,6 +164,8 @@ public class MainMenuManager : MonoBehaviour
     }
     private void Start()
     {
+        audioManager = AudioManager.Instane;
+        audioManager.PlayBgMusic(audioManager.isMusicOn);
         // Players.gameObject.transform.position = position2.transform.position;
         DisplayMainMenu();
         playerSelectionPanel.SetActive(false);
@@ -135,7 +177,8 @@ public class MainMenuManager : MonoBehaviour
     void DisplayMainMenu()
     {
         mainMenu.SetActive(true);
-        MainMenuPlayers[GameData.UnlockedPlayerIndex].SetActive(true);
+        EnablePlayer(MainMenuPlayers, GameData.SelectedPlayerIndex);
+
     }
     public void OnSelectPlayerBtnClick()
     {
@@ -161,6 +204,10 @@ public class MainMenuManager : MonoBehaviour
         {
             GameData.SaveUnlockedPlayer(index);
         }*/
+       if(!IsItemLocked(index,Items.player))
+        {
+            GameData.SaveSelectedPlayer(index);
+        }
         currentPlayerIndex=index;
         DisplayPlayer(index);
        
@@ -216,7 +263,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OnUpgragePlayerButtonClick()
     {
-        GameData.SaveUnlockedPlayer(currentPlayerIndex);
+       /* GameData.SaveUnlockedPlayer(currentPlayerIndex);*/
     }
     private void LevelButtonActivation()
     {
@@ -406,7 +453,19 @@ public class MainMenuManager : MonoBehaviour
       
         
     }
+    void EnablePlayer(List<GameObject> players, int index)
+    {
+        players[index].SetActive(true);
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (i != index)
+            {
 
+                players[i].SetActive(false);
+            }
+
+        }
+    }
     private void DisplayPlayer(int index)
     {
         /*  if (IsItemLocked(index,Items.player))
@@ -419,9 +478,11 @@ public class MainMenuManager : MonoBehaviour
           }*/
         ButtonChanger(index, Items.player,buyAgentButtonLocked, buyAgentButtonSelected);
         SpriteChanger(playerButtons, PlayerUnlockedSprite,PlayerLockedSprite,Items.player);
-        PlayerData.Player currentPlayer = playerData.playerList[index];
+        /* PlayerData.Player currentPlayer = playerData.playerList[index];*/
+        currentPlayer = playerData.GetCurrentPlayer(index);
+        EnablePlayer(players, index);
         agentPriceText.text = currentPlayer.price.ToString();
-        players[index].SetActive(true);
+       /* players[index].SetActive(true);
         for (int i = 0; i < players.Count; i++)
         {
             if (i != index)
@@ -430,7 +491,7 @@ public class MainMenuManager : MonoBehaviour
                 players[i].SetActive(false);
             }
             
-        }
+        }*/
 
         // Update the UI elements with the weapon's data
         playerHealthText.text = currentPlayer.health.ToString() + "%";
@@ -441,6 +502,26 @@ public class MainMenuManager : MonoBehaviour
         playerHidingBar.fillAmount = Mathf.Clamp01(currentPlayer.hiding / 100f);
         playerReloadBar.fillAmount = Mathf.Clamp01(currentPlayer.reloadTime / 100f);
 
+    }
+    public void OnBuyPlayerButtonClick()
+    {
+      
+        if (currentPlayer != null)
+        {
+            
+            if (GameData.Coins >= currentPlayer.price)
+            {
+                GameData.SpendCoins(currentPlayer.price);
+                GameData.SaveUnlockedPlayer(currentPlayerIndex);
+                GameData.SaveSelectedPlayer(currentPlayerIndex);
+                DisplayPlayer(currentPlayerIndex);
+            }
+            else
+            {
+                Debug.Log("You don't have enough coins");
+                NotEnoughCoins.SetActive(true);
+            }
+        }
     }
   /*  private void GunButtonActivation()
     {

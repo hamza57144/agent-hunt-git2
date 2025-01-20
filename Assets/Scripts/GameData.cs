@@ -3,15 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 public static class GameData
 {
-    public static int SelectedPlayerIndex { get; private set; }
-    public static int UnlockedPlayerIndex { get; private set; }
-    public static int CompletedLevelIndex { get; private set; }
-    public static int SelectedLevelIndex { get; private set; }
-    public static int SelectedWeapon_Pistol_Index { get; private set; }
-    public static int SelectedWeapon_Gun_Index { get; private set; }
-    public static int SoundSettingsIndex { get; private set; }
-    public static int MusicSettingsIndex { get; private set; }
+    public static int SelectedPlayerIndex { get { return LoadSelectedPlayer(); } }
+    public static int UnlockedPlayerIndex { get { return LoadUnlockedPlayer(); } }
+    public static int CompletedLevelIndex { get {return LoadCompletedLevel(); } }
+    public static int SelectedLevelIndex { get{return LoadSelectedLevel(); } }
+    public static int SelectedWeapon_Pistol_Index { get { return LoadSelectedWeaponPistol(); } }
+    public static int SelectedWeapon_Gun_Index { get { return LoadSelectedWeaponGun(); } }
+    public static int SoundSettingsIndex { get { return LoadSoundSettings(); } }
+    public static int MusicSettingsIndex { get { return LoadMusicSettings(); } }
+    public static int Coins { get { return LoadCoins(); } } 
+    public static void AddCoins(int amount)
+    {
+        int coins = Coins+amount;        
+        SaveCoins(coins);
+        Debug.Log($"Added {amount} coins. Total coins: {Coins}");
+    }
 
+    public static void SpendCoins(int amount)
+    {
+          int coins = Coins - amount;
+          
+            SaveCoins(coins);
+            Debug.Log($"Spent {amount} coins. Remaining coins: {Coins}");
+           
+       
+    }
+    private static void SaveCoins(int amount)
+    {
+        PlayerPrefs.SetInt(PlayerPrefsHandler.Coins, amount);
+        PlayerPrefs.Save();
+    }
+
+    public static int LoadCoins()
+    {
+        int coins = PlayerPrefs.GetInt(PlayerPrefsHandler.Coins, 500); // Default to 500
+        Debug.Log($"Loaded Coins: {coins}");
+        return coins;
+        
+    }
     public static void SaveSoundSetting(int index)
     {
        
@@ -19,96 +48,99 @@ public static class GameData
         PlayerPrefs.Save();
         Debug.Log($"Saved Music Settings: ");
     }
-    public static void LoadSoundSettings()
+    public static int LoadSoundSettings()
     {
-        SoundSettingsIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.SoundSettings, 1);
-        
+       int  SoundSettingsIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.SoundSettings, 1);
+        return SoundSettingsIndex;
     }
     public static void SaveMusicSettings(int index)
     {
        
         PlayerPrefs.SetInt(PlayerPrefsHandler.MusicSettings, index);
         PlayerPrefs.Save();
-        Debug.Log($"Saved Music Settingswerwerer: {index}");
+        Debug.Log($"Saved Music Settings: {index}");
     }
-    public static void LoadMusicSettings()
+    public static int LoadMusicSettings()
     {
-        MusicSettingsIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.MusicSettings, 1);
+       int MusicSettingsIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.MusicSettings, 1);
+        return MusicSettingsIndex;
 
     }
     public static void SaveSelectedPlayer(int index)
     {
-        SelectedPlayerIndex = index;
+        
         PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedPlayer, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Player: {index}");
     }
-    public static void LoadSelectedPlayer()
-    {
-        SelectedPlayerIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedPlayer, 0); 
-        Debug.Log($"Loaded Selected Player: {SelectedPlayerIndex}");
+    public static int LoadSelectedPlayer()
+    { 
+        int selectedPlayerIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedPlayer, 0); 
+        Debug.Log($"Loaded Selected Player: {selectedPlayerIndex}");
+        return selectedPlayerIndex;
     }
     public static void SaveUnlockedPlayer(int index)
-    {
-        UnlockedPlayerIndex = index;
+    {       
         PlayerPrefs.SetInt(PlayerPrefsHandler.UnlockedPlayerIndex, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Player: {index}");
     }
-    public static void LoadUnlockedPlayer()
+    public static int LoadUnlockedPlayer()
     {
-        SelectedPlayerIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedPlayerIndex, 0);
-        Debug.Log($"Loaded Selected Player: {SelectedPlayerIndex}");
+        int unlockedPlayerIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedPlayerIndex, 0);
+        Debug.Log($"Loaded Selected Player: {unlockedPlayerIndex}");
+        return unlockedPlayerIndex;
     }
     public static void SaveCompletedLevel(int index)
-    {
-        CompletedLevelIndex = index;
+    {     
         PlayerPrefs.SetInt(PlayerPrefsHandler.CompletedLevel, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Level: {index}");
     }
-    public static void LoadCompletedLevel()
+    public static int LoadCompletedLevel()
     {
-        CompletedLevelIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.CompletedLevel, 0); // Default to 0
+       int CompletedLevelIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.CompletedLevel, 0); // Default to 0
         Debug.Log($"Loaded Selected Level: {CompletedLevelIndex}");
+        return CompletedLevelIndex;
     }
     public static void SaveSelectedWeapon_Pistol(int index)
-    {
-        SelectedWeapon_Pistol_Index = index;
+    {       
         PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedWeaponPistol, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Weapon: {index}");
     }
-    public static void LoadSelectedWeaponPistol()
+    public static int LoadSelectedWeaponPistol()
     {
-        SelectedWeapon_Pistol_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponPistol, 1); // Default to 1
+       int SelectedWeapon_Pistol_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponPistol, 1); // Default to 1
         Debug.Log($"Loaded Selected Weapon: {SelectedWeapon_Pistol_Index}");
+        return SelectedWeapon_Pistol_Index;
     }
     public static void SaveSelectedWeapon_Gun(int index)
     {
-        SelectedWeapon_Gun_Index = index;
+        
         PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedWeaponGun, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Weapon: {index}");
     }
-    public static void LoadSelectedWeaponGun()
+    public static int LoadSelectedWeaponGun()
     {
-        SelectedWeapon_Gun_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponGun, 2); 
+       int  SelectedWeapon_Gun_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponGun, 2); 
         Debug.Log($"Loaded Selected Weapon: {SelectedWeapon_Gun_Index}");
+        return SelectedWeapon_Gun_Index;
     }
     public static void SaveSelectedLevel(int index)
-    {
-        SelectedLevelIndex = index;
+    {                  
         PlayerPrefs.SetInt(PlayerPrefsHandler.UnlockedLevel, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Level: {index}");
     }
-    public static void LoadSelectedLevel()
+    public static int LoadSelectedLevel()
     {
-        SelectedLevelIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedLevel, 0); // Default to 0
+       int SelectedLevelIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedLevel, 0); // Default to 0
         Debug.Log($"Unlocked Level: {SelectedLevelIndex}");
+        return SelectedLevelIndex;
     }
-    public static void LoadGameData()
+    /*public static void LoadGameData()
     {
         LoadSelectedPlayer();
         LoadCompletedLevel();
@@ -118,7 +150,8 @@ public static class GameData
         LoadSelectedWeaponGun();
         LoadMusicSettings();
         LoadSoundSettings();
-    }
+       
+    }*/
 }
 public static class TagsHandler
 {
@@ -143,6 +176,9 @@ public static class PlayerPrefsHandler
     public const string UnlockedPlayerIndex = "UnlockedPlayerIndex";
     public const string SoundSettings = "SoundSettings";
     public const string MusicSettings = "MusicSettings";
-
-
+    public const string Coins = "Coins";
+}
+public static class AnimationHandler
+{
+    public const string MainMenuPlayerAnimation = "SetAnimation";
 }

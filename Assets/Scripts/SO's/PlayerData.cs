@@ -13,7 +13,12 @@ public class PlayerData : ScriptableObject
         public int health;
         public float hiding;
         public float reloadTime;
-       
+
     }
     public List<Player> playerList;
+    public Player GetCurrentPlayer(int n)
+    {
+        return playerList[n];
+    }
+   
 }

@@ -661,4 +661,6 @@ namespace CoverShooter
             get { return Util.HorizontalAngle(_controller.AimTargetInput - transform.position); }
         }
     }
+
+   
 }

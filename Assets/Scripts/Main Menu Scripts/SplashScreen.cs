@@ -8,7 +8,7 @@ public class SplashScreen : MonoBehaviour
 {
     // References to UI elements
     public Image progressBar; // Progress bar image
-    public TextMeshProUGUI progressText; // Text for progress percentage
+    
     public RectTransform bulletImage; // Reference to the bullet image (UI element)
     private float offset = 0.019f;
     // Time to wait before starting to load the scene (e.g., splash screen delay)
@@ -21,6 +21,7 @@ public class SplashScreen : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.Instane.PlayBgMusic(AudioManager.Instane.isMusicOn);
         // Cache the RectTransform of the progress bar
         progressBarRect = progressBar.GetComponent<RectTransform>();
 
@@ -52,7 +53,7 @@ public class SplashScreen : MonoBehaviour
 
             // Update the progress bar fill amount and progress text
             progressBar.fillAmount = simulatedProgress;
-            progressText.text = Mathf.RoundToInt(simulatedProgress * 100) + "%";
+           /* progressText.text = Mathf.RoundToInt(simulatedProgress * 100) + "%";*/
 
             // Move the bullet to match the edge of the filled area
             UpdateBulletPosition(simulatedProgress- offset);

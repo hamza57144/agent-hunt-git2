@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerList:
   - playerName: Futin
-    price: 1000
+    price: 100
     playerPrefab: {fileID: 0}
     health: 90
     hiding: 15
     reloadTime: 60
   - playerName: Futin
-    price: 2500
+    price: 100
     playerPrefab: {fileID: 0}
     health: 60
     hiding: 60
@@ -33,6 +33,18 @@ MonoBehaviour:
     reloadTime: 60
   - playerName: Futin
     price: 4000
+    playerPrefab: {fileID: 0}
+    health: 60
+    hiding: 60
+    reloadTime: 60
+  - playerName: Futin
+    price: 1000
+    playerPrefab: {fileID: 0}
+    health: 60
+    hiding: 60
+    reloadTime: 60
+  - playerName: Futin
+    price: 1000
     playerPrefab: {fileID: 0}
     health: 60
     hiding: 60

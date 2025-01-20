@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     private int totalShots { get {  return headShot+bodyShot; } }
     public int amo;
     [SerializeField] TextMeshProUGUI bulletsText;
+    private AudioManager audioManager;
 
     private void DisableHand()
     {
@@ -89,8 +90,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Time.timeScale = 1f;
-        GameData.LoadGameData();
+        Time.timeScale = 1f;       
         ind = GameData.CompletedLevelIndex;
        
         Player.gameObject.SetActive(true);
@@ -110,7 +110,9 @@ public class GameManager : MonoBehaviour
         enemies = EnemyManager.instance.enemyCount;
         progressBarRect = progressBar.GetComponent<RectTransform>();
         amo = levelManager.GetLevel.bullets;
-       
+        audioManager = AudioManager.Instane;
+
+
     }
     private void Update()
     {
@@ -159,7 +161,7 @@ public class GameManager : MonoBehaviour
         DisableCrossHair(false);
         gameCanvas.SetActive(false);
         levelCompleteCanvas.SetActive(true);
-       
+        audioManager.PlayBgMusic(audioManager.isMusicOn);
         headShotText.text = headShot.ToString()+"/"+enemies.ToString();
         healthText.text = ((Player.GetHealth)/5).ToString("0")+"%";
         accuracyText.text = CalculateAccuracy().ToString()+"%";
@@ -168,7 +170,8 @@ public class GameManager : MonoBehaviour
     public void LevelFailed()
     {
         Time.timeScale = 0f;
-        gameCanvas.SetActive(true);
+        gameCanvas.SetActive(false);
+        audioManager.PlayBgMusic(audioManager.isMusicOn);
         levelFailCanvas.SetActive(true);
     }
     public void PlayerRunning()
@@ -210,9 +213,7 @@ public class GameManager : MonoBehaviour
         loadingCanvas.SetActive(true);
             ind++;
         if (ind < 1)
-            GameData.SaveCompletedLevel(ind);
-        
-        GameData.LoadGameData();
+            GameData.SaveCompletedLevel(ind);           
         Debug.Log($"SelectedLevelIndex is {GameData.SelectedPlayerIndex} and  ind is {ind}");
         Time.timeScale = 1f;
         StartCoroutine(LoadSceneWithProgress(SceneHandler.GameplayScene));
@@ -291,15 +292,16 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         PausePanel.SetActive(true);
+        audioManager.PlayBgMusic(audioManager.isMusicOn);
     }
     public void OnResumeButtonClick()
     {
         Time.timeScale = 1;
         PausePanel.SetActive(false);
+        audioManager.PlayBgMusic(false);
     }
     private void Amo()
     {
-        
         
           //  Player.gameObject.GetComponent<ThirdPersonInput>().enabled = !(amo<=0);
            bulletsText.text = $"{amo.ToString()}/{levelManager.GetLevel.bullets}";

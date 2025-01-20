@@ -19,18 +19,22 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip vicotryAudioClip;
     public bool isAudioOn { get { return GameData.SoundSettingsIndex == 1; } }
     public bool isMusicOn { get { return GameData.MusicSettingsIndex == 1; } }
+    [Space(10)]
+    [Hamza(1, 1, 1, 7)]
+    [Header("Button Section"),Space(10)]
     [SerializeField] Button musicOnBtn;
     [SerializeField] Button musicOffBtn;
     [SerializeField] Button soundONBtn;
     [SerializeField] Button soundOffBtn;
+   
     private void Awake()
     {
         Instane = this;
-        GameData.LoadGameData();
+        
     }
     private void Start()
     {
-        PlayBgMusic(isMusicOn);
+        
         SoundButtonEnable(isAudioOn);
         MusicButtonsEnable(isMusicOn);
     }
@@ -97,32 +101,28 @@ public class AudioManager : MonoBehaviour
     public void OnMusicOnButtonClick()
     {
         PauseSound(SoundName.ButtonClick);
-        GameData.SaveMusicSettings(1);
-        GameData.LoadGameData();
+        GameData.SaveMusicSettings(1);       
         MusicButtonsEnable(isMusicOn);
         PlayBgMusic(true);
     }
     public void OnMusicOffButtonClick()
     {
         PauseSound(SoundName.ButtonClick);
-        GameData.SaveMusicSettings(0);
-        GameData.LoadGameData();
+        GameData.SaveMusicSettings(0);      
         MusicButtonsEnable(isMusicOn);
         PlayBgMusic(false);
     }
     public void ONSoundOnButtonClick()
     {
         PauseSound(SoundName.ButtonClick);
-        GameData.SaveSoundSetting(1);
-        GameData.LoadGameData();
+        GameData.SaveSoundSetting(1);        
         SoundButtonEnable(isAudioOn);
     }
     public void OnSoundOffButtonClick()
     {
 
         PauseSound(SoundName.ButtonClick);
-        GameData.SaveSoundSetting(0);
-        GameData.LoadGameData();
+        GameData.SaveSoundSetting(0);    
         SoundButtonEnable(isAudioOn);
 
     }

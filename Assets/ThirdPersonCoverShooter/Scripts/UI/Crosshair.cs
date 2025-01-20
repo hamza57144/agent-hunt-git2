@@ -5,7 +5,9 @@ namespace CoverShooter
     [RequireComponent(typeof(ThirdPersonCamera))]
     public class Crosshair : MonoBehaviour
     {
-
+       
+        private CharacterOutline characterOutline;
+        
         // Crosshair colors
         public Color defaultColor = Color.white;
         public Color targetColor = Color.red;
@@ -138,15 +140,25 @@ namespace CoverShooter
 
             // Check if crosshair is on target
             Color crosshairColor = defaultColor;
+            
             Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                
                 // Check if the object hit is an enemy or a target
-                if (hit.collider.CompareTag("Enemy"))
+                if (hit.collider.CompareTag(TagsHandler.Enemy))
                 {
-                    crosshairColor = targetColor;
+                    crosshairColor = targetColor;                    
+                    characterOutline = hit.collider.GetComponent<CharacterOutline>();
+                    if(GameData.CompletedLevelIndex<3)
+                       ChangeOutline(characterOutline,true);
+                    
                 }
+                else
+                {
+                    ChangeOutline(characterOutline, false);
+                }
+               
             }
 
             // Apply color and draw crosshair
@@ -154,6 +166,11 @@ namespace CoverShooter
             GUI.color = new Color(crosshairColor.r, crosshairColor.g, crosshairColor.b, _thirdPersonCamera.CrosshairAlpha);
             GUI.DrawTextureWithTexCoords(dest, texture, source, true);
             GUI.color = previous;
+        }
+        private void ChangeOutline(CharacterOutline characterOutline,bool change)
+        {
+            if (characterOutline !=null)
+                characterOutline.enabled = change;
         }
     }
 }
