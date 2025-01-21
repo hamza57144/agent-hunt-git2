@@ -40,6 +40,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject pistolPanel;
     bool isPistolPanelOpened = true;
     [SerializeField] WeaponData weaponData;
+    private WeaponData.Weapon currentWeapon;
     [SerializeField] TextMeshProUGUI weaponhealthText;
     [SerializeField] TextMeshProUGUI weaponHidingText;
     [SerializeField] TextMeshProUGUI weaponReloadText;
@@ -89,6 +90,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Text agentPriceText;
     PlayerData.Player currentPlayer;
     [SerializeField] GameObject NotEnoughCoins;
+    [SerializeField] Text totalAmmountTex;
     private int currentPlayerIndex;
 
     public string playStoreURL = "https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games";
@@ -119,9 +121,10 @@ public class MainMenuManager : MonoBehaviour
     // Total loading time for the scene (how long it will take to fill the progress bar)
     public float loadingTime = 5f;
     #endregion
-    private AudioManager audioManager;
+    private AudioManager audioManager;    
     private void Awake()
     {
+        
         CurrentWeaponindex = GameData.SelectedWeapon_Pistol_Index;
         currentPlayerIndex  = GameData.UnlockedPlayerIndex;        
         UnlockCursor();
@@ -177,11 +180,12 @@ public class MainMenuManager : MonoBehaviour
     void DisplayMainMenu()
     {
         mainMenu.SetActive(true);
-        EnablePlayer(MainMenuPlayers, GameData.SelectedPlayerIndex);
+        EnableItem(MainMenuPlayers, GameData.SelectedPlayerIndex);
 
     }
     public void OnSelectPlayerBtnClick()
     {
+        totalAmmountTex.text = GameData.Coins.ToString();
         mainMenu.SetActive(false);
         playerSelectionPanel.SetActive(true);
     }
@@ -415,20 +419,12 @@ public class MainMenuManager : MonoBehaviour
         {
             SpriteChanger(pistolButtons, pistolUnlockedSprite, pistolLockedSprite, Items.pistols);
         }
-        WeaponData.Weapon currentWeapon = weaponData.weaponList[index];
+        currentWeapon = weaponData.weaponList[index];
         weaponPrice.text = currentWeapon.price.ToString();
         weaponAnimator.SetActive(false);
         Invoke(nameof(ActivateWeapon), 0.25f);
-
-        weapons[index].SetActive(true);
+        EnableItem(weapons, index);   
         weapon = weapons[index].transform;
-        for (int i = 0; i < weapons.Count; i++)
-        {
-            if (i != index)
-            {
-                weapons[i].SetActive(false);
-            }
-        }
 
         /* // Instantiate the new weapon prefab at the spawn point's position and rotation
          currentWeaponInstance = Instantiate(currentWeapon.weaponPrefab, weaponSpawnPoint.position, weaponSpawnPoint.rotation);
@@ -453,7 +449,7 @@ public class MainMenuManager : MonoBehaviour
       
         
     }
-    void EnablePlayer(List<GameObject> players, int index)
+    void EnableItem(List<GameObject> players, int index)
     {
         players[index].SetActive(true);
         for (int i = 0; i < players.Count; i++)
@@ -480,7 +476,7 @@ public class MainMenuManager : MonoBehaviour
         SpriteChanger(playerButtons, PlayerUnlockedSprite,PlayerLockedSprite,Items.player);
         /* PlayerData.Player currentPlayer = playerData.playerList[index];*/
         currentPlayer = playerData.GetCurrentPlayer(index);
-        EnablePlayer(players, index);
+        EnableItem(players, index);
         agentPriceText.text = currentPlayer.price.ToString();
        /* players[index].SetActive(true);
         for (int i = 0; i < players.Count; i++)
@@ -523,18 +519,38 @@ public class MainMenuManager : MonoBehaviour
             }
         }
     }
-  /*  private void GunButtonActivation()
+    public void OnBuyWeaponClick()
     {
-        for (int i = 0; i < gunButtons.Count; i++)
+
+     /*   if (currentWeaponInstance != null)
         {
-            if (i <= GameData.SelectedWeapon_Pistol_Index)
+
+            if (GameData.Coins >= CurrentWeaponindex.price)
             {
-
-                gunButtons[i].interactable = true;
+                GameData.SpendCoins(currentPlayer.price);
+                GameData.SaveUnlockedPlayer(currentPlayerIndex);
+                GameData.SaveSelectedPlayer(currentPlayerIndex);
+                DisplayPlayer(currentPlayerIndex);
             }
+            else
+            {
+                Debug.Log("You don't have enough coins");
+                NotEnoughCoins.SetActive(true);
+            }
+        }*/
+    }
+    /*  private void GunButtonActivation()
+      {
+          for (int i = 0; i < gunButtons.Count; i++)
+          {
+              if (i <= GameData.SelectedWeapon_Pistol_Index)
+              {
 
-        }
-    }*/
+                  gunButtons[i].interactable = true;
+              }
+
+          }
+      }*/
     public void OnPlayerSelectionBackButtonClick()
     {
         playerSelectionPanel.SetActive(false);
