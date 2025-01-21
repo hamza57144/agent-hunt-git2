@@ -16,9 +16,9 @@ public class PlayerData : ScriptableObject
 
     }
     public List<Player> playerList;
-    public Player GetCurrentPlayer(int n)
+    public Player GetPlayer(int index)
     {
-        return playerList[n];
+        return playerList[index];
     }
    
 }

@@ -15815,7 +15815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &717817364
 Transform:
   m_ObjectHideFlags: 0
@@ -23888,7 +23888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1210585357
 Transform:
   m_ObjectHideFlags: 0
@@ -39398,6 +39398,12 @@ PrefabInstance:
       objectReference: {fileID: 941534357}
     - target: {fileID: 1007060975336966186, guid: 8c369c2b1d2e6c542bd67446a22d8c33,
         type: 3}
+      propertyPath: pistolsData
+      value: 
+      objectReference: {fileID: 11400000, guid: 143645ee5f20c3448bcb53c5e5f09cc6,
+        type: 2}
+    - target: {fileID: 1007060975336966186, guid: 8c369c2b1d2e6c542bd67446a22d8c33,
+        type: 3}
       propertyPath: progressBar
       value: 
       objectReference: {fileID: 402636843}
@@ -39406,6 +39412,12 @@ PrefabInstance:
       propertyPath: sniperPanel
       value: 
       objectReference: {fileID: 1518884100}
+    - target: {fileID: 1007060975336966186, guid: 8c369c2b1d2e6c542bd67446a22d8c33,
+        type: 3}
+      propertyPath: snipersData
+      value: 
+      objectReference: {fileID: 11400000, guid: 10754419fd9f39b4e8e4b0b041bdcc22,
+        type: 2}
     - target: {fileID: 1007060975336966186, guid: 8c369c2b1d2e6c542bd67446a22d8c33,
         type: 3}
       propertyPath: weaponPrice
@@ -46480,6 +46492,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1210585357}
     m_Modifications:
     - target: {fileID: 518337278, guid: 2a0d422cb4ef8bd41913f2aa8bbeeb05, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 518337278, guid: 2a0d422cb4ef8bd41913f2aa8bbeeb05, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 360799820}
@@ -46491,6 +46507,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1147574701}
+    - target: {fileID: 518337278, guid: 2a0d422cb4ef8bd41913f2aa8bbeeb05, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBuyWeaponButtonClick
+      objectReference: {fileID: 0}
     - target: {fileID: 544808303, guid: 2a0d422cb4ef8bd41913f2aa8bbeeb05, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -65519,17 +65539,17 @@ PrefabInstance:
     - target: {fileID: 685386174916922600, guid: a2a83cf3b87a22443bb8144ab3c69f84,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 685386174916922600, guid: a2a83cf3b87a22443bb8144ab3c69f84,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 685386174916922600, guid: a2a83cf3b87a22443bb8144ab3c69f84,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 982429529472551357, guid: a2a83cf3b87a22443bb8144ab3c69f84,
         type: 3}

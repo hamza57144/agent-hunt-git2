@@ -7,8 +7,10 @@ public static class GameData
     public static int UnlockedPlayerIndex { get { return LoadUnlockedPlayer(); } }
     public static int CompletedLevelIndex { get {return LoadCompletedLevel(); } }
     public static int SelectedLevelIndex { get{return LoadSelectedLevel(); } }
-    public static int SelectedWeapon_Pistol_Index { get { return LoadSelectedWeaponPistol(); } }
-    public static int SelectedWeapon_Gun_Index { get { return LoadSelectedWeaponGun(); } }
+    public static int Selected_Pistol_Index { get { return LoadSelectedPistol(); } }
+    public static int Selected_Gun_Index { get { return LoadSelectedGun(); } }
+    public static int Unlocked_Pistol_Index { get { return LoadUnlockedPistol(); } }
+    public static int Unlocked_Gun_Index { get { return LoadUnlockedGun(); } }
     public static int SoundSettingsIndex { get { return LoadSoundSettings(); } }
     public static int MusicSettingsIndex { get { return LoadMusicSettings(); } }
     public static int Coins { get { return LoadCoins(); } } 
@@ -103,30 +105,55 @@ public static class GameData
         Debug.Log($"Loaded Selected Level: {CompletedLevelIndex}");
         return CompletedLevelIndex;
     }
-    public static void SaveSelectedWeapon_Pistol(int index)
+    public static void SaveSelectedPistol(int index)
     {       
-        PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedWeaponPistol, index);
+        PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedPistol, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Weapon: {index}");
     }
-    public static int LoadSelectedWeaponPistol()
+    public static int LoadSelectedPistol()
     {
-       int SelectedWeapon_Pistol_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponPistol, 1); // Default to 1
+       int SelectedWeapon_Pistol_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedPistol, 1); // Default to 1
         Debug.Log($"Loaded Selected Weapon: {SelectedWeapon_Pistol_Index}");
         return SelectedWeapon_Pistol_Index;
     }
-    public static void SaveSelectedWeapon_Gun(int index)
+    public static void SaveUnlocked_Pistol(int index)
     {
-        
-        PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedWeaponGun, index);
+        PlayerPrefs.SetInt(PlayerPrefsHandler.UnlockedPistol, index);
         PlayerPrefs.Save();
         Debug.Log($"Saved Selected Weapon: {index}");
     }
-    public static int LoadSelectedWeaponGun()
+    public static int LoadUnlockedPistol()
     {
-       int  SelectedWeapon_Gun_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedWeaponGun, 2); 
-        Debug.Log($"Loaded Selected Weapon: {SelectedWeapon_Gun_Index}");
-        return SelectedWeapon_Gun_Index;
+        int UnlockedPistol_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedPistol, 0); // Default to 1
+        Debug.Log($"Loaded Selected Weapon: {UnlockedPistol_Index}");
+        return UnlockedPistol_Index;
+    }
+    public static void SaveSelected_Gun(int index)
+    {
+        
+        PlayerPrefs.SetInt(PlayerPrefsHandler.SelectedGun, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Selected Weapon: {index}");
+    }
+    public static int LoadSelectedGun()
+    {
+       int  Selected_Gun_Index = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedGun, 0); 
+        Debug.Log($"Loaded Selected Weapon: {Selected_Gun_Index}");
+        return Selected_Gun_Index;
+    }
+    public static void SaveUnlocked_Gun(int index)
+    {
+
+        PlayerPrefs.SetInt(PlayerPrefsHandler.UnlockedGun, index);
+        PlayerPrefs.Save();
+        Debug.Log($"Saved Selected Weapon: {index}");
+    }
+    public static int LoadUnlockedGun()
+    {
+        int UnlockedGun = PlayerPrefs.GetInt(PlayerPrefsHandler.UnlockedGun, 0);
+        Debug.Log($"Loaded Selected Weapon: {UnlockedGun}");
+        return UnlockedGun;
     }
     public static void SaveSelectedLevel(int index)
     {                  
@@ -170,8 +197,10 @@ public static class PlayerPrefsHandler
 {   
     public const string CompletedLevel = "CompletedLevel";
     public const string UnlockedLevel = "UnlockedLevel";
-    public const string SelectedWeaponPistol = "SelectedWeaponPistol";
-    public const string SelectedWeaponGun = "SelectedWeaponGun";
+    public const string SelectedPistol = "SelectedPistol";
+    public const string SelectedGun = "SelectedGun";
+    public const string UnlockedPistol = "UnlockedPistol";
+    public const string UnlockedGun = "UnlockedGun";
     public const string SelectedPlayer = "SelectedPlayer";
     public const string UnlockedPlayerIndex = "UnlockedPlayerIndex";
     public const string SoundSettings = "SoundSettings";

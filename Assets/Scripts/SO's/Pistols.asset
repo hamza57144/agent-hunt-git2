@@ -10,30 +10,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98c56b18b31c60d45ac05cd5b7c474e1, type: 3}
-  m_Name: Weapon
+  m_Name: Pistols
   m_EditorClassIdentifier: 
   weaponList:
-  - weaponName: 'Sniper '
-    price: 1000
+  - weaponName: Pistol
+    isHeavy: 0
+    price: 45
     weaponPrefab: {fileID: 100000, guid: c2961a41e4ce60d4cbc34a29593a6a0e, type: 3}
     health: 60
     hiding: 60
     reloadTime: 60
-  - weaponName: 'Sniper '
-    price: 2000
+  - weaponName: Pistol
+    isHeavy: 0
+    price: 45
     weaponPrefab: {fileID: 100000, guid: 6c4ba7fdce2dd214b802aa239b0a2fa4, type: 3}
     health: 40
     hiding: 40
     reloadTime: 40
-  - weaponName: 'Sniper '
-    price: 3000
+  - weaponName: Pistol
+    isHeavy: 0
+    price: 45
     weaponPrefab: {fileID: 5975488655072251466, guid: 7182092e1e0389e4e84c2f5871178195,
       type: 3}
     health: 50
     hiding: 70
     reloadTime: 60
-  - weaponName: 'Sniper '
-    price: 4000
+  - weaponName: Pistol
+    isHeavy: 0
+    price: 90
+    weaponPrefab: {fileID: 5975488655072251466, guid: 7182092e1e0389e4e84c2f5871178195,
+      type: 3}
+    health: 50
+    hiding: 70
+    reloadTime: 60
+  - weaponName: Pistol
+    isHeavy: 0
+    price: 90
+    weaponPrefab: {fileID: 5975488655072251466, guid: 7182092e1e0389e4e84c2f5871178195,
+      type: 3}
+    health: 50
+    hiding: 70
+    reloadTime: 60
+  - weaponName: Pistol
+    isHeavy: 0
+    price: 90
     weaponPrefab: {fileID: 5975488655072251466, guid: 7182092e1e0389e4e84c2f5871178195,
       type: 3}
     health: 50
