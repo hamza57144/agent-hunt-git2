@@ -10,16 +10,27 @@ public class SavaDataEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        // Draw the default Inspector
+ 
         DrawDefaultInspector();
 
-        // Add a dropdown to select data type
+     
         selectedIndex = EditorGUILayout.Popup("Select Data to Clear", selectedIndex, options);
-
-        // Add a button to clear the selected data
-        if (GUILayout.Button($"Clear {options[selectedIndex]} Data"))
+        // Create a custom GUIStyle for the button
+        GUIStyle dangerButtonStyle = new GUIStyle(GUI.skin.button)
         {
-            SavedData savaData = (SavedData)target; // Reference to the SavaData script
+            normal = { textColor = Color.white },
+            fontStyle = FontStyle.Bold,
+            fontSize = 12,
+            alignment = TextAnchor.MiddleCenter
+        };
+
+        // Set the button background color
+        Color dangerColor = new Color(0.8f, 0.1f, 0.1f); 
+        GUI.backgroundColor = dangerColor;
+
+        if (GUILayout.Button($"Clear {options[selectedIndex]} Data", dangerButtonStyle))
+        {
+            SavedData savaData = (SavedData)target; 
             switch (selectedIndex)
             {
                 case 0: 
