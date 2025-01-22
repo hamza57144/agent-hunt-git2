@@ -14,56 +14,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerList:
   - playerName: Futin
-    price: 100
+    price: 10000
     playerPrefab: {fileID: 0}
     health: 90
     hiding: 15
     reloadTime: 60
+    isLocked: 0
   - playerName: Futin
-    price: 100
+    price: 10000
+    playerPrefab: {fileID: 0}
+    health: 335
+    hiding: 60
+    reloadTime: 60
+    isLocked: 1
+  - playerName: Futin
+    price: 45
     playerPrefab: {fileID: 0}
     health: 60
     hiding: 60
     reloadTime: 60
+    isLocked: 1
   - playerName: Futin
-    price: 3500
+    price: 45
     playerPrefab: {fileID: 0}
     health: 60
     hiding: 60
     reloadTime: 60
+    isLocked: 1
   - playerName: Futin
-    price: 4000
+    price: 45
     playerPrefab: {fileID: 0}
     health: 60
     hiding: 60
     reloadTime: 60
+    isLocked: 1
   - playerName: Futin
-    price: 1000
+    price: 45
     playerPrefab: {fileID: 0}
     health: 60
     hiding: 60
     reloadTime: 60
+    isLocked: 0
   - playerName: Futin
-    price: 1000
+    price: 45
     playerPrefab: {fileID: 0}
     health: 60
     hiding: 60
     reloadTime: 60
-  - playerName: Futin
-    price: 1000
-    playerPrefab: {fileID: 0}
-    health: 60
-    hiding: 60
-    reloadTime: 60
-  - playerName: Futin
-    price: 1000
-    playerPrefab: {fileID: 0}
-    health: 60
-    hiding: 60
-    reloadTime: 60
-  - playerName: Futin
-    price: 1000
-    playerPrefab: {fileID: 0}
-    health: 60
-    hiding: 60
-    reloadTime: 60
+    isLocked: 1
