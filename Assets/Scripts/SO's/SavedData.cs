@@ -18,7 +18,7 @@ public class SavedData : MonoBehaviour
             else
             {
                 weaponData.pistolData[i].isLocked = true;
-              //  mainMenuManager.DisplayWeapons(GameData.Selected_Pistol_Index,Items.pistols);
+                mainMenuManager.DisplayWeapons(GameData.Selected_Pistol_Index,Items.pistols);
             }
         }
         for (int i = 1; i < weaponData.sniperData.Count; i++)
@@ -31,7 +31,7 @@ public class SavedData : MonoBehaviour
             else
             {
                 weaponData.sniperData[i].isLocked = true;
-               // mainMenuManager.DisplayWeapons(GameData.Selected_Gun_Index, Items.snipers);
+                mainMenuManager.DisplayWeapons(GameData.Selected_Gun_Index, Items.snipers);
             }
         }
         for (int i = 1; i < playerData.playerList.Count; i++)
@@ -44,7 +44,7 @@ public class SavedData : MonoBehaviour
             else
             {
                 playerData.playerList[i].isLocked=true;
-               // mainMenuManager.DisplayPlayer(GameData.SelectedPlayerIndex);
+                mainMenuManager.DisplayPlayer(GameData.SelectedPlayerIndex);
 
 
             }
