@@ -25,8 +25,9 @@ public class CoverPoint : MonoBehaviour
     /// <param name="e"></param>
     private void CharacterMotor_EnemyDie(object sender, System.EventArgs e)
     {
+        
         if (!areEnemiesAlerted)
-             AlertAllEnemies();
+            Invoke(nameof(AlertAllEnemies), 0.1f);
     } 
     /// <summary>
     /// If one of the the enemy got hit, all enemies will get alerted
@@ -35,8 +36,8 @@ public class CoverPoint : MonoBehaviour
     /// <param name="e"></param>
     private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
     {
-        if(!areEnemiesAlerted) 
-           AlertAllEnemies();
+        if(!areEnemiesAlerted)
+            Invoke(nameof(AlertAllEnemies), 0.1f);
     }
     /// <summary>
     /// Check if enemies in this cover point 
@@ -71,6 +72,7 @@ public class CoverPoint : MonoBehaviour
     }
     public void AlertAllEnemies()
     {
+       
         areEnemiesAlerted =true;
         if (coverNumber == Nav_Movement.Instance.ActiveCoverPoint)
         {
@@ -82,5 +84,10 @@ public class CoverPoint : MonoBehaviour
         }
        
     }
-   
+    private void OnDisable()
+    {
+        AIAlerts.OnEnemyAlert -= AIAlerts_OnEnemyAlert;
+        CharacterMotor.EnemyDie -= CharacterMotor_EnemyDie;
+    }
+
 }

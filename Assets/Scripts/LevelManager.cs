@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
     }
 
     public List<Level> levels = new List<Level>();
+    public int totalLevels {  get { return levels.Count; } }
     public Level GetLevel { get { return levels[levelIndex]; } }
     public CoverPoint[] GetCoverPoints()
     {

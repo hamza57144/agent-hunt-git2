@@ -64,12 +64,13 @@ public class EnemyManager : MonoBehaviour
             Invoke(nameof(LevelComplete),3f);   
             once = true;
         }
+       
         if (lastEnemy)
         {
          
             DetectBodyParts();
-
-            Enemy enemy = FindObjectOfType<Enemy>();
+            
+            Enemy enemy = FindFirstObjectByType<Enemy>();
             animator= enemy.gameObject.GetComponentInParent<Animator>();
             if (enemy != null)
             {

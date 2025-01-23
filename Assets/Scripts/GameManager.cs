@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour
         levelCompleteCanvas.SetActive(false );
         loadingCanvas.SetActive(true);
             ind++;
-        if (ind < 1)
+        if (ind < levelManager.totalLevels)
             GameData.SaveCompletedLevel(ind);           
         Debug.Log($"SelectedLevelIndex is {GameData.SelectedPlayerIndex} and  ind is {ind}");
         Time.timeScale = 1f;

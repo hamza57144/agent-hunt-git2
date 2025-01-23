@@ -7,7 +7,7 @@ namespace CoverShooter
     {
        
         private CharacterOutline characterOutline;
-        
+       
         // Crosshair colors
         public Color defaultColor = Color.white;
         public Color targetColor = Color.red;
@@ -150,15 +150,17 @@ namespace CoverShooter
                 {
                     crosshairColor = targetColor;                    
                     characterOutline = hit.collider.GetComponent<CharacterOutline>();
-                    if(GameData.CompletedLevelIndex<3)
-                       ChangeOutline(characterOutline,true);
-                    
-                }
+                    if (GameData.CompletedLevelIndex < 3)
+                        ChangeOutline(characterOutline, true);
+
+
+                }                             
                 else
                 {
                     ChangeOutline(characterOutline, false);
                 }
-               
+
+
             }
 
             // Apply color and draw crosshair
