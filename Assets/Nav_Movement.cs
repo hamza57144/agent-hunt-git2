@@ -31,7 +31,7 @@ public class Nav_Movement : MonoBehaviour
     //For optimization
     private GameObject player;
 
-   
+   private GameObject helpingPoint { get { return coverPoint[point].GetHelpingPoint(); } }
     Actor actor;
     public bool isInCoverAnim;
     bool isInCover;
@@ -65,8 +65,22 @@ public class Nav_Movement : MonoBehaviour
                 enemyMotor.isVisible = false;
             }
         }
+        // Invoke(nameof(StartMoving), 0.1f);
         MoveToCover(point);
+        /*if(helpingPoint != null)
+        {
+            agent.SetDestination(helpingPoint.transform.position);
+        }
+        else
+        {
+            MoveToCover(point);
+        }
+       */
 
+    }
+   private void StartMoving()
+    {
+        MoveToCover(point);
     }
     void CalculateEnemies()
     {
@@ -79,7 +93,7 @@ public class Nav_Movement : MonoBehaviour
     }
     void Update()
     {
-
+      //  if (!agent.pathPending && agent.remainingDistance && 
         if ((Input.GetKeyDown(KeyCode.T) || coverPoint[point].AreEnemiesCleared()) && !wait )
         {
             coverPoint[point].DeleteEnemiesCovers();
@@ -190,9 +204,7 @@ public class Nav_Movement : MonoBehaviour
     }
 
     void EnterCoverPosition()
-    {
-       
-        
+    {               
         // Stop the agent
         agent.isStopped = true;
         isReached = true;
@@ -203,9 +215,7 @@ public class Nav_Movement : MonoBehaviour
         animator.SetFloat("MovementSpeed", 0f);
         animator.SetFloat("MovementX", 0f);
         animator.SetFloat("MovementZ", 0f);
-        actor.InputTakeCover();
-        /*// Trigger cover animation (assuming there's a parameter or trigger)
-        animator.SetBool("ISInCover", true); // Or use a trigger if preferred*/
+        actor.InputTakeCover();       
     }
     void UpdateAgentRotation()
     {

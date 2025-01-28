@@ -27,7 +27,7 @@ public class MainMenuManager : MonoBehaviour
         [SerializeField] GameObject mainMenu;
         [SerializeField] List<GameObject> MainMenuPlayers;
         [SerializeField] GameObject playerSelectionPanel;
-        [SerializeField] GameObject weaponsSelectionPanel;
+        public GameObject weaponsSelectionPanel;
         [SerializeField] GameObject levelSelectionPanel;
         [SerializeField] GameObject loadingScreen;
     #endregion
@@ -133,7 +133,8 @@ public class MainMenuManager : MonoBehaviour
         currentPlayerIndex  = GameData.SelectedPlayerIndex;        
         UnlockCursor();
         LevelButtonActivation();
-        DisplayWeapons(CurrentWeaponindex,pistols,Items.pistols);
+        DisplayWeapons(GameData.Unlocked_Pistol_Index,pistols,Items.pistols);
+       
         DisplayPlayer(GameData.SelectedPlayerIndex);
         //PlayerButtonsLockUnlock();
 
@@ -470,6 +471,7 @@ public class MainMenuManager : MonoBehaviour
     }
     void EnableItem(List<GameObject> items, int index)
     {
+        Debug.Log("Index of item is "+ index);
         items[index].SetActive(true);
         for (int i = 0; i < items.Count; i++)
         {

@@ -57,11 +57,12 @@ public class LevelManager : MonoBehaviour
     {        
        levelIndex=GameData.CompletedLevelIndex;
          Instance = this;
+        SetPlayerPosition();
+        EnableSelectedLevel();
     }
     private void Start()
     {
-        SetPlayerPosition();
-        EnableSelectedLevel();
+       
     }
     private void SetPlayerPosition()
     {

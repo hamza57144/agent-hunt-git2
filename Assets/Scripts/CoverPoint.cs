@@ -7,6 +7,7 @@ public class CoverPoint : MonoBehaviour
     public int coverNumber ;
     public CharacterMotor[] enemies;
     public GameObject[] enemiesCovers;
+    public GameObject helpingPoints;
     public int TotalEnemies { get { return enemies.Length; } }
     bool areEnemiesAlerted;
 
@@ -26,8 +27,8 @@ public class CoverPoint : MonoBehaviour
     private void CharacterMotor_EnemyDie(object sender, System.EventArgs e)
     {
         
-        if (!areEnemiesAlerted)
-            Invoke(nameof(AlertAllEnemies), 0.1f);
+      //  if (!areEnemiesAlerted)
+            AlertAllEnemies();
     } 
     /// <summary>
     /// If one of the the enemy got hit, all enemies will get alerted
@@ -36,8 +37,8 @@ public class CoverPoint : MonoBehaviour
     /// <param name="e"></param>
     private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
     {
-        if(!areEnemiesAlerted)
-            Invoke(nameof(AlertAllEnemies), 0.1f);
+        if (!areEnemiesAlerted)
+            AlertAllEnemies();
     }
     /// <summary>
     /// Check if enemies in this cover point 
@@ -88,6 +89,12 @@ public class CoverPoint : MonoBehaviour
     {
         AIAlerts.OnEnemyAlert -= AIAlerts_OnEnemyAlert;
         CharacterMotor.EnemyDie -= CharacterMotor_EnemyDie;
+    }
+    public GameObject GetHelpingPoint()
+    {
+        if(helpingPoints!=null)
+            return helpingPoints;
+        else return null;
     }
 
 }

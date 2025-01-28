@@ -58,6 +58,16 @@ public class WeaponRotation : MonoBehaviour
 
     private void Update()
     {
+        if (MainMenuManager.Instance.weaponsSelectionPanel.activeInHierarchy)
+        {
+            RotateWeapons();
+        }
+      
+    } 
+
+    void RotateWeapons()
+    {
+       
         if (isDragging || targetObject == null)
         {
             return; // Stop default behavior while dragging
@@ -72,6 +82,7 @@ public class WeaponRotation : MonoBehaviour
         }
         else // Resume default rotation
         {
+
             targetObject.Rotate(Vector3.up, defaultRotationSpeed * Time.deltaTime);
         }
     }

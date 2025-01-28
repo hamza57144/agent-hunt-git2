@@ -564,7 +564,9 @@ namespace CoverShooter
                     }
                     else
                     {
-                        _stateName = "TallCover";
+                        _stateName = "Corner";
+                        state = States.Corner;
+                       // _stateName = "TallCover";
                         /*if (Target.HasScope())
                         {
                             States.TallCover.Offset = States.TallCornerZoom.ScopeOffset;

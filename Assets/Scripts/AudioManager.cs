@@ -11,6 +11,7 @@ public enum SoundName
 }
 public class AudioManager : MonoBehaviour
 {
+   
     public static AudioManager Instane { get;private set; }   
     [SerializeField] AudioSource buttonClick;
     [SerializeField] AudioSource audioSource;
@@ -26,7 +27,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] Button musicOffBtn;
     [SerializeField] Button soundONBtn;
     [SerializeField] Button soundOffBtn;
-   
+    public Scenes scene;
     private void Awake()
     {
         Instane = this;
@@ -34,9 +35,12 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        
-        SoundButtonEnable(isAudioOn);
-        MusicButtonsEnable(isMusicOn);
+        if (scene != Scenes.splash)
+        {
+            SoundButtonEnable(isAudioOn);
+            MusicButtonsEnable(isMusicOn);
+        }
+       
     }
     private SoundName soundName;
     public void PlaySound(SoundName sound)
@@ -139,4 +143,11 @@ public class AudioManager : MonoBehaviour
         musicOffBtn.gameObject.SetActive(isMusicON);
 
     }
+}
+public enum Scenes
+{
+   
+    mainMenu,
+    gamePlay,
+    splash,
 }

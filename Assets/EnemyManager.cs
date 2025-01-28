@@ -34,8 +34,8 @@ public class EnemyManager : MonoBehaviour
     private bool isAiming;
 
     private Animator animator;
+    private CharacterOutline characterOutline;
 
-    
     private void Awake()
     {
         instance = this;
@@ -59,6 +59,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
+        DetectBodyParts();
         if (levelCompleted && !once)
         {
             Invoke(nameof(LevelComplete),3f);   
@@ -118,12 +119,10 @@ public class EnemyManager : MonoBehaviour
         Gizmos.DrawLine(ray.origin, ray.origin + ray.direction * 100);*/
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
-            
+          
             BodyPartDetection bodyPart = hit.collider.GetComponent<BodyPartDetection>();
             if (bodyPart != null)
-            {
-
-
+            {               
                 if (bodyPart.bodyPart == BodyPart.head)
                 {
                     
@@ -140,9 +139,10 @@ public class EnemyManager : MonoBehaviour
                
                 isHead = false;
             }
+           
 
         }
-
+       
         if (Physics.Raycast(ray, out RaycastHit _hit))
         {
             if (_hit.collider.CompareTag("Enemy"))
@@ -192,7 +192,7 @@ public class EnemyManager : MonoBehaviour
     private void CountEnemies()
     {
         enemyCount--;
-    }
+    }    
     private void OnDisable()
     {
         // Unsubscribe from the event to avoid issues

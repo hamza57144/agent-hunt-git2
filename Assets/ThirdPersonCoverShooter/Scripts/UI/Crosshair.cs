@@ -171,7 +171,7 @@ namespace CoverShooter
         }
         private void ChangeOutline(CharacterOutline characterOutline,bool change)
         {
-            if (characterOutline !=null)
+            if (characterOutline != null)
                 characterOutline.enabled = change;
         }
     }

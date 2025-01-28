@@ -11,7 +11,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-  
+
+    [SerializeField] GameObject environment;
     public static GameManager instance { get; private set; }
     public LevelManager levelManager;
     [SerializeField] GameObject Hand;
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        environment.SetActive(true );
         if (GameData.CompletedLevelIndex == 0)
         {
             Hand.SetActive(true );
