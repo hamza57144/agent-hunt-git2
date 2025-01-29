@@ -66,6 +66,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Sprite weaponDefualtSprite;
     [SerializeField] Image pistolBtn;
     [SerializeField] Image sniperBtn;
+    [SerializeField] List<Image> pistolsLockImgages;
+    [SerializeField] List<Image> sniperLockImages;
     public static Transform weapon { get; set; }
     /*    public RawImage weaponDisplay; // Raw Image for displaying the Render Texture
         public Transform weaponDisplayParent; // Parent object for spawning weapon prefabs*/
@@ -95,6 +97,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject NotEnoughCoins;
     [SerializeField] Text totalAmmountTex;
     private int currentPlayerIndex;
+    [SerializeField] List<Image> playerLockImages;
 
     public string playStoreURL = "https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games";
     /*[SerializeField] List<Button> gunButtons;
@@ -133,7 +136,7 @@ public class MainMenuManager : MonoBehaviour
         currentPlayerIndex = GameData.SelectedPlayerIndex;
         UnlockCursor();
         LevelButtonActivation();
-        DisplayWeapons(GameData.Unlocked_Pistol_Index, pistols, Items.pistols);
+        DisplayWeapons(GameData.Selected_Pistol_Index, pistols, Items.pistols);
 
         DisplayPlayer(GameData.SelectedPlayerIndex);
         //PlayerButtonsLockUnlock();
@@ -291,28 +294,69 @@ public class MainMenuManager : MonoBehaviour
 
         }
     }
-    private void SpriteChanger(List<Button> buttons, List<Sprite> unlockedSprites, List<Sprite> lockedSprites, Items item)
+    private void SpriteChanger(List<Button> buttons, List<Sprite> unlockedSprites, List<Sprite> lockedSprites, Items item,int index=0)
     {
         for (int i = 0; i < buttons.Count; i++)
         {
             Image buttonImage = buttons[i].GetComponent<Image>();
-            if (!IsItemLocked(i, item))
+            if ((item==Items.player))
             {
-                
-                buttonImage.sprite = unlockedSprites[i];         
+                if (!IsItemLocked(i, item))
+                {
+
+                    buttonImage.sprite = unlockedSprites[i];
+                    buttonImage.SetNativeSize();
+
+                }
+                else
+                {
+
+                    buttonImage.sprite = lockedSprites[i];
+                    buttonImage.SetNativeSize();
+
+                }
+            }
+            else
+            {
+                if (i == index)
+                {
+
+                    buttonImage.sprite = unlockedSprites[i];
+                    buttonImage.SetNativeSize();
+
+                }
+                else
+                {
+
+                    buttonImage.sprite = lockedSprites[i];
+                    buttonImage.SetNativeSize();
+
+                }
+            }
+            
+        }
+    }
+  /*  private void SpriteChanger(List<Button> buttons, List<Sprite> unlockedSprites, List<Sprite> lockedSprites, Items item,int index)
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            Image buttonImage = buttons[i].GetComponent<Image>();
+            if (i==index)
+            {
+
+                buttonImage.sprite = unlockedSprites[i];
                 buttonImage.SetNativeSize();
 
             }
             else
             {
-               
-                buttonImage.sprite = lockedSprites[i];               
+
+                buttonImage.sprite = lockedSprites[i];
                 buttonImage.SetNativeSize();
 
             }
-
         }
-    }
+    }*/
     /* private void PlistolButtonsSpriteChange()
      {
          for (int i = 0; i < pistolButtons.Count; i++)
@@ -423,21 +467,39 @@ public class MainMenuManager : MonoBehaviour
         else
             DisplayWeapons(index, snipers, item);
     }
+
+    private void DisplayLockImage(List<Image> lockImages,Items item)
+    {
+        for(int i = 0; i < lockImages.Count; i++)
+        {
+            if(IsItemLocked(i, item))
+            {
+                lockImages[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                lockImages[i].gameObject.SetActive(false);
+            }
+        } 
+    }
     private void DisplayWeapons(int index, List<GameObject> weapons, Items item)
     {
+        DisplayLockImage(pistolsLockImgages, Items.pistols);
+        DisplayLockImage(sniperLockImages, Items.snipers);
         currentWeapon = weaponData.GetWeapon(index, item);
 
         ButtonChanger(index, item, weaponLockedBtn, WeaponUnlockedBtn);
+
         //   if(IsPistolLocked(index)) 
 
         // Get the currently selected weapon
         if (item == Items.snipers)
         {
-            SpriteChanger(sniperButtons, sniperUnlockedSprites, sniperLockedSprites, Items.snipers);
+            SpriteChanger(sniperButtons, sniperUnlockedSprites, sniperLockedSprites, Items.snipers,index);
         }
         else if (item == Items.pistols)
         {
-            SpriteChanger(pistolButtons, pistolUnlockedSprites, pistolLockedSprites, Items.pistols);
+            SpriteChanger(pistolButtons, pistolUnlockedSprites, pistolLockedSprites, Items.pistols, index);
         }
         //  currentWeapon = weaponData.GetWeapon(index, WeaponType.pistol);        
         //   weaponAnimator.SetActive(false);
