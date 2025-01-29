@@ -23,7 +23,7 @@ MonoBehaviour:
     isLocked: 0
   - weaponName: 
     isHeavy: 0
-    price: 5000
+    price: 57
     weaponPrefab: {fileID: 0}
     health: 50
     hiding: 50
@@ -31,7 +31,7 @@ MonoBehaviour:
     isLocked: 1
   - weaponName: 
     isHeavy: 0
-    price: 5000
+    price: 57
     weaponPrefab: {fileID: 0}
     health: 67
     hiding: 67
@@ -39,14 +39,30 @@ MonoBehaviour:
     isLocked: 1
   - weaponName: 
     isHeavy: 0
-    price: 5000
+    price: 57
     weaponPrefab: {fileID: 0}
     health: 67
     hiding: 67
     reloadTime: 67
-    isLocked: 0
+    isLocked: 1
+  - weaponName: 
+    isHeavy: 0
+    price: 57
+    weaponPrefab: {fileID: 0}
+    health: 67
+    hiding: 67
+    reloadTime: 67
+    isLocked: 1
+  - weaponName: 
+    isHeavy: 0
+    price: 57
+    weaponPrefab: {fileID: 0}
+    health: 67
+    hiding: 67
+    reloadTime: 67
+    isLocked: 1
   sniperData:
-  - weaponName: Sniper 1
+  - weaponName: 1
     isHeavy: 1
     price: 45
     weaponPrefab: {fileID: 0}
@@ -54,25 +70,41 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 79
     isLocked: 0
-  - weaponName: Sniper 1
+  - weaponName: 2
     isHeavy: 1
-    price: 5000
+    price: 57
     weaponPrefab: {fileID: 0}
     health: 50
     hiding: 67
     reloadTime: 79
     isLocked: 1
-  - weaponName: Sniper 1
+  - weaponName: 3
     isHeavy: 1
-    price: 5000
+    price: 57
     weaponPrefab: {fileID: 0}
     health: 50
     hiding: 67
     reloadTime: 79
-    isLocked: 0
-  - weaponName: Sniper 1
+    isLocked: 1
+  - weaponName: 4
     isHeavy: 1
-    price: 5000
+    price: 57
+    weaponPrefab: {fileID: 0}
+    health: 50
+    hiding: 67
+    reloadTime: 79
+    isLocked: 1
+  - weaponName: 5
+    isHeavy: 1
+    price: 57
+    weaponPrefab: {fileID: 0}
+    health: 50
+    hiding: 67
+    reloadTime: 79
+    isLocked: 1
+  - weaponName: 6
+    isHeavy: 1
+    price: 57
     weaponPrefab: {fileID: 0}
     health: 50
     hiding: 67
