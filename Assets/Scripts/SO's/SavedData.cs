@@ -39,7 +39,7 @@ public class SavedData : MonoBehaviour
             if (PlayerPrefs.HasKey("Player" + i + "isLocked"))
             {
                 playerData.playerList[i].isLocked = PlayerPrefs.GetInt("Player" + i + "isLocked") == 1;
-
+                mainMenuManager.DisplayPlayer(GameData.SelectedPlayerIndex);
             }
             else
             {

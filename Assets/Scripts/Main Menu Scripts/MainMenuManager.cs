@@ -98,6 +98,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Text totalAmmountTex;
     private int currentPlayerIndex;
     [SerializeField] List<Image> playerLockImages;
+    [SerializeField] Vector3 lockedTextPosition;
+    [SerializeField] Vector3 unLockedTextPosition;
 
     public string playStoreURL = "https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games";
     /*[SerializeField] List<Button> gunButtons;
@@ -468,6 +470,23 @@ public class MainMenuManager : MonoBehaviour
             DisplayWeapons(index, snipers, item);
     }
 
+    private void SetTextPosition(List<Button> buttons,Items item)
+    {
+        for(int i = 0; i < buttons.Count; i++)
+        {
+            Text nameText = buttons[i].GetComponentInChildren<Text>();
+          
+            if (!IsItemLocked(i, item))
+            {              
+                nameText.gameObject.transform.localPosition = unLockedTextPosition;
+            }
+            else
+            {
+                nameText.gameObject.transform.localPosition=lockedTextPosition;
+            }
+            
+        }
+    }
     private void DisplayLockImage(List<Image> lockImages,Items item)
     {
         for(int i = 0; i < lockImages.Count; i++)
@@ -555,23 +574,15 @@ public class MainMenuManager : MonoBehaviour
           {
               buyAgentButtonSelected.interactable = true;
           }*/
+
         ButtonChanger(index, Items.player, buyAgentButtonLocked, buyAgentButtonSelected);
         SpriteChanger(playerButtons, PlayerUnlockedSprites, PlayerLockedSprites, Items.player);
+        DisplayLockImage(playerLockImages, Items.player);
+        SetTextPosition(playerButtons,Items.player);
         /* PlayerData.Player currentPlayer = playerData.playerList[index];*/
         currentPlayer = playerData.GetPlayer(index);
         EnableItem(players, index);
-        agentPriceText.text = currentPlayer.price.ToString();
-        /* players[index].SetActive(true);
-         for (int i = 0; i < players.Count; i++)
-         {
-             if (i != index)
-             {
-
-                 players[i].SetActive(false);
-             }
-
-         }*/
-
+        agentPriceText.text = currentPlayer.price.ToString();     
         // Update the UI elements with the weapon's data
         playerHealthText.text = currentPlayer.health.ToString() + "%";
         playerHidingText.text = currentPlayer.hiding.ToString() + "%";
