@@ -63,6 +63,7 @@ namespace CoverShooter
     [RequireComponent(typeof(Rigidbody))]
     public class CharacterMotor : MonoBehaviour
     {
+        private AIAlerts aIAlerts;
         public static event EventHandler EnemyDie;
         public static event EventHandler OnPlayerDie;
         private Nav_Movement playerMotor;
@@ -3140,6 +3141,7 @@ namespace CoverShooter
             _wantsToFire = true;
             _hasFireCondition = false;
            InputAim();
+            
         }
 
         /// <summary>
@@ -3279,12 +3281,14 @@ namespace CoverShooter
 
         private void Awake()
         {
+            ThirdPersonInput.Fired += ThirdPersonInput_Fired;
             playerMotor = Nav_Movement.Instance;
             if (!isPlayer)
             {
                 playerMotor = null; 
                 enemy = GetComponentInChildren<Enemy>();
                 healthBar = GetComponentInChildren<HealthBar>();
+                aIAlerts = GetComponent<AIAlerts>();
             }
             
             _capsule = GetComponent<CapsuleCollider>();
@@ -3372,6 +3376,13 @@ namespace CoverShooter
             if (CurrentHeightChanged != null) CurrentHeightChanged.Invoke(_defaultCapsuleHeight);
 
             SetAimTarget(transform.position + transform.forward * 100);
+        }
+
+        private void ThirdPersonInput_Fired(object sender, EventArgs e)
+        {
+            if (!isPlayer)
+                Debug.Log("Play scared animation");
+              //  Scared();
         }
 
         private void OnAnimatorMove()
@@ -6667,6 +6678,10 @@ namespace CoverShooter
         }
 
         #endregion
-        
+        public void Scared()
+        {
+            if(aIAlerts != null)
+               aIAlerts.OnScared();
+        }
     }
 }
