@@ -38,7 +38,7 @@ public static class GameData
 
     public static int LoadCoins()
     {
-        int coins = PlayerPrefs.GetInt(PlayerPrefsHandler.Coins, 500); // Default to 500
+        int coins = PlayerPrefs.GetInt(PlayerPrefsHandler.Coins, 100); // Default to 500
         Debug.Log($"Loaded Coins: {coins}");
         return coins;
         

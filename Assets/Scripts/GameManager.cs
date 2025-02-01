@@ -22,7 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameCanvas;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
     [SerializeField] GameObject levelCompleteCanvas;
+    [SerializeField] Text levelCompleteCashText;
     [SerializeField] GameObject levelFailCanvas;
+    [SerializeField] Text levelFailedCashText;
     [SerializeField] GameObject[] controllerButtons;
     int ind;
     private int headShot;
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject PausePanel;
     [SerializeField] Image healthBarFill;
 
-    private int enemies;
+    private int enemies;    
     private int totalShots { get {  return headShot+bodyShot; } }
     public int amo;
     [SerializeField] TextMeshProUGUI bulletsText;
@@ -124,6 +126,11 @@ public class GameManager : MonoBehaviour
         }
         Amo();
     }
+
+    void ShowCash(Text text)
+    {
+        text.text = GameData.Coins.ToString();
+    }
     private void ThirdPersonInput_ButtonUp(object sender, EventArgs e)
     {
         amo--;
@@ -163,6 +170,7 @@ public class GameManager : MonoBehaviour
         DisableCrossHair(false);
         gameCanvas.SetActive(false);
         levelCompleteCanvas.SetActive(true);
+        ShowCash(levelCompleteCashText);
         audioManager.PlayBgMusic(audioManager.isMusicOn);
         headShotText.text = headShot.ToString()+"/"+enemies.ToString();
         healthText.text = ((Player.GetHealth)/5).ToString("0")+"%";
@@ -173,6 +181,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         gameCanvas.SetActive(false);
+        ShowCash(levelFailedCashText);
         audioManager.PlayBgMusic(audioManager.isMusicOn);
         levelFailCanvas.SetActive(true);
     }

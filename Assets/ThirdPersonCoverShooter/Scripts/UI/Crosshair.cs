@@ -7,6 +7,7 @@ namespace CoverShooter
     {
        
         private CharacterOutline characterOutline;
+        private CharacterMotor enemyMotor;
        
         // Crosshair colors
         public Color defaultColor = Color.white;
@@ -150,14 +151,15 @@ namespace CoverShooter
                 {
                     crosshairColor = targetColor;                    
                     characterOutline = hit.collider.GetComponent<CharacterOutline>();
+                    enemyMotor = hit.collider.GetComponent<CharacterMotor>();
+                    EnableHealthBar(enemyMotor,true);
                     if (GameData.CompletedLevelIndex < 3)
                         ChangeOutline(characterOutline, true);
-
-
                 }                             
                 else
                 {
                     ChangeOutline(characterOutline, false);
+                    EnableHealthBar(enemyMotor, false);
                 }
 
 
@@ -173,6 +175,11 @@ namespace CoverShooter
         {
             if (characterOutline != null)
                 characterOutline.enabled = change;
+        } 
+        private void EnableHealthBar(CharacterMotor characterMotor,bool enable)
+        {
+            if (characterMotor != null)
+              characterMotor.GetHealthBar.EnableHealthBar(enable);
         }
     }
 }

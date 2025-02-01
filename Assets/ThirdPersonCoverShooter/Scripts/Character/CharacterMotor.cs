@@ -71,6 +71,7 @@ namespace CoverShooter
         private static bool hasScope;
         private Enemy enemy;
         private HealthBar healthBar;
+        public HealthBar GetHealthBar { get { return healthBar; } }
         public bool isVisible;
         public float GetHealth { get { return this.gameObject.GetComponent<CharacterHealth>().GetHealth; } }
         #region Properties
@@ -1923,8 +1924,8 @@ namespace CoverShooter
                 if (!EnemyManager.instance.lastEnemy)
                 {
                     DestroyEnemy();
-                    Invoke(nameof(HideHealthbar), 3f);
 
+                    Invoke(nameof(DisableCollider), 2f);
                     
                 }        
                 EnemyDie?.Invoke(this, EventArgs.Empty);
@@ -1942,25 +1943,21 @@ namespace CoverShooter
             for (int i = 0; i < _healthListeners.Length; i++)
                 _healthListeners[i].OnDead();
         }
-        private void HideHealthbar()
-        {
-            healthBar.HideHealthBar();
-        }
+        
         private void DestroyEnemy()
         {
             Destroy(enemy.gameObject);
         }
         
-
+        private void DisableCollider()
+        {
+            this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        }
         /// <summary>
         /// Affects the character spine by a bullet hit.
         /// </summary>
         public void OnHit(Hit hit)
-        {
-            if (!isPlayer)
-            {
-                healthBar.ShowHealthBar();
-            }
+        {            
             if (isPlayer && !IsZooming)
                 return;
             var gotHit = true;

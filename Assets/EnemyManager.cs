@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -21,7 +22,9 @@ public class EnemyManager : MonoBehaviour
     private AIMovement aIMovement;
     [HideInInspector]
     public int enemyCount;
-   
+    private int totalEnemies;
+    [SerializeField] Text totalEnemiesText;
+
     public  bool finalShot;
     
     public bool shoot;
@@ -44,12 +47,18 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         finalShot = false;
-        enemyCount = player.TotalEnemies;
+        CalculateEnemies();
         CharacterMotor.EnemyDie += OnEnemyDie;
 
         
     }
-    
+    private void CalculateEnemies()
+    {
+        enemyCount = player.TotalEnemies;
+        totalEnemies = enemyCount;
+        totalEnemiesText.text = $"{enemyCount}/{totalEnemies}";
+
+    }
     private void OnEnemyDie(object sender, System.EventArgs e)
     {
 
@@ -192,6 +201,7 @@ public class EnemyManager : MonoBehaviour
     private void CountEnemies()
     {
         enemyCount--;
+        totalEnemiesText.text = $"{enemyCount}/{totalEnemies}";
     }    
     private void OnDisable()
     {

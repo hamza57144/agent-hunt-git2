@@ -9,9 +9,7 @@ namespace CoverShooter
     [ExecuteInEditMode]
     public class HealthBar : MonoBehaviour
     {
-       
-        float timer ;
-        bool isHealthbarEnabled;
+
         /// <summary>
         /// Object whose health is displayed on the health bar.
         /// </summary>
@@ -58,20 +56,17 @@ namespace CoverShooter
         private GameObject _cachedTarget;
         private CharacterHealth _cachedCharacterHealth;
         private CharacterName _cachedCharacterName;
-        private void Start()
-        {
-            HideHealthBar();
-        }
+       
         private void LateUpdate()
         {
-            if (isHealthbarEnabled) 
+            /*if (isHealthbarEnabled) 
             {
                 timer -= Time.deltaTime;
                 if (timer <= 0)
                 {
                     HideHealthBar();
                 }
-            }
+            }*/
            
             FaceCamera();
             if (Target != _cachedTarget)
@@ -117,26 +112,15 @@ namespace CoverShooter
             
         }
 
-        public void ShowHealthBar()
+        public void EnableHealthBar(bool enable)
         {
-            timer = 10f;
-            isHealthbarEnabled=true;
-           
 
-            FillRect.gameObject.SetActive(true);
-            BackgroundRect.gameObject.SetActive(true);
+            FillRect.gameObject.SetActive(enable);
+            BackgroundRect.gameObject.SetActive(enable);
 
         }
 
-        public void HideHealthBar()
-        {
-            isHealthbarEnabled=false;
-           
-            FillRect.gameObject.SetActive(false);
-            BackgroundRect.gameObject.SetActive(false);
-
-
-        }
+   
 
         private void FaceCamera()
         {

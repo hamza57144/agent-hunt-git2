@@ -35,10 +35,14 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        if (scene != Scenes.splash)
+        if (scene != Scenes.splash )
         {
             SoundButtonEnable(isAudioOn);
             MusicButtonsEnable(isMusicOn);
+        }
+        if(scene != Scenes.gamePlay)
+        {
+            PlayBgMusic(isMusicOn);
         }
        
     }
@@ -146,7 +150,6 @@ public class AudioManager : MonoBehaviour
 }
 public enum Scenes
 {
-   
     mainMenu,
     gamePlay,
     splash,

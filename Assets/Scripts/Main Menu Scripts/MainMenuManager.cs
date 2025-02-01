@@ -30,6 +30,9 @@ public class MainMenuManager : MonoBehaviour
     public GameObject weaponsSelectionPanel;
     [SerializeField] GameObject levelSelectionPanel;
     [SerializeField] GameObject loadingScreen;
+    [SerializeField] Text mainMenuPanelCashText;
+    [SerializeField] GameObject inAppCanvas;
+    [SerializeField] Text InAppPanelCashText;
     #endregion
 
     #region Weapons Selection
@@ -68,6 +71,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Image sniperBtn;
     [SerializeField] List<Image> pistolsLockImgages;
     [SerializeField] List<Image> sniperLockImages;
+    [SerializeField] Text weaponPanelCashText;
     public static Transform weapon { get; set; }
     /*    public RawImage weaponDisplay; // Raw Image for displaying the Render Texture
         public Transform weaponDisplayParent; // Parent object for spawning weapon prefabs*/
@@ -95,7 +99,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Text agentPriceText;
     PlayerData.Player currentPlayer;
     [SerializeField] GameObject NotEnoughCoins;
-    [SerializeField] Text totalAmmountTex;
+    [SerializeField] Text playerSelectionPanelCashText;
     private int currentPlayerIndex;
     [SerializeField] List<Image> playerLockImages;
     [SerializeField] Vector3 lockedTextPosition;
@@ -187,21 +191,37 @@ public class MainMenuManager : MonoBehaviour
         progressBarRect = progressBar.GetComponent<RectTransform>();
         SpriteChanger(pistolBtn, sniperBtn, weaponSelectedSprite, weaponDefualtSprite);
 
+        foreach (var button in backButtons)
+        {
+            if (button.backButton != null)
+            {
+                button.backButton.onClick.AddListener(() => SwitchPanels(button.panelToDisable));
+            }
+        }
+
     }
     void DisplayMainMenu()
     {
+        ShowCash(mainMenuPanelCashText);
         mainMenu.SetActive(true);
         EnableItem(MainMenuPlayers, GameData.SelectedPlayerIndex);
 
     }
     public void OnSelectPlayerBtnClick()
     {
-        totalAmmountTex.text = GameData.Coins.ToString();
+        ShowCash(playerSelectionPanelCashText);
+       
         mainMenu.SetActive(false);
         playerSelectionPanel.SetActive(true);
     }
+
+    private void ShowCash(Text cashText)
+    {
+        cashText.text = GameData.Coins.ToString();
+    }
     public void OnSelectWeaponBtnClick()
     {
+        ShowCash(weaponPanelCashText);
         mainMenu.SetActive(false);
         weaponsSelectionPanel.SetActive(true);
         // Players.gameObject.transform.position = position1.transform.position;
@@ -225,7 +245,7 @@ public class MainMenuManager : MonoBehaviour
         }
         currentPlayerIndex = index;
         DisplayPlayer(currentPlayerIndex);
-
+        audioManager.PlayButtonClickSound();
 
     }
     /// <summary>
@@ -664,7 +684,7 @@ public class MainMenuManager : MonoBehaviour
     {
         playerSelectionPanel.SetActive(false);
         DisplayMainMenu();
-
+        audioManager.PlayButtonClickSound();
     }
     public void OnQuitButtonClick()
     {
@@ -699,5 +719,31 @@ public class MainMenuManager : MonoBehaviour
     {
         ThisImage.sprite = ThisSprites;
         OtherImage.sprite = OhterSprite;
+    }
+    public void OnStoreButtonClick()
+    {
+        inAppCanvas.SetActive(true);
+        mainMenu.SetActive(false);
+        audioManager.PlayButtonClickSound();
+        ShowCash(InAppPanelCashText);
+    }
+    
+    [System.Serializable]
+    public struct BackButtons
+    {
+        public string name;
+        public Button backButton;
+        public GameObject panelToDisable;      
+    }
+    [Space(25)]
+    [Hamza(1, 1, 1, 7)]
+    [Header("Other Things"), Space(25)]
+    public List<BackButtons> backButtons;
+    void SwitchPanels(GameObject panelToDisable)
+    {
+        audioManager.PlayButtonClickSound();
+        if (panelToDisable != null)
+            panelToDisable.SetActive(false);
+        DisplayMainMenu();
     }
 }
