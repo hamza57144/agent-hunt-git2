@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] ThirdPersonCamera thirdPersonCamera;
-    [SerializeField] GameObject levelCompleteCanvas;
+    [SerializeField] GameObject levelCompleteCanvas;   
     [SerializeField] Text levelCompleteCashText;
     [SerializeField] GameObject levelFailCanvas;
     [SerializeField] Text levelFailedCashText;
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public int amo;
     [SerializeField] TextMeshProUGUI bulletsText;
     private AudioManager audioManager;
+    [SerializeField] BossLevelProgress bossLevelProgress;
 
     private void DisableHand()
     {
@@ -93,7 +94,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Time.timeScale = 1f;       
+        Time.timeScale = 1f;     
+       
         ind = GameData.CompletedLevelIndex;
        
         Player.gameObject.SetActive(true);
@@ -174,9 +176,30 @@ public class GameManager : MonoBehaviour
         audioManager.PlayBgMusic(audioManager.isMusicOn);
         headShotText.text = headShot.ToString()+"/"+enemies.ToString();
         healthText.text = ((Player.GetHealth)/5).ToString("0")+"%";
-        accuracyText.text = CalculateAccuracy().ToString()+"%";
-        Debug.Log($"GameData.SelectedLevelIndex {GameData.CompletedLevelIndex} and i is {ind} GameManager");
+        accuracyText.text = CalculateAccuracy().ToString()+"%";     
+        ind++;
+       
+       
+            GameData.SaveCompletedLevel(ind);
+        bossLevelProgress.UpdateBossProgressBar(ind - 1);
+
+        /*if (GameData.CompletedLevelIndex <= 5)
+        {
+            for(int i = 0; i < GameData.CompletedLevelIndex; i++)
+            {
+                Debug.Log($"i is {i} and levelCompleteIndex is {GameData.CompletedLevelIndex}");
+                bossProgressImages[i].color = Color.green;
+            }
+        }*/
+
+        if (GameData.CompletedLevelIndex == 3)
+        {
+            GameData.SaveCompletedLevel(0);
+        }
     }
+
+  
+
     public void LevelFailed()
     {
         Time.timeScale = 0f;
@@ -221,13 +244,9 @@ public class GameManager : MonoBehaviour
     {
         DisableCrossHair(false);
         levelCompleteCanvas.SetActive(false );
-        loadingCanvas.SetActive(true);
-            ind++;
-        if (ind < levelManager.totalLevels)
-            GameData.SaveCompletedLevel(ind);           
-        Debug.Log($"SelectedLevelIndex is {GameData.SelectedPlayerIndex} and  ind is {ind}");
+        loadingCanvas.SetActive(true);           
         Time.timeScale = 1f;
-        StartCoroutine(LoadSceneWithProgress(SceneHandler.GameplayScene));
+        StartCoroutine(LoadSceneWithProgress(SceneHandler.MainMenu));
     }
     public void OnHomeBtnClick()
     {

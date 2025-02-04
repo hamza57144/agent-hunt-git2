@@ -33,6 +33,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Text mainMenuPanelCashText;
     [SerializeField] GameObject inAppCanvas;
     [SerializeField] Text InAppPanelCashText;
+    [SerializeField] BossLevelProgress bossLevelProgress;
     #endregion
 
     #region Weapons Selection
@@ -134,6 +135,7 @@ public class MainMenuManager : MonoBehaviour
     public float loadingTime = 5f;
     #endregion
     private AudioManager audioManager;
+    
     private void Awake()
     {
         Instance = this;
@@ -181,6 +183,7 @@ public class MainMenuManager : MonoBehaviour
     }
     private void Start()
     {
+        bossLevelProgress.UpdateBossProgressBar(GameData.CompletedLevelIndex -1);
         audioManager = AudioManager.Instane;
         audioManager.PlayBgMusic(audioManager.isMusicOn);
         // Players.gameObject.transform.position = position2.transform.position;
