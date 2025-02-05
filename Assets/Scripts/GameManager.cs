@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI bulletsText;
     private AudioManager audioManager;
     [SerializeField] BossLevelProgress bossLevelProgress;
+    [SerializeField] WeaponFiller weaponFiller;
+    [SerializeField] WeaponsData weaponsData;
 
     private void DisableHand()
     {
@@ -165,23 +167,36 @@ public class GameManager : MonoBehaviour
     {
         Invoke(nameof(LevelFailed), 2f);
     }
-
+    public  void EnableGameCompleteCanvas()
+    {
+        levelCompleteCanvas.SetActive(true);
+        ind++;
+        GameData.SaveCompletedLevel(ind);
+        bossLevelProgress.UpdateBossProgressBar(ind - 1);
+        if (GameData.CompletedLevelIndex == 3)
+        {
+            GameData.SaveCompletedLevel(0);
+        }
+    }
     // Start is called before the first frame update
     public void LevelComplete()
     {
         DisableCrossHair(false);
-        gameCanvas.SetActive(false);
-        levelCompleteCanvas.SetActive(true);
+        if (!weaponsData.AreAllWeaponsLocked(Items.pistols))
+        {
+            weaponFiller.OnLevelComplete();
+        }
+        else
+        {
+            EnableGameCompleteCanvas();
+        }       
+        gameCanvas.SetActive(false);       
         ShowCash(levelCompleteCashText);
         audioManager.PlayBgMusic(audioManager.isMusicOn);
-        headShotText.text = headShot.ToString()+"/"+enemies.ToString();
+        headShotText.text = $"{headShot}/{enemies}";        
         healthText.text = ((Player.GetHealth)/5).ToString("0")+"%";
-        accuracyText.text = CalculateAccuracy().ToString()+"%";     
-        ind++;
-       
-       
-            GameData.SaveCompletedLevel(ind);
-        bossLevelProgress.UpdateBossProgressBar(ind - 1);
+        accuracyText.text =$"{CalculateAccuracy()}%";     
+        
 
         /*if (GameData.CompletedLevelIndex <= 5)
         {
@@ -192,10 +207,7 @@ public class GameManager : MonoBehaviour
             }
         }*/
 
-        if (GameData.CompletedLevelIndex == 3)
-        {
-            GameData.SaveCompletedLevel(0);
-        }
+        
     }
 
   

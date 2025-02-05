@@ -21,6 +21,8 @@ MonoBehaviour:
     hiding: 45
     reloadTime: 45
     isLocked: 0
+    bgSprite: {fileID: 21300000, guid: 8c6a843eeef5fcc4a8bf0571e0ff56ef, type: 3}
+    fillSprite: {fileID: 21300000, guid: c522faf348d455f4c97e1bd360ff3526, type: 3}
   - weaponName: 
     isHeavy: 0
     price: 10000
@@ -29,6 +31,8 @@ MonoBehaviour:
     hiding: 50
     reloadTime: 50
     isLocked: 1
+    bgSprite: {fileID: 21300000, guid: b79fdcd7c04e44d4a931435d45da5177, type: 3}
+    fillSprite: {fileID: 21300000, guid: b58e8f6e47a82a043a00f3d84bf2d66c, type: 3}
   - weaponName: 
     isHeavy: 0
     price: 10000
@@ -37,6 +41,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 67
     isLocked: 1
+    bgSprite: {fileID: 21300000, guid: 16c229bb9b4cf9649b11c8460aec1d34, type: 3}
+    fillSprite: {fileID: 21300000, guid: 9494adf8f9f1737458df7254671ef6f7, type: 3}
   - weaponName: 
     isHeavy: 0
     price: 10000
@@ -45,6 +51,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 67
     isLocked: 1
+    bgSprite: {fileID: 21300000, guid: 698b620d1eb6089468f865fe54b80b35, type: 3}
+    fillSprite: {fileID: 21300000, guid: ff368b6ce6f103d4bb035144fe790db1, type: 3}
   - weaponName: 
     isHeavy: 0
     price: 10000
@@ -53,6 +61,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 67
     isLocked: 1
+    bgSprite: {fileID: 21300000, guid: 8edf99eb5f4147c46a658c2c040d5918, type: 3}
+    fillSprite: {fileID: 21300000, guid: cc35db20aa4b06b409c7e6e05f9b86f3, type: 3}
   - weaponName: 
     isHeavy: 0
     price: 10000
@@ -61,6 +71,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 67
     isLocked: 1
+    bgSprite: {fileID: 21300000, guid: 7012d5541a17a624a9c22203f37c711a, type: 3}
+    fillSprite: {fileID: 21300000, guid: 8e0d6c0f5457f5246b164a10872466a5, type: 3}
   sniperData:
   - weaponName: 1
     isHeavy: 1
@@ -70,6 +82,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 79
     isLocked: 0
+    bgSprite: {fileID: 0}
+    fillSprite: {fileID: 0}
   - weaponName: 2
     isHeavy: 1
     price: 10000
@@ -78,6 +92,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 79
     isLocked: 1
+    bgSprite: {fileID: 0}
+    fillSprite: {fileID: 0}
   - weaponName: 3
     isHeavy: 1
     price: 10000
@@ -86,6 +102,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 79
     isLocked: 1
+    bgSprite: {fileID: 0}
+    fillSprite: {fileID: 0}
   - weaponName: 4
     isHeavy: 1
     price: 10000
@@ -94,6 +112,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 79
     isLocked: 1
+    bgSprite: {fileID: 0}
+    fillSprite: {fileID: 0}
   - weaponName: 5
     isHeavy: 1
     price: 10000
@@ -102,6 +122,8 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 79
     isLocked: 1
+    bgSprite: {fileID: 0}
+    fillSprite: {fileID: 0}
   - weaponName: 6
     isHeavy: 1
     price: 10000
@@ -110,3 +132,5 @@ MonoBehaviour:
     hiding: 67
     reloadTime: 79
     isLocked: 1
+    bgSprite: {fileID: 0}
+    fillSprite: {fileID: 0}

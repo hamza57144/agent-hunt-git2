@@ -18,6 +18,8 @@ public class WeaponsData : ScriptableObject
         public float hiding;
         public float reloadTime;
         public bool isLocked;
+        public Sprite bgSprite;
+        public Sprite fillSprite;
         
     }
     public List<Weapon> pistolData;
@@ -48,5 +50,26 @@ public class WeaponsData : ScriptableObject
         return sniperData[index];
 
     }
-  
+    public bool AreAllWeaponsLocked(Items weaponType)
+    {
+        if (weaponType == Items.pistols)
+        {
+            for (int i = 0; i < pistolData.Count; i++)
+            {
+                if (IsWeaponLocked(i, weaponType))
+                    return false;
+            }
+            return true;
+        }
+        else
+        {
+            for (int i = 0; i < sniperData.Count; i++)
+            {
+                if (IsWeaponLocked(i, weaponType))
+                    return false;
+            }
+            return true;
+        }
+       
+    }
 }
