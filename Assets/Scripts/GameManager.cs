@@ -94,6 +94,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
+
     void Awake()
     {
         Time.timeScale = 1f;     
@@ -173,16 +175,17 @@ public class GameManager : MonoBehaviour
         ind++;
         GameData.SaveCompletedLevel(ind);
         bossLevelProgress.UpdateBossProgressBar(ind - 1);
-        if (GameData.CompletedLevelIndex == 3)
+        /*if (GameData.CompletedLevelIndex == 3)
         {
             GameData.SaveCompletedLevel(0);
-        }
+        }*/
     }
     // Start is called before the first frame update
     public void LevelComplete()
     {
+        GameData.AddCoins(500);
         DisableCrossHair(false);
-        if (!weaponsData.AreAllWeaponsLocked(Items.pistols))
+        if (!weaponsData.AreAllWeaponsUnlocked(Items.pistols))
         {
             weaponFiller.OnLevelComplete();
         }
@@ -252,8 +255,20 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         StartCoroutine(LoadSceneWithProgress(SceneHandler.GameplayScene));
     }
+    public void ResumeGame()
+    {
+        levelCompleteCanvas.SetActive(false);
+        loadingCanvas.SetActive(true);
+        GameData.SaveCompletedLevel(ind-1);
+        Time.timeScale = 1f;
+        StartCoroutine(LoadSceneWithProgress(SceneHandler.GameplayScene));
+    }
     public void OnNextButtonClicked()
     {
+        if (GameData.CompletedLevelIndex == 3)
+        {
+            GameData.SaveCompletedLevel(0);
+        }
         DisableCrossHair(false);
         levelCompleteCanvas.SetActive(false );
         loadingCanvas.SetActive(true);           

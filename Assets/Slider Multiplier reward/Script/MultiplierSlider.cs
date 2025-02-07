@@ -18,6 +18,7 @@ public class MultiplierSlider : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coins;
     [SerializeField] private GameObject pre;
     [SerializeField] private GameObject post;
+    [SerializeField] private Text rewardText;
 
     public static MultiplierSlider Instance;
     [SerializeField]
@@ -40,7 +41,7 @@ public class MultiplierSlider : MonoBehaviour
     [SerializeField] private float textMinScale = 1f;
     [SerializeField] private float textMaxScale = 1.5f;
     [SerializeField] private float scaleSpeed = 5f;
-
+    int reward = 500;
     void Start()
     {
         if (rectTransform == null)
@@ -60,7 +61,7 @@ public class MultiplierSlider : MonoBehaviour
 
     void Update()
     {
-       
+        rewardText.text = $"Reward: {reward}";
         if (PlayerPrefs.GetString("ExR", "no") == "yes")
         {
             Debug.Log("update exed");
@@ -122,8 +123,7 @@ public class MultiplierSlider : MonoBehaviour
             int coinss = PlayerPrefs.GetInt("coins");
             PlayerPrefs.SetInt("coins", coinss + 5000 * 1);
             coins.text = "You Received 10,000 Coins";
-            outsideTotalCoinsText.text = "10,000 Coins";
-           
+            outsideTotalCoinsText.text = "10,000 Coins";          
             Debug.Log("coins 2x earned");
         }
         else if (isX3Active)
@@ -131,8 +131,7 @@ public class MultiplierSlider : MonoBehaviour
             int coinss = PlayerPrefs.GetInt("coins");
             PlayerPrefs.SetInt("coins", coinss + 5000 * 2);
             coins.text = "You Received 15,000 Coins";
-            outsideTotalCoinsText.text = "15,000 Coins";
-            
+            outsideTotalCoinsText.text = "15,000 Coins";         
             Debug.Log("coins 3x earned");
         }
         else if (isX4Active)
@@ -182,19 +181,23 @@ public class MultiplierSlider : MonoBehaviour
 
         if (isX2Active)
         {
-            buttonText.text = "+5,000 COINS";
+            buttonText.text = "+500 COINS";
+            reward = 500+500;
         }
         if (isX3Active)
         {
-            buttonText.text = "+10,000 COINS";
+            buttonText.text = "+1000 COINS";
+            reward = 500 + 1000;
         }
         if (isX4Active)
         {
-            buttonText.text = "+15,000 COINS";
+            buttonText.text = "+1500 COINS";
+            reward = 500 + 1500;
         }
         if (isX5Active)
         {
-            buttonText.text = "+20,000 COINS";
+            buttonText.text = "+2000 COINS";
+            reward = 500 + 2000;
         }
     }
 

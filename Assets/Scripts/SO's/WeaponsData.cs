@@ -50,7 +50,7 @@ public class WeaponsData : ScriptableObject
         return sniperData[index];
 
     }
-    public bool AreAllWeaponsLocked(Items weaponType)
+    public bool AreAllWeaponsUnlocked(Items weaponType)
     {
         if (weaponType == Items.pistols)
         {

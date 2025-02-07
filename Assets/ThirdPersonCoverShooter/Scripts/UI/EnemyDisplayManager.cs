@@ -66,7 +66,6 @@ namespace CoverShooter
 
         private void LateUpdate()
         {
-
             /// Manage arrows
             {
                 _keep.Clear();
@@ -87,21 +86,22 @@ namespace CoverShooter
 
                             bool isEnemyVisible = characterMotor.isVisible;
 
+                            // Fixed height offset above the enemy
+                            const float arrowHeightOffset = 2.5f; // Adjust this value to raise the arrow higher
+
                             if (IsEnemyVisible(enemyTransform, camera)) // Assuming you have visibility check
                             {
-                                // Place arrow above the enemy (head position)
-                                Vector3 screenPos = camera.WorldToScreenPoint(enemyTransform.position + Vector3.up * 2); // Adjust offset
+                                // Calculate the position directly above the enemy
+                                Vector3 arrowWorldPosition = enemyTransform.position + Vector3.up * arrowHeightOffset;
 
-                                // Increase the arrow height further when visible
-                                screenPos.y += 50f;  // Increase Y-position for more height (adjust as needed)
-                                                     // Access the CharacterMotor script of the enemy to check the visibility flag
+                                // Convert the world position to screen position
+                                Vector3 screenPos = camera.WorldToScreenPoint(arrowWorldPosition);
 
                                 if (!_away.ContainsKey(character.Object))
                                 {
                                     var clone = GameObject.Instantiate(ArrowPrototype.gameObject);
                                     clone.transform.SetParent(transform, false);
                                     _away.Add(character.Object, clone);
-
                                 }
 
                                 var t = _away[character.Object].GetComponent<RectTransform>();
@@ -111,16 +111,11 @@ namespace CoverShooter
                                     t.position = new Vector3(screenPos.x, screenPos.y, t.position.z);
                                     t.eulerAngles = new Vector3(0, 0, -180);
                                 }
-
                             }
                             else
                             {
-                                // Increase the Y position to simulate the enemy's head or neck when it's not visible
+                                // Handle the case when the enemy is not visible
                                 Vector3 viewportPos = camera.WorldToViewportPoint(enemyTransform.position);
-
-                                // Adjust position higher for non-visible enemies
-                                viewportPos.y += 0.1f;  // Increase Y position when not visible (adjust as needed)
-
                                 const float edgeThreshold = 0.05f;
 
                                 if (viewportPos.z < 0)
@@ -149,17 +144,16 @@ namespace CoverShooter
                                     var clone = GameObject.Instantiate(ArrowPrototype.gameObject);
                                     clone.transform.SetParent(transform, false);
                                     _away.Add(character.Object, clone);
-
                                 }
 
                                 var t = _away[character.Object].GetComponent<RectTransform>();
                                 if (isEnemyVisible)
                                 {
                                     t.gameObject.SetActive(true);
-                                    t.position = new Vector3(viewportPos.x * Screen.width, viewportPos.y * Screen.height, t.position.z);
-                                    t.eulerAngles = new Vector3(t.eulerAngles.x, t.eulerAngles.y, angle );
+                                    // Position the arrow based on viewport position
+                                    t.position = new Vector3(viewportPos.x * Screen.width, (viewportPos.y * Screen.height) + arrowHeightOffset * 100, t.position.z); // Adjust this value to raise the arrow higher
+                                    t.eulerAngles = new Vector3(t.eulerAngles.x, t.eulerAngles.y, angle);
                                 }
-
                             }
 
                             _keep.Add(character.Object);

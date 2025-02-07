@@ -51,9 +51,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI weaponhealthText;
     [SerializeField] TextMeshProUGUI weaponHidingText;
     [SerializeField] TextMeshProUGUI weaponReloadText;
-    [SerializeField] Image healthBar;
-    [SerializeField] Image hidingBar;
-    [SerializeField] Image reloadBar;
+    [SerializeField] Image weaponHealthBar;
+    [SerializeField] Image weaponHidingBar;
+    [SerializeField] Image weaponReloadBar;
     [SerializeField] List<Button> sniperButtons;
     [SerializeField] List<Button> pistolButtons;    
     [SerializeField] List<Sprite> pistolLockedSprites;
@@ -97,7 +97,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Image playerReloadBar;
     [SerializeField] Button buyAgentButtonSelected;
     [SerializeField] Button buyAgentButtonLocked;
-    [SerializeField] Text agentPriceText;
+    [SerializeField] Text playerPriceText;
     PlayerData.Player currentPlayer;
     [SerializeField] GameObject NotEnoughCoins;
     [SerializeField] Text playerSelectionPanelCashText;
@@ -194,13 +194,13 @@ public class MainMenuManager : MonoBehaviour
         progressBarRect = progressBar.GetComponent<RectTransform>();
         SpriteChanger(pistolBtn, sniperBtn, weaponSelectedSprite, weaponDefualtSprite);
 
-        foreach (var button in backButtons)
+        /*foreach (var button in backButtons)
         {
             if (button.backButton != null)
             {
                 button.backButton.onClick.AddListener(() => SwitchPanels(button.panelToDisable));
             }
-        }
+        }*/
 
     }
     void DisplayMainMenu()
@@ -251,12 +251,7 @@ public class MainMenuManager : MonoBehaviour
         audioManager.PlayButtonClickSound();
 
     }
-    /// <summary>
-    /// For pistol buttons, give index odd and for snipers, assign even index
-    /// </summary>
-    /// <param name="index"></param>
-
-    [Tooltip("For pistol buttons, give index odd and for snipers, assign even index")]
+   
     public void SelectWeapon(int index)
     {
         CurrentWeaponindex = index;
@@ -531,17 +526,15 @@ public class MainMenuManager : MonoBehaviour
         currentWeapon = weaponData.GetWeapon(index, item);
 
         ButtonChanger(index, item, weaponLockedBtn, WeaponUnlockedBtn);
-
-        //   if(IsPistolLocked(index)) 
-
+     
         // Get the currently selected weapon
         if (item == Items.snipers)
         {
-            SpriteChanger(sniperButtons, sniperUnlockedSprites, sniperLockedSprites, Items.snipers,index);
+            SpriteChanger(sniperButtons, sniperUnlockedSprites, sniperLockedSprites, item, index);
         }
         else if (item == Items.pistols)
         {
-            SpriteChanger(pistolButtons, pistolUnlockedSprites, pistolLockedSprites, Items.pistols, index);
+            SpriteChanger(pistolButtons, pistolUnlockedSprites, pistolLockedSprites, item, index);
         }
         //  currentWeapon = weaponData.GetWeapon(index, WeaponType.pistol);        
         //   weaponAnimator.SetActive(false);
@@ -559,19 +552,37 @@ public class MainMenuManager : MonoBehaviour
          currentWeaponInstance.transform.localPosition = Vector3.zero;
          currentWeaponInstance.transform.localRotation = Quaternion.identity;
          currentWeaponInstance.transform.localScale = Vector3.one;*/
-
-        // Update the UI elements with the weapon's data
-        weaponPrice.text = currentWeapon.price.ToString();
-        weaponhealthText.text = currentWeapon.health.ToString() + "%";
-        weaponHidingText.text = currentWeapon.hiding.ToString() + "%";
-        weaponReloadText.text = currentWeapon.reloadTime.ToString() + "%";
-
-        healthBar.fillAmount = Mathf.Clamp01(currentWeapon.health / 100f);
-        hidingBar.fillAmount = Mathf.Clamp01(currentWeapon.hiding / 100f);
-        reloadBar.fillAmount = Mathf.Clamp01(currentWeapon.reloadTime / 100f);
+       
+        UpdateItemStatsUI(weaponPrice, weaponhealthText, weaponHidingText, weaponReloadText, weaponHealthBar, weaponHealthBar, weaponReloadBar, item, currentWeapon);
 
 
+    }
 
+    private void UpdateItemStatsUI(Text priceText,TextMeshProUGUI healthText, TextMeshProUGUI hidingText, TextMeshProUGUI reloadingText, Image healthBar, Image hidingBar, Image reloadingBar,Items item,WeaponsData.Weapon weapon=null,PlayerData.Player player=null )
+    {
+        if(item == Items.player)
+        {
+            priceText.text = $"{player.price}";
+            healthText.text = $"{player.health}%";
+            hidingText.text = $"{player.hiding}%";
+            reloadingText.text = $"{player.reloadTime}%";
+
+            healthBar.fillAmount = Mathf.Clamp01(player.health / 100f);
+            hidingBar.fillAmount = Mathf.Clamp01(player.hiding / 100f);
+            reloadingBar.fillAmount = Mathf.Clamp01(player.reloadTime / 100f);
+        }
+       else
+        {
+            priceText.text = $"{weapon.price}";
+            healthText.text = $"{weapon.health}%";
+            hidingText.text = $"{weapon.hiding}%";
+            reloadingText.text = $"{weapon.reloadTime}%";
+
+            healthBar.fillAmount = Mathf.Clamp01(weapon.health / 100f);
+            hidingBar.fillAmount = Mathf.Clamp01(weapon.hiding / 100f);
+            reloadingBar.fillAmount = Mathf.Clamp01(weapon.reloadTime / 100f);
+        }
+       
     }
     void EnableItem(List<GameObject> items, int index)
     {
@@ -605,20 +616,12 @@ public class MainMenuManager : MonoBehaviour
         /* PlayerData.Player currentPlayer = playerData.playerList[index];*/
         currentPlayer = playerData.GetPlayer(index);
         EnableItem(players, index);
-        agentPriceText.text = currentPlayer.price.ToString();     
-        // Update the UI elements with the weapon's data
-        playerHealthText.text = currentPlayer.health.ToString() + "%";
-        playerHidingText.text = currentPlayer.hiding.ToString() + "%";
-        playerReloadText.text = currentPlayer.reloadTime.ToString() + "%";
-
-        playerHealthBar.fillAmount = Mathf.Clamp01(currentPlayer.health / 100f);
-        playerHidingBar.fillAmount = Mathf.Clamp01(currentPlayer.hiding / 100f);
-        playerReloadBar.fillAmount = Mathf.Clamp01(currentPlayer.reloadTime / 100f);
+        UpdateItemStatsUI(playerPriceText, playerHealthText, playerHidingText, playerReloadText, playerHealthBar, playerHidingBar, playerReloadBar, Items.player,null, currentPlayer);
 
     }
     public void OnBuyPlayerButtonClick()
     {
-
+        audioManager.PlayButtonClickSound();
         if (currentPlayer != null)
         {
 
@@ -639,7 +642,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OnBuyWeaponButtonClick()
     {
-
+        audioManager.PlayButtonClickSound();
         if (currentWeapon != null)
         {
 
@@ -692,7 +695,7 @@ public class MainMenuManager : MonoBehaviour
     public void OnQuitButtonClick()
     {
 #if UNITY_EDITOR
-
+        audioManager.PlayButtonClickSound();
         UnityEditor.EditorApplication.isPlaying = false;
 #else
             
@@ -701,10 +704,12 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OpenMoreGames()
     {
+        audioManager.PlayButtonClickSound();
         Application.OpenURL("https://play.google.com/store/apps/details?id=com.topgamesinc.evony&pcampaignid=merch_published_cluster_promotion_battlestar_browse_all_games"); // Open the URL
     }
     public void RateGame()
     {
+        audioManager.PlayButtonClickSound();
 #if UNITY_ANDROID
         // Open the Play Store page for your app (use your actual package name)
         Application.OpenURL(playStoreURL);
@@ -723,30 +728,20 @@ public class MainMenuManager : MonoBehaviour
         ThisImage.sprite = ThisSprites;
         OtherImage.sprite = OhterSprite;
     }
-    public void OnStoreButtonClick()
+    public void  OnStoreButtonClick(GameObject panel)
     {
         inAppCanvas.SetActive(true);
-        mainMenu.SetActive(false);
+        panel.SetActive(false);
         audioManager.PlayButtonClickSound();
         ShowCash(InAppPanelCashText);
+       
     }
     
-    [System.Serializable]
-    public struct BackButtons
-    {
-        public string name;
-        public Button backButton;
-        public GameObject panelToDisable;      
-    }
-    [Space(25)]
-    [Hamza(1, 1, 1, 7)]
-    [Header("Other Things"), Space(25)]
-    public List<BackButtons> backButtons;
-    void SwitchPanels(GameObject panelToDisable)
+    public void OnBackButtonClick(GameObject panel)
     {
         audioManager.PlayButtonClickSound();
-        if (panelToDisable != null)
-            panelToDisable.SetActive(false);
+        panel.SetActive(false);
         DisplayMainMenu();
     }
+    
 }
