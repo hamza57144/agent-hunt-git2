@@ -45,6 +45,7 @@ namespace CoverShooter
     [Serializable]
     public struct WeaponDescription
     {
+        public string name; 
         /// <summary>
         /// True if Item is null.
         /// </summary>

@@ -24,6 +24,7 @@ public class MainMenuManager : MonoBehaviour
     #region Main Menu Panels
 
     [Header("Main Menu Panels"), Space(25)]
+    [SerializeField] Text levelNo;
     [SerializeField] GameObject mainMenu;
     [SerializeField] List<GameObject> MainMenuPlayers;
     [SerializeField] GameObject playerSelectionPanel;
@@ -193,6 +194,8 @@ public class MainMenuManager : MonoBehaviour
         levelSelectionPanel.SetActive(false);
         progressBarRect = progressBar.GetComponent<RectTransform>();
         SpriteChanger(pistolBtn, sniperBtn, weaponSelectedSprite, weaponDefualtSprite);
+       /* GameData.CompletedLevelIndex==*/
+        
 
         /*foreach (var button in backButtons)
         {
@@ -259,6 +262,7 @@ public class MainMenuManager : MonoBehaviour
             DisplayWeapons(index, pistols, Items.pistols);
         else
             DisplayWeapons(index, snipers, Items.snipers);
+        audioManager.PlayButtonClickSound();
 
     }
     public void OnPistolButtonClick()
@@ -505,7 +509,7 @@ public class MainMenuManager : MonoBehaviour
             
         }
     }
-    private void DisplayLockImage(List<Image> lockImages,Items item)
+    private void DisplayLockIcon(List<Image> lockImages,Items item)
     {
         for(int i = 0; i < lockImages.Count; i++)
         {
@@ -521,13 +525,11 @@ public class MainMenuManager : MonoBehaviour
     }
     private void DisplayWeapons(int index, List<GameObject> weapons, Items item)
     {
-        DisplayLockImage(pistolsLockImgages, Items.pistols);
-        DisplayLockImage(sniperLockImages, Items.snipers);
+        DisplayLockIcon(pistolsLockImgages, Items.pistols);
+        DisplayLockIcon(sniperLockImages, Items.snipers);
         currentWeapon = weaponData.GetWeapon(index, item);
 
-        ButtonChanger(index, item, weaponLockedBtn, WeaponUnlockedBtn);
-     
-        // Get the currently selected weapon
+        ButtonChanger(index, item, weaponLockedBtn, WeaponUnlockedBtn);           
         if (item == Items.snipers)
         {
             SpriteChanger(sniperButtons, sniperUnlockedSprites, sniperLockedSprites, item, index);
@@ -553,7 +555,7 @@ public class MainMenuManager : MonoBehaviour
          currentWeaponInstance.transform.localRotation = Quaternion.identity;
          currentWeaponInstance.transform.localScale = Vector3.one;*/
        
-        UpdateItemStatsUI(weaponPrice, weaponhealthText, weaponHidingText, weaponReloadText, weaponHealthBar, weaponHealthBar, weaponReloadBar, item, currentWeapon);
+        UpdateItemStatsUI(weaponPrice, weaponhealthText, weaponHidingText, weaponReloadText, weaponHealthBar, weaponHidingBar, weaponReloadBar, item, currentWeapon);
 
 
     }
@@ -611,7 +613,7 @@ public class MainMenuManager : MonoBehaviour
 
         ButtonChanger(index, Items.player, buyAgentButtonLocked, buyAgentButtonSelected);
         SpriteChanger(playerButtons, PlayerUnlockedSprites, PlayerLockedSprites, Items.player);
-        DisplayLockImage(playerLockImages, Items.player);
+        DisplayLockIcon(playerLockImages, Items.player);
         SetTextPosition(playerButtons,Items.player);
         /* PlayerData.Player currentPlayer = playerData.playerList[index];*/
         currentPlayer = playerData.GetPlayer(index);

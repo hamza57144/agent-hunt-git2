@@ -61,7 +61,7 @@ public class MultiplierSlider : MonoBehaviour
 
     void Update()
     {
-        rewardText.text = $"Reward: {reward}";
+       // rewardText.text = $"Reward: {reward}";
         if (PlayerPrefs.GetString("ExR", "no") == "yes")
         {
             Debug.Log("update exed");

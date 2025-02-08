@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject environment;
     public static GameManager instance { get; private set; }
+    [SerializeField] int levelCompleteReward;
     public LevelManager levelManager;
     [SerializeField] GameObject Hand;
     public List<CharacterMotor> players;

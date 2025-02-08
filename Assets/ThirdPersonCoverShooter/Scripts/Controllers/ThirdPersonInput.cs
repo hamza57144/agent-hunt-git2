@@ -465,16 +465,11 @@ namespace CoverShooter
             if (currentWeapon == 0)
             {
                 EquipDefaultWeapon();
-            }
-            if(Input.GetKeyDown(KeyCode.H))
-            {
-                
-                
-            }
+            }           
             // Weapon selection by number keys
-            if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha1)) { _motor.InputCancelGrenade(); inputWeapon(0); }
+            /*if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha1)) { _motor.InputCancelGrenade(); inputWeapon(0); }
             if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha2)) { _motor.InputCancelGrenade(); inputWeapon(1); }
-            if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha3)) { _motor.InputCancelGrenade(); inputWeapon(2); }
+            if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha3)) { _motor.InputCancelGrenade(); inputWeapon(2); }*/
             // Repeat for other numbers as needed
 
             // Scroll to cycle through weapons
@@ -486,15 +481,19 @@ namespace CoverShooter
                 {
                     _motor.InputCancelGrenade();
 
-                    inputWeapon(GameData.Selected_Pistol_Index + 1);
-                    switchWeapon = false;
+                    inputWeapon(GameData.Selected_Pistol_Index + 6);
+                    SwitchWeapon();
                     Debug.Log($"P is {switchWeapon}");
+                    Debug.Log($"We are Selecting the Pistol ");
+
+
                 }
                 else
                 {
-                    inputWeapon(GameData.Selected_Gun_Index + 2);
-                    switchWeapon = true;
-                    Debug.Log($"P is {switchWeapon}");
+                 //   inputWeapon(GameData.Selected_Gun_Index + 2);
+                    inputWeapon(GameData.Selected_Gun_Index+1);
+                    SwitchWeapon();
+                    Debug.Log($"We are Selecting the gun ");
                 }
             }
             else if (ControlFreak2.CF2Input.mouseScrollDelta.y > 0)
@@ -505,15 +504,16 @@ namespace CoverShooter
                 {
                     _motor.InputCancelGrenade();
 
-                    inputWeapon(GameData.Selected_Pistol_Index + 1);
-                    switchWeapon = false;
+                    inputWeapon(GameData.Selected_Pistol_Index + 6);
+                    SwitchWeapon();
                     Debug.Log($"P is {switchWeapon}");
                 }
                 else
                 {
-                    inputWeapon(GameData.Selected_Gun_Index + 2);
-                    switchWeapon = true;
-                    Debug.Log($"P is {switchWeapon}");
+                    //inputWeapon(GameData.Selected_Gun_Index + 2);
+                    inputWeapon(GameData.Selected_Gun_Index + 1);
+                    SwitchWeapon();
+                    Debug.Log($"We are Selecting the gun 1");
                 }
             }
         }
@@ -525,7 +525,7 @@ namespace CoverShooter
                 if (_inventory == null || !_motor.IsEquipped)
                     return 0;
                 
-                    return MainMenuManager.CurrentWeaponindex;
+                    return GameData.Selected_Pistol_Index;
 
             }
         }
@@ -539,16 +539,17 @@ namespace CoverShooter
                 _controller.InputUnequip();
             else if (_inventory != null && index <= _inventory.Weapons.Length)
             {
-                if (switchWeapon)
+                _controller.InputEquip(_inventory.Weapons[index]);
+                /*if (switchWeapon)
                 {
-                   /* inputWeapon(GameData.Selected_Pistol_Index + 1);*/
-                    _controller.InputEquip(_inventory.Weapons[/*GameData.Selected_Pistol_Index*/1]);
+                    *//* inputWeapon(GameData.Selected_Pistol_Index + 1);*//*
+                    _controller.InputEquip(_inventory.Weapons[GameData.Selected_Gun_Index + 6]);
+                   
                 }
                 else
                 {
-                    _controller.InputEquip(_inventory.Weapons[/*GameData.Selected_Gun_Index*/0]);
-
-                }
+                    _controller.InputEquip(_inventory.Weapons[GameData.Selected_Pistol_Index + 1]);
+                }*/
             }
 
         }
