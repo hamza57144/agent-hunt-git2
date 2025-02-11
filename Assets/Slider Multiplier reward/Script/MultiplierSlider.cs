@@ -181,22 +181,22 @@ public class MultiplierSlider : MonoBehaviour
 
         if (isX2Active)
         {
-            buttonText.text = "+500 COINS";
+            buttonText.text = "+1000 COINS";
             reward = 500+500;
         }
         if (isX3Active)
         {
-            buttonText.text = "+1000 COINS";
+            buttonText.text = "+1500 COINS";
             reward = 500 + 1000;
         }
         if (isX4Active)
         {
-            buttonText.text = "+1500 COINS";
+            buttonText.text = "+2000 COINS";
             reward = 500 + 1500;
         }
         if (isX5Active)
         {
-            buttonText.text = "+2000 COINS";
+            buttonText.text = "+2500 COINS";
             reward = 500 + 2000;
         }
     }

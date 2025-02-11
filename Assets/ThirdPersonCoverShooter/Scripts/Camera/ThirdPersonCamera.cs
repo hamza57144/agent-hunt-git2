@@ -15,11 +15,12 @@ namespace CoverShooter
     {
       
         public Image myScope;
+        public Image dotImg;
         float myFov;
         bool once=true;
         public float cameraOffset;
        
-     
+        public static bool isGun;
         
         /// <summary>
         /// Field of view as defined by the current camera state.
@@ -713,7 +714,16 @@ namespace CoverShooter
             {
                 myFov = fov;
                 if (Target.ActiveWeapon.Gun.myScope!=null)
-                  myScope.enabled = true;
+                {
+                    myScope.enabled = true;
+                    dotImg.enabled = true;
+                    isGun=true;
+                }
+                else
+                {
+                    isGun=false;
+                }
+                 
             }
            
             
@@ -728,6 +738,7 @@ namespace CoverShooter
             if (EnemyManager.instance.shoot)
             {
                 myScope.enabled = false;
+                dotImg.enabled= false;
                 once = true;
             }
             if (!once && !ThirdPersonInput.zoomIn)
@@ -816,7 +827,9 @@ namespace CoverShooter
             yield return new WaitForSeconds(1f);
             once = true;
             myScope.enabled = false;
-            
+            isGun = false;
+            dotImg.enabled = false;
+
            /* Target.ActiveWeapon.Gun.Scope.*/
         }
         private Vector3 checkObstacles(Vector3 camera, Vector3 target, float radius)

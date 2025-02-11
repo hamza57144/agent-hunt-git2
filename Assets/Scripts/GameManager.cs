@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] GameObject PausePanel;
     [SerializeField] Image healthBarFill;
+  
 
     private int enemies;    
     private int totalShots { get {  return headShot+bodyShot; } }
@@ -184,6 +185,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public void LevelComplete()
     {
+        GameData.showBossProgress = true;
         GameData.AddCoins(500);
         DisableCrossHair(false);
         if (!weaponsData.AreAllWeaponsUnlocked(Items.pistols))

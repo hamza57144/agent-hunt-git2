@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ad45ce015130744906b3703f645edf, type: 3}
+  m_Name: Stages Data
+  m_EditorClassIdentifier: 
+  levelData:
+  - levelNo: 01
+    totalEnemies: 01
+    location: Western
+  - levelNo: 02
+    totalEnemies: 01
+    location: Western
+  - levelNo: 03
+    totalEnemies: 02
+    location: Western

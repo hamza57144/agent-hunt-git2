@@ -13,7 +13,8 @@ public static class GameData
     public static int Unlocked_Gun_Index { get { return LoadUnlockedGun(); } }
     public static int SoundSettingsIndex { get { return LoadSoundSettings(); } }
     public static int MusicSettingsIndex { get { return LoadMusicSettings(); } }
-    public static int Coins { get { return LoadCoins(); } } 
+    public static int Coins { get { return LoadCoins(); } }
+    public static bool showBossProgress;
     public static void AddCoins(int amount)
     {
         int coins = Coins+amount;        
@@ -78,7 +79,7 @@ public static class GameData
     public static int LoadSelectedPlayer()
     { 
         int selectedPlayerIndex = PlayerPrefs.GetInt(PlayerPrefsHandler.SelectedPlayer, 0); 
-        Debug.Log($"Loaded Selected Player: {selectedPlayerIndex}");
+/*        Debug.Log($"Loaded Selected Player: {selectedPlayerIndex}");*/
         return selectedPlayerIndex;
     }
     public static void SaveUnlockedPlayer(int index)

@@ -21,6 +21,7 @@ public class SplashScreen : MonoBehaviour
 
     private void Start()
     {
+        GameData.showBossProgress = false;
         AudioManager.Instane.PlayBgMusic(AudioManager.Instane.isMusicOn);
         // Cache the RectTransform of the progress bar
         progressBarRect = progressBar.GetComponent<RectTransform>();

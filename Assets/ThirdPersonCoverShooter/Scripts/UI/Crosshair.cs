@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace CoverShooter
 {
@@ -8,7 +9,8 @@ namespace CoverShooter
        
         private CharacterOutline characterOutline;
         private CharacterMotor enemyMotor;
-       
+        [SerializeField] Image dotImg;
+        public LayerMask layerMask;
         // Crosshair colors
         public Color defaultColor = Color.white;
         public Color targetColor = Color.red;
@@ -58,7 +60,34 @@ namespace CoverShooter
             _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
             _camera = GetComponent<Camera>();
         }
+        private void Update()
+        {
+            Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
+            {
 
+                // Check if the object hit is an enemy or a target
+                if (hit.collider.CompareTag(TagsHandler.BodyPart))
+                {
+                    if (!ThirdPersonCamera.isGun)
+                    {
+                        characterOutline = hit.collider.GetComponentInParent<CharacterOutline>();
+                        enemyMotor = hit.collider.GetComponentInParent<CharacterMotor>();
+                      
+                        EnableHealthBar(enemyMotor, true);
+                        if (GameData.CompletedLevelIndex < 3)
+                            ChangeOutline(characterOutline, true);
+                    }
+                    ChangeDotColor(Color.green);
+                }
+            }
+            else
+            {
+                ChangeOutline(characterOutline, false);
+                EnableHealthBar(enemyMotor, false);
+                ChangeDotColor(Color.white);
+            }
+        }
         /// <summary>
         /// Draws the crosshair.
         /// </summary>
@@ -150,16 +179,16 @@ namespace CoverShooter
                 if (hit.collider.CompareTag(TagsHandler.Enemy))
                 {
                     crosshairColor = targetColor;                    
-                    characterOutline = hit.collider.GetComponent<CharacterOutline>();
+                   /* characterOutline = hit.collider.GetComponent<CharacterOutline>();
                     enemyMotor = hit.collider.GetComponent<CharacterMotor>();
                     EnableHealthBar(enemyMotor,true);
                     if (GameData.CompletedLevelIndex < 3)
-                        ChangeOutline(characterOutline, true);
+                        ChangeOutline(characterOutline, true);*/
                 }                             
                 else
-                {
+                {/*
                     ChangeOutline(characterOutline, false);
-                    EnableHealthBar(enemyMotor, false);
+                    EnableHealthBar(enemyMotor, false);*/
                 }
 
 
@@ -180,6 +209,10 @@ namespace CoverShooter
         {
             if (characterMotor != null)
               characterMotor.GetHealthBar.EnableHealthBar(enable);
+        }
+        private void ChangeDotColor(Color color)
+        {
+            dotImg.color = color;
         }
     }
 }

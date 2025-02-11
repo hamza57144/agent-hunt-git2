@@ -35,6 +35,11 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject inAppCanvas;
     [SerializeField] Text InAppPanelCashText;
     [SerializeField] BossLevelProgress bossLevelProgress;
+    [SerializeField] GameObject bossProgressPanel;
+    [SerializeField] GameObject PlayersPanel;
+    [SerializeField] Image mainMenuBg;
+    [SerializeField] StatgesData stagesData;
+
     #endregion
 
     #region Weapons Selection
@@ -140,6 +145,7 @@ public class MainMenuManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        ShowBossProgress(GameData.showBossProgress);
         /*weaponData = pistolsData;*/
         CurrentWeaponindex = GameData.Selected_Pistol_Index;
         currentPlayerIndex = GameData.SelectedPlayerIndex;
@@ -152,6 +158,14 @@ public class MainMenuManager : MonoBehaviour
 
     }
 
+    private void ShowBossProgress(bool show)
+    {
+        bossProgressPanel.SetActive(show);
+        PlayersPanel.SetActive(!show);
+        mainMenuBg.enabled = show;
+
+
+    }
     public void AnimationChanger(List<GameObject> animators, int idx)
     {
 
@@ -211,6 +225,7 @@ public class MainMenuManager : MonoBehaviour
         ShowCash(mainMenuPanelCashText);
         mainMenu.SetActive(true);
         EnableItem(MainMenuPlayers, GameData.SelectedPlayerIndex);
+        levelNo.text = $"Mission:{GameData.SelectedPlayerIndex+1}";
 
     }
     public void OnSelectPlayerBtnClick()

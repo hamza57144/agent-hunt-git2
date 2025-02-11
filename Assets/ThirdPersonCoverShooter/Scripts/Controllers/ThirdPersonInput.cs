@@ -40,7 +40,7 @@ namespace CoverShooter
         public static event EventHandler Fired;
         public static bool zoomIn;
         public static bool zoomOut;
-        bool switchWeapon;
+        bool switchWeapon=true;
         public static event EventHandler ButtonDown;
         public static event EventHandler ButtonUp;
         public static int totalTries { get; private set; } = 0;
@@ -481,7 +481,7 @@ namespace CoverShooter
                 {
                     _motor.InputCancelGrenade();
 
-                    inputWeapon(GameData.Selected_Pistol_Index + 6);
+                    inputWeapon(GameData.Selected_Gun_Index + 7);
                     SwitchWeapon();
                     Debug.Log($"P is {switchWeapon}");
                     Debug.Log($"We are Selecting the Pistol ");
@@ -491,7 +491,7 @@ namespace CoverShooter
                 else
                 {
                  //   inputWeapon(GameData.Selected_Gun_Index + 2);
-                    inputWeapon(GameData.Selected_Gun_Index+1);
+                    inputWeapon(GameData.Selected_Pistol_Index);
                     SwitchWeapon();
                     Debug.Log($"We are Selecting the gun ");
                 }
@@ -504,14 +504,14 @@ namespace CoverShooter
                 {
                     _motor.InputCancelGrenade();
 
-                    inputWeapon(GameData.Selected_Pistol_Index + 6);
+                    inputWeapon(GameData.Selected_Gun_Index + 7);
                     SwitchWeapon();
                     Debug.Log($"P is {switchWeapon}");
                 }
                 else
                 {
                     //inputWeapon(GameData.Selected_Gun_Index + 2);
-                    inputWeapon(GameData.Selected_Gun_Index + 1);
+                    inputWeapon(GameData.Selected_Pistol_Index);
                     SwitchWeapon();
                     Debug.Log($"We are Selecting the gun 1");
                 }
@@ -542,13 +542,13 @@ namespace CoverShooter
                 _controller.InputEquip(_inventory.Weapons[index]);
                 /*if (switchWeapon)
                 {
-                    *//* inputWeapon(GameData.Selected_Pistol_Index + 1);*//*
+                  //  inputWeapon(GameData.Selected_Pistol_Index + 1);
                     _controller.InputEquip(_inventory.Weapons[GameData.Selected_Gun_Index + 6]);
-                   
+
                 }
                 else
                 {
-                    _controller.InputEquip(_inventory.Weapons[GameData.Selected_Pistol_Index + 1]);
+                    _controller.InputEquip(_inventory.Weapons[GameData.Selected_Pistol_Index ]);
                 }*/
             }
 

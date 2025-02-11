@@ -3267,6 +3267,7 @@ namespace CoverShooter
 
         private void OnDisable()
         {
+            ThirdPersonInput.Fired -= ThirdPersonInput_Fired;
             Characters.Unregister(this);
             _hasRegistered = false;
         }
@@ -3378,7 +3379,11 @@ namespace CoverShooter
         private void ThirdPersonInput_Fired(object sender, EventArgs e)
         {
             if (!isPlayer)
-                Debug.Log("Play scared animation");
+            {
+                _animator.SetTrigger("Fear");
+                Debug.Log("Play fear animation");
+            }
+                
               //  Scared();
         }
 
