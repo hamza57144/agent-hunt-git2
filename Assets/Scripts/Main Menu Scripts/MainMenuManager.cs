@@ -39,7 +39,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject PlayersPanel;
     [SerializeField] Image mainMenuBg;
     [SerializeField] StatgesData stagesData;
-
+    [SerializeField] Text locationText;
+    [SerializeField] Text targetText;    
     #endregion
 
     #region Weapons Selection
@@ -208,8 +209,9 @@ public class MainMenuManager : MonoBehaviour
         levelSelectionPanel.SetActive(false);
         progressBarRect = progressBar.GetComponent<RectTransform>();
         SpriteChanger(pistolBtn, sniperBtn, weaponSelectedSprite, weaponDefualtSprite);
+        MissionDetails(GameData.CompletedLevelIndex);
        /* GameData.CompletedLevelIndex==*/
-        
+
 
         /*foreach (var button in backButtons)
         {
@@ -225,8 +227,15 @@ public class MainMenuManager : MonoBehaviour
         ShowCash(mainMenuPanelCashText);
         mainMenu.SetActive(true);
         EnableItem(MainMenuPlayers, GameData.SelectedPlayerIndex);
-        levelNo.text = $"Mission:{GameData.SelectedPlayerIndex+1}";
+      
 
+
+    } 
+    private void MissionDetails(int index)
+    {
+        levelNo.text = $"Mission:{stagesData.GetStage(index).levelNo}";
+        locationText.text = $"{stagesData.GetStage(index).location}";
+        targetText.text = $"{stagesData.GetStage(index).totalEnemies}";
     }
     public void OnSelectPlayerBtnClick()
     {

@@ -15,7 +15,7 @@ public class StatgesData : ScriptableObject
 
     }
     public List<Level> levelData;
-    public Level GetWeapon(int index)
+    public Level GetStage(int index)
     {      
             return levelData[index];      
     }
