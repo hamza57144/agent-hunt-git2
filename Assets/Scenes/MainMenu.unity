@@ -30575,7 +30575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1147574702
 Transform:
   m_ObjectHideFlags: 0
@@ -77204,6 +77204,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainMenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265884653948906029, guid: f73383777c73c1c499760f594afcd4af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6426585411051067013, guid: f73383777c73c1c499760f594afcd4af,
         type: 3}

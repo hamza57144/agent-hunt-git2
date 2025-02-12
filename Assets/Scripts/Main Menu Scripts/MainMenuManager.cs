@@ -258,6 +258,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OnPlayBtnClick()
     {
+        audioManager.PlayButtonClickSound();
         mainMenu.SetActive(false);
         loadingScreen.SetActive(true);
         StartCoroutine(LoadSceneWithProgress());

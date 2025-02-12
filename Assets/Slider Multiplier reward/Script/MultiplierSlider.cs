@@ -33,7 +33,7 @@ public class MultiplierSlider : MonoBehaviour
     [SerializeField] private TextMeshProUGUI x4Text;
     [SerializeField] private TextMeshProUGUI x5Text;
 
-    [SerializeField] private TextMeshProUGUI buttonText;
+    [SerializeField] private Text buttonText;
 
     [SerializeField] private Color activeColor = Color.yellow;
     [SerializeField] private Color inactiveColor = Color.white;
@@ -123,7 +123,7 @@ public class MultiplierSlider : MonoBehaviour
             int coinss = PlayerPrefs.GetInt("coins");
             PlayerPrefs.SetInt("coins", coinss + 5000 * 1);
             coins.text = "You Received 10,000 Coins";
-            outsideTotalCoinsText.text = "10,000 Coins";          
+            outsideTotalCoinsText.text = "10000 Coins";          
             Debug.Log("coins 2x earned");
         }
         else if (isX3Active)
@@ -131,7 +131,7 @@ public class MultiplierSlider : MonoBehaviour
             int coinss = PlayerPrefs.GetInt("coins");
             PlayerPrefs.SetInt("coins", coinss + 5000 * 2);
             coins.text = "You Received 15,000 Coins";
-            outsideTotalCoinsText.text = "15,000 Coins";         
+            outsideTotalCoinsText.text = "15000 Coins";         
             Debug.Log("coins 3x earned");
         }
         else if (isX4Active)
@@ -139,7 +139,7 @@ public class MultiplierSlider : MonoBehaviour
             int coinss = PlayerPrefs.GetInt("coins");
             PlayerPrefs.SetInt("coins", coinss + 5000 * 3);
             coins.text = "You Received 20,000 Coins";
-            outsideTotalCoinsText.text = "20,000 Coins";
+            outsideTotalCoinsText.text = "20000 Coins";
            
             Debug.Log("coins 4x earned");
         }
@@ -148,7 +148,7 @@ public class MultiplierSlider : MonoBehaviour
             int coinss = PlayerPrefs.GetInt("coins");
             PlayerPrefs.SetInt("coins", coinss + 5000 * 4);
             coins.text = "You Received 25,000 Coins";
-            outsideTotalCoinsText.text = "25,000 Coins";
+            outsideTotalCoinsText.text = "25000 Coins";
            
             Debug.Log("coins 5x earned");
         }
@@ -181,22 +181,22 @@ public class MultiplierSlider : MonoBehaviour
 
         if (isX2Active)
         {
-            buttonText.text = "+1000 COINS";
+            buttonText.text = "1000";
             reward = 500+500;
         }
         if (isX3Active)
         {
-            buttonText.text = "+1500 COINS";
+            buttonText.text = "1500";
             reward = 500 + 1000;
         }
         if (isX4Active)
         {
-            buttonText.text = "+2000 COINS";
+            buttonText.text = "2000";
             reward = 500 + 1500;
         }
         if (isX5Active)
         {
-            buttonText.text = "+2500 COINS";
+            buttonText.text = "2500";
             reward = 500 + 2000;
         }
     }
