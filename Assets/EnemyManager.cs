@@ -68,7 +68,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        DetectBodyParts();
+        
         if (levelCompleted && !once)
         {
             Invoke(nameof(LevelComplete),3f);   
@@ -78,7 +78,7 @@ public class EnemyManager : MonoBehaviour
         if (lastEnemy)
         {
          
-            DetectBodyParts();
+            
             
             Enemy enemy = FindFirstObjectByType<Enemy>();
             animator= enemy.gameObject.GetComponentInParent<Animator>();
@@ -88,6 +88,7 @@ public class EnemyManager : MonoBehaviour
                 {
                     if (gameManager.PlayerMotor.ActiveWeapon.Gun.myScope != null)
                     {
+                        DetectBodyParts();
                         if (enemy.CheckHealth() < 75 || isHead)
                         {
                             if (isAiming)
@@ -130,6 +131,12 @@ public class EnemyManager : MonoBehaviour
         {
           
             BodyPartDetection bodyPart = hit.collider.GetComponent<BodyPartDetection>();
+            if (hit.collider.CompareTag(TagsHandler.BodyPart))
+            {              
+                    isAiming = true;
+                
+            }
+           
             if (bodyPart != null)
             {               
                 if (bodyPart.bodyPart == BodyPart.head)
@@ -151,20 +158,13 @@ public class EnemyManager : MonoBehaviour
            
 
         }
-       
-        if (Physics.Raycast(ray, out RaycastHit _hit))
+        else
         {
-            if (_hit.collider.CompareTag("Enemy"))
-            {
-                isAiming = true;
-            }
-            else
-            {
-                isAiming = false;
-                finalShot = false;
-            }
-
+            isAiming = false;
+            finalShot = false;           
         }
+
+       
     }
     public void Shoot()
     {

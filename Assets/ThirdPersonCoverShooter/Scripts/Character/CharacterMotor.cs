@@ -3388,9 +3388,7 @@ namespace CoverShooter
             {
                 _animator.SetTrigger("Fear");
                 Debug.Log("Play fear animation");
-            }
-                
-              //  Scared();
+            }  
         }
 
         private void OnAnimatorMove()

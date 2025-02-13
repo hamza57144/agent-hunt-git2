@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public LevelManager levelManager;
     [SerializeField] GameObject aimTutorial;
     [SerializeField] GameObject switchWeaponTutorial;
+    [SerializeField] GameObject fireButton;
     public List<CharacterMotor> players;
     public CharacterMotor Player { get { return players[GameData.SelectedPlayerIndex]; } }
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
@@ -126,7 +127,9 @@ public class GameManager : MonoBehaviour
         if (GameData.CompletedLevelIndex == 2)
         {
             EnableTutorial(switchWeaponTutorial,false);
-           
+            EnableTutorial(fireButton, true);
+
+
         }
     }
 
@@ -146,6 +149,7 @@ public class GameManager : MonoBehaviour
     public void EnableSwitchWeaponTutorial()
     {
         EnableTutorial(switchWeaponTutorial,true);
+        EnableTutorial(fireButton, false);
     }
     void ShowCash(Text text)
     {
