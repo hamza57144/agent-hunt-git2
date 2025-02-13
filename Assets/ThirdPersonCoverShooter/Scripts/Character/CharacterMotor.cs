@@ -3309,11 +3309,11 @@ namespace CoverShooter
             _rightFoot = _animator.GetBoneTransform(HumanBodyBones.RightFoot);
 
             animatorToMotorMap[_animator] = this;
-
+           
             if (!Weapon.IsNull && IsEquipped)
             {
                 InputGrabWeapon();
-                InputFinishEquip();
+              InputFinishEquip();
 
                 _weaponGrabTimer = 0;
 
@@ -3374,8 +3374,14 @@ namespace CoverShooter
             if (CurrentHeightChanged != null) CurrentHeightChanged.Invoke(_defaultCapsuleHeight);
 
             SetAimTarget(transform.position + transform.forward * 100);
+            if(!isPlayer) 
+                Invoke(nameof(EquipWeapon),.3f);
+           
         }
-
+        private void EquipWeapon()
+        {
+            IsEquipped = true;
+        }
         private void ThirdPersonInput_Fired(object sender, EventArgs e)
         {
             if (!isPlayer)
@@ -4171,11 +4177,33 @@ namespace CoverShooter
 
         private void updateAngles()
         {
+            
+                
             if (isPlayer && !Nav_Movement.Instance.isInCoverAnim)
-                return;
-            var vector = _bodyTarget - VirtualHead;
-            _horizontalAngle = Util.HorizontalAngle(vector);
-            _verticalAngle = Util.VerticalAngle(vector);
+            {
+                // Get the agent's current velocity
+                Vector3 movementDirection = Nav_Movement.Instance.agent.velocity;
+
+
+                // Calculate the target direction based on the agent's movement
+                Vector3 targetDirection = movementDirection.normalized;
+
+                // Calculate the angles based on the target direction
+                _horizontalAngle = Util.HorizontalAngle(targetDirection);
+                _verticalAngle = Util.VerticalAngle(targetDirection);
+
+            }
+            else
+            {
+                var vector = _bodyTarget - VirtualHead;
+                _horizontalAngle = Util.HorizontalAngle(vector);
+                _verticalAngle = Util.VerticalAngle(vector);
+            }
+           
+          
+              
+            
+
         }
 
         private void loadBullet()

@@ -22,7 +22,7 @@ public class Nav_Movement : MonoBehaviour
     public float smoothness = 3f;
     private CoverPoint[] coverPoint;
     private Cover[] covers;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private Animator animator;
     public float stoppingDistance = 0.1f; // Distance threshold to stop at cover
     private int point = 0;
@@ -30,7 +30,7 @@ public class Nav_Movement : MonoBehaviour
     private PlayerState state;
     //For optimization
     private GameObject player;
-
+    public bool PlaySwitchTutorial { get { return GameData.CompletedLevelIndex == 2 && point==1; } }
    private GameObject helpingPoint { get { return coverPoint[point].GetHelpingPoint(); } }
     Actor actor;
     public bool isInCoverAnim;
@@ -99,7 +99,10 @@ public class Nav_Movement : MonoBehaviour
             coverPoint[point].DeleteEnemiesCovers();
             wait = true;
             if(!lastCoverPoint)
+            {
                 Invoke(nameof(SetNextMovePoint), 2.2f);
+            
+            }
             else
             {
                // Invoke(nameof(DestroyCoverPoint), 2.1f);
@@ -116,6 +119,7 @@ public class Nav_Movement : MonoBehaviour
                 GameManager.instance.PlayerStopped();
                 // Stop movement and transition to cover position
                 EnterCoverPosition();
+              //  UpdateAgentRotation();
             }
             else
             {
@@ -170,6 +174,10 @@ public class Nav_Movement : MonoBehaviour
     }
     void MoveToCover(int movPoint)
     {
+        if (PlaySwitchTutorial)
+        {           
+            GameManager.instance.EnableSwitchWeaponTutorial();
+        }
         ActiveCoverPoint++;
         foreach (var enemyMotor in coverPoint[movPoint].enemies)
         {
@@ -219,12 +227,17 @@ public class Nav_Movement : MonoBehaviour
     }
     void UpdateAgentRotation()
     {
+        // Check if the agent is moving
         if (agent.velocity.sqrMagnitude > 0.01f)
         {
-            // Rotate the player to face the movement direction
-            Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
+            // Calculate the target rotation based on the agent's velocity
+            Vector3 movementDirection = agent.velocity.normalized; // Get the normalized direction of movement
+            Quaternion targetRotation = Quaternion.LookRotation(movementDirection); // Create a rotation that looks in the movement direction
+
+            // Smoothly rotate towards the target rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smoothness);
         }
+
     }
 
 }

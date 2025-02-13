@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
     [SerializeField] int levelCompleteReward;
     public LevelManager levelManager;
-    [SerializeField] GameObject Hand;
+    [SerializeField] GameObject aimTutorial;
+    [SerializeField] GameObject switchWeaponTutorial;
     public List<CharacterMotor> players;
     public CharacterMotor Player { get { return players[GameData.SelectedPlayerIndex]; } }
     [SerializeField] EnemyDisplayManager enemyDisplayManager;
@@ -46,13 +47,8 @@ public class GameManager : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] BossLevelProgress bossLevelProgress;
     [SerializeField] WeaponFiller weaponFiller;
-    [SerializeField] WeaponsData weaponsData;
-
-    private void DisableHand()
-    {
-        if(Hand != null)
-        Hand.SetActive(false);
-    }
+    [SerializeField] WeaponsData weaponsData;   
+    
     private void HideControllerButtons()
     {
         foreach (var item in controllerButtons)
@@ -110,15 +106,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         environment.SetActive(true );
-        if (GameData.CompletedLevelIndex == 0)
-        {
-            Hand.SetActive(true );
-        }
+        EnableTutorial(aimTutorial, GameData.CompletedLevelIndex == 0);       
         CharacterMotor.OnPlayerDie += CharacterMotor_OnPlayerDie;
         BodyPartHealth.OnBodyShot += BodyPartHealth_OnBodyShot;
         BodyPartHealth.OnHeadShot += BodyPartHealth_OnHeadShot;
         ThirdPersonInput.ButtonDown += ThirdPersonInput_ButtonDown;
         ThirdPersonInput.ButtonUp += ThirdPersonInput_ButtonUp;
+        ThirdPersonInput.SwitchWeaponButtonClicked += ThirdPersonInput_SwitchWeaponButtonClicked;
         enemies = EnemyManager.instance.enemyCount;
         progressBarRect = progressBar.GetComponent<RectTransform>();
         amo = levelManager.GetLevel.bullets;
@@ -126,6 +120,16 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+    private void ThirdPersonInput_SwitchWeaponButtonClicked(object sender, EventArgs e)
+    {
+        if (GameData.CompletedLevelIndex == 2)
+        {
+            EnableTutorial(switchWeaponTutorial,false);
+           
+        }
+    }
+
     private void Update()
     {
         if (Player != null && healthBarFill != null)
@@ -133,8 +137,16 @@ public class GameManager : MonoBehaviour
             healthBarFill.fillAmount = Player.GetHealth / 500f; 
         }
         Amo();
+        
     }
-
+    public void EnableTutorial(GameObject tutorial,bool enable)
+    {
+        tutorial.SetActive(enable);
+    } 
+    public void EnableSwitchWeaponTutorial()
+    {
+        EnableTutorial(switchWeaponTutorial,true);
+    }
     void ShowCash(Text text)
     {
         text.text = GameData.Coins.ToString();
@@ -147,9 +159,10 @@ public class GameManager : MonoBehaviour
 
     private void ThirdPersonInput_ButtonDown(object sender, EventArgs e)
     {
+      
         if (GameData.CompletedLevelIndex == 0)
         {
-            DisableHand();
+            EnableTutorial(aimTutorial, false);
         }
         HideControllerButtons();
     }
@@ -347,6 +360,7 @@ public class GameManager : MonoBehaviour
         BodyPartHealth.OnHeadShot -= BodyPartHealth_OnHeadShot;
         ThirdPersonInput.ButtonDown -= ThirdPersonInput_ButtonDown;
         ThirdPersonInput.ButtonUp -= ThirdPersonInput_ButtonUp;
+        ThirdPersonInput.SwitchWeaponButtonClicked -= ThirdPersonInput_SwitchWeaponButtonClicked;
     }
     public void OnPauseButtonClick()
     {

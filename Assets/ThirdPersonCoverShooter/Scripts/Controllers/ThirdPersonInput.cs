@@ -38,6 +38,7 @@ namespace CoverShooter
     public class ThirdPersonInput : MonoBehaviour
     {
         public static event EventHandler Fired;
+        public static event EventHandler SwitchWeaponButtonClicked;
         public static bool zoomIn;
         public static bool zoomOut;
         bool switchWeapon=true;
@@ -475,6 +476,7 @@ namespace CoverShooter
             // Scroll to cycle through weapons
             if (ControlFreak2.CF2Input.mouseScrollDelta.y < 0)
             {
+                SwitchWeaponButtonClicked?.Invoke(this,EventArgs.Empty);
                 Debug.Log("Inupt is in if body  ");
              /*   SwitchWeapon();*/
                 if (switchWeapon)
@@ -490,7 +492,7 @@ namespace CoverShooter
                 }
                 else
                 {
-                 //   inputWeapon(GameData.Selected_Gun_Index + 2);
+                    inputWeapon(GameData.Selected_Gun_Index + 2);
                     inputWeapon(GameData.Selected_Pistol_Index);
                     SwitchWeapon();
                     Debug.Log($"We are Selecting the gun ");
@@ -498,6 +500,7 @@ namespace CoverShooter
             }
             else if (ControlFreak2.CF2Input.mouseScrollDelta.y > 0)
             {
+                SwitchWeaponButtonClicked?.Invoke(this, EventArgs.Empty);
                 Debug.Log("Inupt is in else body  ");
                 //  SwitchWeapon();
                 if (switchWeapon)
