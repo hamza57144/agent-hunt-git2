@@ -12,6 +12,7 @@ public class StatgesData : ScriptableObject
         public string levelNo;
         public string totalEnemies;
         public string location;
+        public int bossProgression;
 
     }
     public List<Level> levelData;

@@ -110,7 +110,10 @@ public class BossLevelProgress : MonoBehaviour
         // Wait for 0.75 seconds before progressing to the next bar
         yield return new WaitForSeconds(0.75f);
 
-        // Check if the next bar exists
+        // Set the current yellow bar to green
+        bossProgressImages[index].sprite = greenSprite;
+
+        // Check if there is a next bar
         int nextIndex = index + 1;
         if (nextIndex < bossProgressImages.Count)
         {
@@ -118,12 +121,9 @@ public class BossLevelProgress : MonoBehaviour
 
             if (nextBar != null)
             {
-                // Set the current yellow bar to green (no animation)
-                bossProgressImages[index].sprite = greenSprite;
-
                 // Set the next bar to yellow and start animating
                 nextBar.sprite = yellowSprite;
-                StartCoroutine(AnimateYellowBar(nextIndex));  // Start animation for the next yellow bar
+                StartCoroutine(AnimateYellowBar(nextIndex));
             }
         }
     }

@@ -24,7 +24,7 @@ public class WeaponFiller : MonoBehaviour
     }
     private void Start()
     {
-        progressLevel = (GameData.CompletedLevelIndex < 3) ? GameData.CompletedLevelIndex + 1 : (GameData.CompletedLevelIndex % 3) + 1;
+        progressLevel =  (GameData.CompletedLevelIndex % 3) + 1;
         weaponFillImage.fillAmount = (progressLevel-1) * fillStep;
         progressText.text = $"{weaponFillImage.fillAmount * 100}%";
         weaponCanvas.gameObject.SetActive(false);
@@ -60,15 +60,7 @@ public class WeaponFiller : MonoBehaviour
         weaponFillImage.fillAmount = targetFill;
         yield return new WaitForSeconds(1f); // Show for a moment
         SwitchPanels(progressLevel == 3);
-      /*  if(progressLevel == 3)
-        {
-            EnableButtonsPanel(true);
-        }
-        else
-        {
-            weaponCanvas.gameObject.SetActive(false);
-            gameManager.EnableGameCompleteCanvas();
-        }*/
+     
 
     }
 

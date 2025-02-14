@@ -199,7 +199,7 @@ public class MainMenuManager : MonoBehaviour
     }
     private void Start()
     {
-        bossLevelProgress.UpdateBossProgressBar(GameData.CompletedLevelIndex -1);
+        bossLevelProgress.UpdateBossProgressBar((GameData.CompletedLevelIndex -1)%7);//There are 7 levels for each boss level 
         audioManager = AudioManager.Instane;
         audioManager.PlayBgMusic(audioManager.isMusicOn);
         // Players.gameObject.transform.position = position2.transform.position;

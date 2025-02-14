@@ -135,6 +135,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        
         if (Player != null && healthBarFill != null)
         {
             healthBarFill.fillAmount = Player.GetHealth / 500f; 
@@ -193,7 +194,7 @@ public class GameManager : MonoBehaviour
         levelCompleteCanvas.SetActive(true);
         ind++;
         GameData.SaveCompletedLevel(ind);
-        bossLevelProgress.UpdateBossProgressBar(ind - 1);
+        bossLevelProgress.UpdateBossProgressBar((ind - 1)%7);//Boss level come after each 7 levels
         /*if (GameData.CompletedLevelIndex == 3)
         {
             GameData.SaveCompletedLevel(0);
@@ -231,9 +232,7 @@ public class GameManager : MonoBehaviour
         }*/
 
         
-    }
-
-  
+    }  
 
     public void LevelFailed()
     {
@@ -388,6 +387,12 @@ public class GameManager : MonoBehaviour
     void DisableCrossHair(bool enable)
     {
         thirdPersonCamera.gameObject.GetComponent<Crosshair>().enabled = enable;
+    }
+    public void OnClaimWeaponButtonClick()
+    {
+        weaponsData.UnlockWeaon(GameData.Unlocked_Pistol_Index+1, Items.pistols);
+        GameData.SaveUnlocked_Pistol(GameData.Unlocked_Pistol_Index + 1);
+        GameData.SaveSelectedPistol(GameData.Unlocked_Pistol_Index + 1);
     }
     /*  public void SetPlayerPosition()
       {

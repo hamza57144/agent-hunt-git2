@@ -176,7 +176,7 @@ namespace CoverShooter
         {
             if (_inventory != null && _inventory.Weapons.Length > 0)
             {
-                inputWeapon(currentWeapon+1);  // Assuming 1 represents the index for the first weapon
+                inputWeapon(GameData.Selected_Pistol_Index);  // Assuming 1 represents the index for the first weapon
             }
         }
         private void Update()
@@ -462,22 +462,10 @@ namespace CoverShooter
           
         }
         protected virtual void UpdateWeapons()
-        {
-            if (currentWeapon == 0)
-            {
-                EquipDefaultWeapon();
-            }           
-            // Weapon selection by number keys
-            /*if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha1)) { _motor.InputCancelGrenade(); inputWeapon(0); }
-            if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha2)) { _motor.InputCancelGrenade(); inputWeapon(1); }
-            if (ControlFreak2.CF2Input.GetKey(KeyCode.Alpha3)) { _motor.InputCancelGrenade(); inputWeapon(2); }*/
-            // Repeat for other numbers as needed
-
-            // Scroll to cycle through weapons
+        {          
             if (ControlFreak2.CF2Input.mouseScrollDelta.y < 0)
             {
-                SwitchWeaponButtonClicked?.Invoke(this,EventArgs.Empty);
-                Debug.Log("Inupt is in if body  ");
+                SwitchWeaponButtonClicked?.Invoke(this,EventArgs.Empty);              
              /*   SwitchWeapon();*/
                 if (switchWeapon)
                 {
@@ -485,23 +473,19 @@ namespace CoverShooter
 
                     inputWeapon(GameData.Selected_Gun_Index + 7);
                     SwitchWeapon();
-                    Debug.Log($"P is {switchWeapon}");
-                    Debug.Log($"We are Selecting the Pistol ");
-
-
                 }
                 else
                 {
-                    inputWeapon(GameData.Selected_Gun_Index + 2);
                     inputWeapon(GameData.Selected_Pistol_Index);
+                  //  inputWeapon(GameData.Selected_Pistol_Index);
                     SwitchWeapon();
-                    Debug.Log($"We are Selecting the gun ");
+                   
                 }
             }
             else if (ControlFreak2.CF2Input.mouseScrollDelta.y > 0)
             {
                 SwitchWeaponButtonClicked?.Invoke(this, EventArgs.Empty);
-                Debug.Log("Inupt is in else body  ");
+               
                 //  SwitchWeapon();
                 if (switchWeapon)
                 {
@@ -509,14 +493,14 @@ namespace CoverShooter
 
                     inputWeapon(GameData.Selected_Gun_Index + 7);
                     SwitchWeapon();
-                    Debug.Log($"P is {switchWeapon}");
+                    
                 }
                 else
                 {
                     //inputWeapon(GameData.Selected_Gun_Index + 2);
                     inputWeapon(GameData.Selected_Pistol_Index);
                     SwitchWeapon();
-                    Debug.Log($"We are Selecting the gun 1");
+                    
                 }
             }
         }
@@ -528,7 +512,7 @@ namespace CoverShooter
                 if (_inventory == null || !_motor.IsEquipped)
                     return 0;
                 
-                    return GameData.Selected_Pistol_Index;
+                    return GameData.Selected_Pistol_Index+2;
 
             }
         }
