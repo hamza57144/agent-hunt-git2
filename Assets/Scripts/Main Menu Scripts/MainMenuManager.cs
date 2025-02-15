@@ -145,6 +145,9 @@ public class MainMenuManager : MonoBehaviour
     
     private void Awake()
     {
+        DisplayWeapons(GameData.Selected_Pistol_Index, pistols, Items.pistols);
+
+        DisplayPlayer(GameData.SelectedPlayerIndex);
         Instance = this;
         ShowBossProgress(GameData.showBossProgress);
         /*weaponData = pistolsData;*/
@@ -152,9 +155,7 @@ public class MainMenuManager : MonoBehaviour
         currentPlayerIndex = GameData.SelectedPlayerIndex;
         UnlockCursor();
         LevelButtonActivation();
-        DisplayWeapons(GameData.Selected_Pistol_Index, pistols, Items.pistols);
-
-        DisplayPlayer(GameData.SelectedPlayerIndex);
+      
         //PlayerButtonsLockUnlock();
 
     }
@@ -166,30 +167,6 @@ public class MainMenuManager : MonoBehaviour
         mainMenuBg.enabled = show;
 
 
-    }
-    public void AnimationChanger(List<GameObject> animators, int idx)
-    {
-
-        for (int i = 0; i < animators.Count; i++)
-        {
-            animators[i].GetComponent<Animator>().SetInteger(AnimationHandler.MainMenuPlayerAnimation, idx);
-        }
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            AnimationChanger(players, idx);
-            AnimationChanger(MainMenuPlayers, idx);
-            ResetIdx();
-        }
-    }
-    int idx = 1;
-    public int totalAnimations;
-    private void ResetIdx()
-    {
-        idx++;
-        if (idx > totalAnimations) { idx = 1; }
     }
     void UnlockCursor()
     {
@@ -770,5 +747,5 @@ public class MainMenuManager : MonoBehaviour
         panel.SetActive(false);
         DisplayMainMenu();
     }
-    
+  
 }

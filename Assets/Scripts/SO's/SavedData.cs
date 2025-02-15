@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SavedData : MonoBehaviour
 {
@@ -77,4 +78,17 @@ public class SavedData : MonoBehaviour
             PlayerPrefs.DeleteKey("Player" + i + "isLocked");
         PlayerPrefs.Save();
     }
+
+    public void ClearLevelsData()
+    {
+        PlayerPrefs.DeleteKey(PlayerPrefsHandler.CompletedLevel);
+    }
+
+    public void  OpenLevel(int index)
+    {
+        GameData.SaveCompletedLevel(index);
+              
+    }
+
+  
 }
