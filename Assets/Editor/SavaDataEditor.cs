@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(SavedData))] // Attach this editor script to your SavedData class
+[CustomEditor(typeof(SavedData))] 
 public class SavaDataEditor : Editor
 {
     private string[] options = { "All", "Weapons", "Players", "Levels" }; // Options for the dropdown

@@ -393,6 +393,7 @@ public class GameManager : MonoBehaviour
         weaponsData.UnlockWeaon(GameData.Unlocked_Pistol_Index+1, Items.pistols);
         GameData.SaveUnlocked_Pistol(GameData.Unlocked_Pistol_Index + 1);
         GameData.SaveSelectedPistol(GameData.Unlocked_Pistol_Index + 1);
+        weaponFiller.OnLoseItButtonClick();
     }
     /*  public void SetPlayerPosition()
       {

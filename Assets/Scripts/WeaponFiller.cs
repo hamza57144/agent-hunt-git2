@@ -4,6 +4,7 @@ using System.Collections;
 
 public class WeaponFiller : MonoBehaviour
 {
+    public static WeaponFiller Instance { get; private set; }
     public Image weaponFillImage;
     public Image bgImage;
     public Canvas weaponCanvas;    
@@ -19,6 +20,7 @@ public class WeaponFiller : MonoBehaviour
     [SerializeField] WeaponsData weaponData;
     private void Awake()
     {
+        Instance = this;
         weaponFillImage.sprite = weaponData.GetWeapon(GameData.Unlocked_Pistol_Index + 1, Items.pistols).fillSprite;
         bgImage.sprite = weaponData.GetWeapon(GameData.Unlocked_Pistol_Index + 1, Items.pistols).bgSprite;
     }

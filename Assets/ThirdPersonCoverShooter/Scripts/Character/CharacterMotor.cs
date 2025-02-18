@@ -3384,10 +3384,15 @@ namespace CoverShooter
         }
         private void ThirdPersonInput_Fired(object sender, EventArgs e)
         {
+            AISight aISight =  GetComponent<AISight>();               
             if (!isPlayer)
             {
-                _animator.SetTrigger("Fear");
-                Debug.Log("Play fear animation");
+                if(!aISight.enabled)
+                {
+                    _animator.SetTrigger("Fear");
+                    Debug.Log("Play fear animation");
+                }
+                
             }  
         }
 

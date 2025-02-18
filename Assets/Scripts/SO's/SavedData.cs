@@ -6,52 +6,54 @@ public class SavedData : MonoBehaviour
     public WeaponsData weaponData;
     public PlayerData playerData;
     private MainMenuManager mainMenuManager;
+    public Scenes scene;
     private void Awake()
     {
-        mainMenuManager =MainMenuManager.Instance;
-        for (int i = 1; i < weaponData.pistolData.Count; i++)
+        if(scene == Scenes.mainMenu)
         {
-            if (PlayerPrefs.HasKey("Pistol" + i + "isLocked"))
+            mainMenuManager = MainMenuManager.Instance;
+            for (int i = 1; i < weaponData.pistolData.Count; i++)
             {
-                weaponData.pistolData[i].isLocked = PlayerPrefs.GetInt("Pistol" + i + "isLocked") == 1;
+                if (PlayerPrefs.HasKey("Pistol" + i + "isLocked"))
+                {
+                    weaponData.pistolData[i].isLocked = PlayerPrefs.GetInt("Pistol" + i + "isLocked") == 1;
 
+                }
+                else
+                {
+                    weaponData.pistolData[i].isLocked = true;
+                    mainMenuManager.DisplayWeapons(GameData.Unlocked_Pistol_Index, Items.pistols);
+                }
             }
-            else
+            for (int i = 1; i < weaponData.sniperData.Count; i++)
             {
-                weaponData.pistolData[i].isLocked = true;
-                mainMenuManager.DisplayWeapons(GameData.Unlocked_Pistol_Index,Items.pistols);
+                if (PlayerPrefs.HasKey("Sniper" + i + "isLocked"))
+                {
+                    weaponData.pistolData[i].isLocked = PlayerPrefs.GetInt("Sniper" + i + "isLocked") == 1;
+
+                }
+                else
+                {
+                    weaponData.sniperData[i].isLocked = true;
+                    mainMenuManager.DisplayWeapons(GameData.Unlocked_Gun_Index, Items.snipers);
+                }
             }
-        }
-        for (int i = 1; i < weaponData.sniperData.Count; i++)
-        {
-            if (PlayerPrefs.HasKey("Sniper" + i + "isLocked"))
+            for (int i = 1; i < playerData.playerList.Count; i++)
             {
-                weaponData.pistolData[i].isLocked = PlayerPrefs.GetInt("Sniper" + i + "isLocked") == 1;
+                if (PlayerPrefs.HasKey("Player" + i + "isLocked"))
+                {
+                    playerData.playerList[i].isLocked = PlayerPrefs.GetInt("Player" + i + "isLocked") == 1;
+                    mainMenuManager.DisplayPlayer(GameData.SelectedPlayerIndex);
+                }
+                else
+                {
+                    playerData.playerList[i].isLocked = true;
+                    mainMenuManager.DisplayPlayer(GameData.SelectedPlayerIndex);
 
+
+                }
             }
-            else
-            {
-                weaponData.sniperData[i].isLocked = true;
-                mainMenuManager.DisplayWeapons(GameData.Unlocked_Gun_Index, Items.snipers);
-            }
-        }
-        for (int i = 1; i < playerData.playerList.Count; i++)
-        {
-            if (PlayerPrefs.HasKey("Player" + i + "isLocked"))
-            {
-                playerData.playerList[i].isLocked = PlayerPrefs.GetInt("Player" + i + "isLocked") == 1;
-                mainMenuManager.DisplayPlayer(GameData.SelectedPlayerIndex);
-            }
-            else
-            {
-                playerData.playerList[i].isLocked=true;
-                mainMenuManager.DisplayPlayer(GameData.SelectedPlayerIndex);
-
-
-            }
-        }
-
-
+        }      
     }
     public void ClearAllData()
     {
