@@ -48,8 +48,9 @@ public class GameManager : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] BossLevelProgress bossLevelProgress;
     [SerializeField] WeaponFiller weaponFiller;
-    [SerializeField] WeaponsData weaponsData;   
-    
+    [SerializeField] WeaponsData weaponsData;
+    [SerializeField] StatgesData stagesData;
+    [SerializeField] GameObject bossLevelThings;
     private void HideControllerButtons()
     {
         foreach (var item in controllerButtons)
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
        
         Player.gameObject.SetActive(true);
         instance = this;
+        bossLevelThings.SetActive(stagesData.IsBossLevel(GameData.CompletedLevelIndex));
     }
     private void Start()
     {
@@ -284,7 +286,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnNextButtonClicked()
     {
-        if (GameData.CompletedLevelIndex == 3)
+        if (GameData.CompletedLevelIndex == levelManager.totalLevels)
         {
             GameData.SaveCompletedLevel(0);
         }

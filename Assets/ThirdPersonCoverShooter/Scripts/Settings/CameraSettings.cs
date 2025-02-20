@@ -181,7 +181,7 @@ namespace CoverShooter
         /// </summary>
         [Tooltip("Maximum allow vertical angle in degrees.")]
         public float MaxAngle;
-        public float MinX;
+        public float MinX ;
         public float MaxX;
         public static CameraState Default()
         {
@@ -207,6 +207,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
+           
 
             return settings;
         }
@@ -220,6 +221,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
+            
 
             return settings;
         }
@@ -233,6 +235,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
+          
 
             return settings;
         }
@@ -246,6 +249,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
+          
 
             return settings;
         }
@@ -259,6 +263,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
+         
 
             return settings;
         }
@@ -272,7 +277,7 @@ namespace CoverShooter
             settings.FOV = 45;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+          
             return settings;
         }
 
@@ -285,7 +290,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+          
             return settings;
         }
 
@@ -298,7 +303,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+          
             return settings;
         }
 
@@ -311,7 +316,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+           
             return settings;
         }
 
@@ -324,7 +329,7 @@ namespace CoverShooter
             settings.FOV = 60;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+           
             return settings;
         }
 
@@ -337,7 +342,7 @@ namespace CoverShooter
             settings.FOV = 40;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+          
             return settings;
         }
 
@@ -350,7 +355,7 @@ namespace CoverShooter
             settings.FOV = 40;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+          
             return settings;
         }
 
@@ -363,7 +368,7 @@ namespace CoverShooter
             settings.FOV = 40;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+           
             return settings;
         }
 
@@ -376,7 +381,7 @@ namespace CoverShooter
             settings.FOV = 40;
             settings.MinAngle = -65;
             settings.MaxAngle = 45;
-
+            
             return settings;
         }
     }

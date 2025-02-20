@@ -587,6 +587,7 @@ namespace CoverShooter
                 _hasAskedToStopMoving = false;
 
             _hasCachedEnemies = false;
+           
         }
 
         #endregion
@@ -611,8 +612,8 @@ namespace CoverShooter
                     _registeredCover.RegisterUser(_actor, _targetPosition);
             }
         }
-
-        private void takeCover(Cover cover, Vector3 position, int direction, float speed)
+      
+        public void takeCover(Cover cover, Vector3 position, int direction, float speed)
         {
             _targetPosition = position;
             _targetCover = cover;
@@ -633,7 +634,7 @@ namespace CoverShooter
                 _targetCover = null;
         }
 
-        private bool isValidCover(Cover cover, Vector3 position, int direction, bool checkPath, bool avoidPivot = true)
+        /*private bool isValidCover(Cover cover, Vector3 position, int direction, bool checkPath, bool avoidPivot = true)
         {
             if (cover == _unreachableCover)
                 return false;
@@ -748,8 +749,124 @@ namespace CoverShooter
             }
 
             return true;
-        }
+        }*/
+        private bool isValidCover(Cover cover, Vector3 position, int direction, bool checkPath, bool avoidPivot = true)
+        {
+            if (cover == _unreachableCover)
+                return false;
 
+            if (_isKeepingCloseTo && Vector3.Distance(position, _keepCloseTo.Position) > _keepCloseTo.Distance)
+                return false;
+
+            if (!_hasPivot)
+            {
+                if (!AICoverUtil.IsCoverPositionFree(cover, position, 1, _actor))
+                    return false;
+
+                return true;
+            }
+
+            if (!_hasCachedEnemies)
+            {
+                _cachedEnemyCount = 0;
+                _hasCachedEnemies = true;
+
+                var totalActorCount = AIUtil.FindActors(position, MinDefenselessDistance, _actor);
+
+                if (totalActorCount > 0)
+                {
+                    var enemyCount = 0;
+                    for (int i = 0; i < totalActorCount; i++)
+                        if (AIUtil.Actors[i].Side != _actor.Side)
+                            enemyCount++;
+
+                    if (enemyCount > 0)
+                    {
+                        if (_cachedEnemies == null || _cachedEnemies.Length < enemyCount)
+                            _cachedEnemies = new BaseActor[enemyCount];
+
+                        var index = 0;
+
+                        for (int i = 0; i < totalActorCount; i++)
+                            if (AIUtil.Actors[i].Side != _actor.Side)
+                                _cachedEnemies[index++] = AIUtil.Actors[i];
+
+                        _cachedEnemyCount = index;
+                    }
+                }
+            }
+
+            for (int i = 0; i < _cachedEnemyCount; i++)
+            {
+                var enemy = _cachedEnemies[i];
+
+                if (enemy.Side != _actor.Side)
+                {
+                    var enemyPosition = enemy.transform.position;
+                    var distance = Vector3.Distance(position, enemyPosition);
+
+                    if (distance < AvoidDistance)
+                        return false;
+
+                    // Removed the angle check to ignore the enemy's angle
+                    // if (!AICoverUtil.IsGoodAngle(MaxTallCoverThreatAngle, MaxLowCoverThreatAngle, cover, position, enemyPosition, cover.IsTall))
+                    //     return false;
+                }
+            }
+
+            if (_isPivotThreat)
+            {
+                var distance = Vector3.Distance(position, _pivotPosition);
+
+                if (_hasMaxPivotDistance && distance > _maxPivotDistance)
+                    return false;
+
+                var aimPosition = position;
+
+                if (AIUtil.IsObstructed(aimPosition + (_actor.StandingTopPosition - transform.position), _pivotPosition + Vector3.up * 2))
+                    return false;
+            }
+            else
+            {
+                var distance = Vector3.Distance(position, _pivotPosition);
+
+                if (_hasMaxPivotDistance && distance > _maxPivotDistance)
+                    return false;
+
+                // Removed the angle check for defense
+                // if (!AICoverUtil.IsGoodAngle(MaxDefenseAngle, MaxDefenseAngle, cover, _pivotPosition, position, cover.IsTall))
+                //     return false;
+            }
+
+            if (!AICoverUtil.IsCoverPositionFree(cover, position, 1, _actor))
+                return false;
+
+            if (checkPath)
+            {
+                if (NavMesh.CalculatePath(transform.position, position, 1, _path))
+                {
+                    if (avoidPivot)
+                    {
+                        var count = _path.GetCornersNonAlloc(_corners);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            var a = i == 0 ? transform.position : _corners[i - 1];
+                            var b = _corners[i];
+
+                            var closest = Util.FindClosestToPath(a, b, _pivotPosition);
+
+                            if (Vector3.Distance(closest, _pivotPosition) < AvoidDistance)
+                                return false;
+                        }
+                    }
+                }
+                else
+                    return false;
+            }
+
+            return true;
+        }
 
         #endregion
     }

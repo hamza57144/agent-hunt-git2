@@ -1,3 +1,4 @@
+using ControlFreak2.Demos.RPG;
 using CoverShooter;
 using CoverShooter.AI;
 using System;
@@ -26,22 +27,26 @@ public class Nav_Movement : MonoBehaviour
     private Animator animator;
     public float stoppingDistance = 0.1f; // Distance threshold to stop at cover
     private int point = 0;
-    private bool isReached;
+    public  bool isReached;
     private PlayerState state;
     //For optimization
     private GameObject player;
-    public bool PlaySwitchTutorial { get { return GameData.CompletedLevelIndex == 2 && point==1; } }
-   private GameObject helpingPoint { get { return coverPoint[point].GetHelpingPoint(); } }
+    
     Actor actor;
     public bool isInCoverAnim;
     bool isInCover;
     bool wait = false;
     int totalEnemies = 0;
+    [SerializeField] StatgesData stagesData;
+    
     #region Properties
         public bool SetCameraLeft { get { return covers[point].OpenLeft; } }//To set Camera left or right 
         private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
         public int coverDirection { get { return SetCameraLeft ? -1 : 1; } }//Direction for player to look left or right
         public int TotalEnemies { get { return totalEnemies; } }
+        public bool PlaySwitchTutorial { get { return GameData.CompletedLevelIndex == 2 && point == 1; } }
+        private GameObject helpingPoint { get { return coverPoint[point].GetHelpingPoint(); } }
+
     #endregion
     private void Awake()
     {
@@ -65,20 +70,12 @@ public class Nav_Movement : MonoBehaviour
                 enemyMotor.isVisible = false;
             }
         }
-        // Invoke(nameof(StartMoving), 0.1f);
-        MoveToCover(point);
-        /*if(helpingPoint != null)
-        {
-            agent.SetDestination(helpingPoint.transform.position);
-        }
-        else
-        {
-            MoveToCover(point);
-        }
-       */
+       if(!stagesData.IsBossLevel(GameData.CompletedLevelIndex))
+          MoveToCover(point);
+      
 
     }
-   private void StartMoving()
+   public void StartMoving()
     {
         MoveToCover(point);
     }
@@ -116,6 +113,7 @@ public class Nav_Movement : MonoBehaviour
         {
             if (!agent.pathPending && agent.remainingDistance <= stoppingDistance && !isReached)
             {
+                Debug.Log("Player Stoped true");
                 GameManager.instance.PlayerStopped();
                 // Stop movement and transition to cover position
                 EnterCoverPosition();
@@ -123,6 +121,7 @@ public class Nav_Movement : MonoBehaviour
             }
             else
             {
+                Debug.Log("Player Stoped false");
                 GameManager.instance.PlayerRunning();
                 UpdateAnimatorParameters();
                 UpdateAgentRotation();
@@ -167,7 +166,6 @@ public class Nav_Movement : MonoBehaviour
         isReached = false;
 
     }
-
     void DestroyCoverPoint()
     {
         Destroy(covers[point].gameObject);
@@ -194,8 +192,6 @@ public class Nav_Movement : MonoBehaviour
         }
 
     }
-
-
     void UpdateAnimatorParameters()
     {
        
@@ -210,9 +206,9 @@ public class Nav_Movement : MonoBehaviour
         animator.SetFloat("MovementZ", movementZ * smoothness);
         
     }
-
     void EnterCoverPosition()
-    {               
+    {
+        Debug.Log("We entered in cover position");
         // Stop the agent
         agent.isStopped = true;
         isReached = true;

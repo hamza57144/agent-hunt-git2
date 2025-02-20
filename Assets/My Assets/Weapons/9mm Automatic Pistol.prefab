@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488654352219123}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0.1251, z: 0.2629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5975488655072251469}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: -180, z: -90}
 --- !u!1 &5975488654396048921
 GameObject:
@@ -54,13 +54,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488654396048921}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.50000006, y: -0.49999994, z: -0.50000006, w: 0.4999999}
   m_LocalPosition: {x: 0.03519996, y: -0.06940006, z: 0.019899454}
   m_LocalScale: {x: 0.05210002, y: 0.072699994, z: 0.06342001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5975488655072251469}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5975488655072251466
 GameObject:
@@ -91,6 +91,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488655072251466}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.7496789, y: 0.49088615, z: -0.23287794, w: -0.3778627}
   m_LocalPosition: {x: -0.039390944, y: 0.07167287, z: 0.0056321323}
   m_LocalScale: {x: 0.59999996, y: 0.6, z: 0.60000014}
@@ -104,7 +105,6 @@ Transform:
   - {fileID: 5975488655477332007}
   - {fileID: 5975488656113133146}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -19.75, y: -130.079, z: 104.302}
 --- !u!114 &5975488655072251459
 MonoBehaviour:
@@ -126,7 +126,7 @@ MonoBehaviour:
   Rate: 2
   BulletsPerShot: 1
   ConsumeSingleBulletPerShot: 1
-  Distance: 50
+  Distance: 1200
   Damage: 150
   Error: 0
   AutoReload: 0
@@ -221,9 +221,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488655072251466}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.1, y: 0.34, z: 0.52}
   m_Center: {x: 0, y: 0, z: 0.18}
 --- !u!114 &5975488655072251471
@@ -285,13 +293,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488655477332004}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.5000001, y: -0.49999988, z: -0.5000001, w: 0.49999988}
   m_LocalPosition: {x: 0.03519996, y: -0.06940006, z: 0.019899454}
   m_LocalScale: {x: 0.05210003, y: 0.072699994, z: 0.06342002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5975488655072251469}
-  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5975488655699077139
 GameObject:
@@ -317,13 +325,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488655699077139}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.50000006, y: -0.5000001, z: -0.49999994, w: 0.5}
   m_LocalPosition: {x: -0.059, y: -0.064, z: 0.015}
   m_LocalScale: {x: 0.05209577, y: 0.07269965, z: 0.06342149}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5975488655072251469}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5975488655699077141
 BoxCollider:
@@ -333,9 +341,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488655699077139}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5975488655925119611
@@ -361,13 +377,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488655925119611}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.50000006, y: -0.50000006, z: -0.49999994, w: 0.49999994}
   m_LocalPosition: {x: 0.03519996, y: -0.06940006, z: 0.019899454}
   m_LocalScale: {x: 0.052100025, y: 0.072699994, z: 0.06342001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5975488655072251469}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5975488656124955855
 GameObject:
@@ -392,19 +408,20 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975488656124955855}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.5000001, y: -0.5000001, z: -0.49999988, w: 0.49999988}
   m_LocalPosition: {x: 0.0352, y: -0.0694, z: 0.0199}
   m_LocalScale: {x: 0.0521, y: 0.0727, z: 0.063419975}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5975488655072251469}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5975488656112745690
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 5975488655072251469}
     m_Modifications:
     - target: {fileID: 100000, guid: 721165e1fd5edae478aeb7e4c425dd5a, type: 3}
@@ -472,11 +489,14 @@ PrefabInstance:
       value: -253.562
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 721165e1fd5edae478aeb7e4c425dd5a, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: edb24d9b9e37af34785fe78dd592c1ee, type: 2}
     m_RemovedComponents:
     - {fileID: 11100000, guid: 721165e1fd5edae478aeb7e4c425dd5a, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 721165e1fd5edae478aeb7e4c425dd5a, type: 3}
 --- !u!4 &5975488656113133146 stripped
 Transform:

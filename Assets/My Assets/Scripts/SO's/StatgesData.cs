@@ -13,11 +13,16 @@ public class StatgesData : ScriptableObject
         public string totalEnemies;
         public string location;
         public int bossProgression;
+        public bool isBossLevel;
 
     }
     public List<Level> levelData;
     public Level GetStage(int index)
     {      
             return levelData[index];      
+    }
+    public bool IsBossLevel(int index)
+    {
+        return levelData[index].isBossLevel;
     }
 }
