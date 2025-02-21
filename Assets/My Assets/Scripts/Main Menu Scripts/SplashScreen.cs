@@ -18,9 +18,13 @@ public class SplashScreen : MonoBehaviour
     public float loadingTime = 5f;
 
     private RectTransform progressBarRect; // RectTransform of the progress bar
-
+    [SerializeField] StatgesData stagesData;
     private void Start()
     {
+        if (GameData.CompletedLevelIndex == stagesData.levelData.Count)
+        {
+            GameData.SaveCompletedLevel(0);
+        }
         GameData.showBossProgress = false;
         AudioManager.Instane.PlayBgMusic(AudioManager.Instane.isMusicOn);
         // Cache the RectTransform of the progress bar

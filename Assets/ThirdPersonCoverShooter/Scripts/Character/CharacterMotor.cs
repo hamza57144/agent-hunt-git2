@@ -66,6 +66,7 @@ namespace CoverShooter
         private AIAlerts aIAlerts;
         public static event EventHandler EnemyDie;
         public static event EventHandler OnPlayerDie;
+        public static event EventHandler OnBossDie;
         private Nav_Movement playerMotor;
         public bool isPlayer;
         private static bool hasScope;
@@ -1929,8 +1930,12 @@ namespace CoverShooter
                     
                 }        
                 EnemyDie?.Invoke(this, EventArgs.Empty);
+                if(GameManager.instance.IsBossLevel())
+                {
+                    OnBossDie?.Invoke(this, EventArgs.Empty);
+                }
 
-            }
+    }
             else
             {
                 OnPlayerDie?.Invoke(this, EventArgs.Empty);

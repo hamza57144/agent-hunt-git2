@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] WeaponsData weaponsData;
     [SerializeField] StatgesData stagesData;
     [SerializeField] GameObject bossLevelThings;
+    
     private void HideControllerButtons()
     {
         foreach (var item in controllerButtons)
@@ -94,7 +95,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+    public bool IsBossLevel()
+    {
+        return stagesData.IsBossLevel(GameData.CompletedLevelIndex);
+    }
 
     void Awake()
     {

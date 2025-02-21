@@ -49,9 +49,15 @@ public class EnemyManager : MonoBehaviour
         finalShot = false;
         CalculateEnemies();
         CharacterMotor.EnemyDie += OnEnemyDie;
-
+        CharacterMotor.OnBossDie += CharacterMotor_OnBossDie;
         
     }
+
+    private void CharacterMotor_OnBossDie(object sender, System.EventArgs e)
+    {
+        Invoke(nameof(LevelComplete), 3f);
+    }
+
     private void CalculateEnemies()
     {
         enemyCount = player.TotalEnemies;
@@ -207,6 +213,7 @@ public class EnemyManager : MonoBehaviour
     {
         // Unsubscribe from the event to avoid issues
         CharacterMotor.EnemyDie -= OnEnemyDie;
+        CharacterMotor.OnBossDie -= CharacterMotor_OnBossDie;
     }
     public void EnableAnimator()
     {

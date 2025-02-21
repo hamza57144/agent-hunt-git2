@@ -47,6 +47,7 @@ public class CoverPoint : MonoBehaviour
     /// <returns></returns>
     public bool AreEnemiesCleared()
     {
+       
         foreach (CharacterMotor enemy in enemies)
         {
             if (enemy.IsAlive)

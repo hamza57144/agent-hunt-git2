@@ -12,6 +12,7 @@ public class CameraFocusController : MonoBehaviour
     public float startDistance = 2f;   // Closer to enemy at start
     public float zoomOutDistance = 5f; // How far back the camera moves
     public BossLevel bossLevel;
+    [SerializeField] GameObject bossPanel;
 
     void Start()
     {
@@ -26,22 +27,33 @@ public class CameraFocusController : MonoBehaviour
         float time = 0;
         float startSize = cam.orthographicSize;
         Vector3 startPosition = cam.transform.position;
-        Vector3 targetPosition = enemy.position + enemy.forward * zoomOutDistance + Vector3.up * cameraHeight; // Stay in front & low
+
+        // Position in front of the enemy at neck level
+        Vector3 targetPosition = enemy.position + enemy.forward * zoomOutDistance + Vector3.up * cameraHeight;
 
         while (time < 1)
         {
             time += Time.deltaTime * transitionSpeed;
             cam.orthographicSize = Mathf.Lerp(startSize, zoomOutSize, time);
-            cam.transform.position = Vector3.Lerp(startPosition, targetPosition, time); // Move back while zooming out
-            cam.transform.LookAt(enemy.position + Vector3.up * 0.5f);
+            cam.transform.position = Vector3.Lerp(startPosition, targetPosition, time);
+
+            // Look slightly downward to align with the neck instead of the head
+            cam.transform.LookAt(enemy.position + Vector3.up * 1.2f);
+
             yield return null;
         }
-        StartMoiving();
+        EnableBossPanel(true);
+        Invoke(nameof(StartMoiving), 3f);
     }
 
     public void StartMoiving()
     {
+        EnableBossPanel(false);
         cam.enabled = false;
         bossLevel.StartMoving();
+    }
+    private void EnableBossPanel(bool enable)
+    {
+        bossPanel.SetActive(enable);
     }
 }

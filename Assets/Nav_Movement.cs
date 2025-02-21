@@ -91,8 +91,9 @@ public class Nav_Movement : MonoBehaviour
     void Update()
     {
       //  if (!agent.pathPending && agent.remainingDistance && 
-        if ((Input.GetKeyDown(KeyCode.T) || coverPoint[point].AreEnemiesCleared()) && !wait )
+        if ((Input.GetKeyDown(KeyCode.T) || (coverPoint[point].AreEnemiesCleared()) && !wait)|| BossMove.moveToNext)
         {
+            BossMove.moveToNext=false;
             coverPoint[point].DeleteEnemiesCovers();
             wait = true;
             if(!lastCoverPoint)
@@ -168,9 +169,10 @@ public class Nav_Movement : MonoBehaviour
     }
     void DestroyCoverPoint()
     {
+        if(covers[point].gameObject!=null)
         Destroy(covers[point].gameObject);
     }
-    void MoveToCover(int movPoint)
+    public void MoveToCover(int movPoint)
     {
         if (PlaySwitchTutorial)
         {           
