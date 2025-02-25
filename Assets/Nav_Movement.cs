@@ -114,7 +114,7 @@ public class Nav_Movement : MonoBehaviour
         {
             if (!agent.pathPending && agent.remainingDistance <= stoppingDistance && !isReached)
             {
-                Debug.Log("Player Stoped true");
+                
                 GameManager.instance.PlayerStopped();
                 // Stop movement and transition to cover position
                 EnterCoverPosition();
@@ -122,7 +122,7 @@ public class Nav_Movement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player Stoped false");
+               
                 GameManager.instance.PlayerRunning();
                 UpdateAnimatorParameters();
                 UpdateAgentRotation();
@@ -210,7 +210,7 @@ public class Nav_Movement : MonoBehaviour
     }
     void EnterCoverPosition()
     {
-        Debug.Log("We entered in cover position");
+        
         // Stop the agent
         agent.isStopped = true;
         isReached = true;

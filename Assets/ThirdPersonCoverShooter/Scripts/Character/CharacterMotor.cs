@@ -49,7 +49,12 @@ namespace CoverShooter
         Left,
         Right
     }
-
+    public enum CharacterType
+    {
+        Player,
+        Enemy,
+        Boss,
+    }
     /// <summary>
     /// Characters must have a Character Motor component attached. It manages the character, it’s movement, appearance and use of weapons. It handles gravity and therefore gravity should be turned off in the RigidBody component to avoid conflicts.
     /// There is an IK (inverse-kinematics) system that handles aiming and recoil. It can be configured manually but for ease of use there is a button to set it up automatically inside the CharacterMotor inspector. It is recommended to reduce the amount of bones used by IK on non-player characters for performance reasons.
@@ -69,6 +74,7 @@ namespace CoverShooter
         public static event EventHandler OnBossDie;
         private Nav_Movement playerMotor;
         public bool isPlayer;
+        public CharacterType characterType;
         private static bool hasScope;
         private Enemy enemy;
         private HealthBar healthBar;
@@ -1961,10 +1967,21 @@ namespace CoverShooter
         /// <summary>
         /// Affects the character spine by a bullet hit.
         /// </summary>
+
+        public int movePoint = -1;
         public void OnHit(Hit hit)
         {            
             if (isPlayer && !IsZooming)
                 return;
+            if(characterType == CharacterType.Boss)
+            {
+
+                movePoint++;
+               if(movePoint <BossMove.Instance.bossCount) 
+                BossMove.Instance.Move(movePoint);
+
+
+            }
             var gotHit = true;
             var weapon = EquippedWeapon;
 
@@ -3394,8 +3411,7 @@ namespace CoverShooter
             {
                 if(!aISight.enabled)
                 {
-                    _animator.SetTrigger("Fear");
-                    Debug.Log("Play fear animation");
+                    _animator.SetTrigger("Fear");                    
                 }
                 
             }  

@@ -37,7 +37,7 @@ public class CoverPoint : MonoBehaviour
     /// <param name="e"></param>
     private void AIAlerts_OnEnemyAlert(object sender, System.EventArgs e)
     {
-        if (!areEnemiesAlerted)
+      /*  if (!areEnemiesAlerted)*/
             AlertAllEnemies();
     }
     /// <summary>
@@ -80,8 +80,7 @@ public class CoverPoint : MonoBehaviour
         {
             foreach (CharacterMotor item in enemies)
             {
-                item.gameObject.GetComponent<AISight>().enabled = true;
-                Debug.Log("Total enemies " + TotalEnemies);
+                item.gameObject.GetComponent<AISight>().enabled = true;              
             }
         }
        

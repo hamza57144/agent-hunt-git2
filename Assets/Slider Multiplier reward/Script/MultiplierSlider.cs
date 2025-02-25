@@ -44,6 +44,8 @@ public class MultiplierSlider : MonoBehaviour
     int reward = 500;
     void Start()
     {
+        reward = GameManager.instance.levelCompleteReward;
+        rewardText.text = $"Reward: {reward}";
         if (rectTransform == null)
         {
             Debug.LogError("RectTransform not assigned!");
@@ -61,7 +63,7 @@ public class MultiplierSlider : MonoBehaviour
 
     void Update()
     {
-       // rewardText.text = $"Reward: {reward}";
+       // 
         if (PlayerPrefs.GetString("ExR", "no") == "yes")
         {
             Debug.Log("update exed");
@@ -181,23 +183,24 @@ public class MultiplierSlider : MonoBehaviour
 
         if (isX2Active)
         {
-            buttonText.text = "1000";
-            reward = 500+500;
+
+            buttonText.text = $"{reward*2}";
+         
         }
         if (isX3Active)
         {
-            buttonText.text = "1500";
-            reward = 500 + 1000;
+            buttonText.text = $"{reward * 3}";
+            
         }
         if (isX4Active)
         {
-            buttonText.text = "2000";
-            reward = 500 + 1500;
+            buttonText.text = $"{reward * 4}";
+          
         }
         if (isX5Active)
         {
-            buttonText.text = "2500";
-            reward = 500 + 2000;
+            buttonText.text = $"{reward * 5}";
+           
         }
     }
 

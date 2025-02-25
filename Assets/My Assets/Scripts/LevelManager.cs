@@ -73,8 +73,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < levels.Count; i++)
         {
             if (i == GameData.CompletedLevelIndex)
-            {
-                Debug.Log($"SelectedLevelIndex is {GameData.CompletedLevelIndex} and i is {i}");
+            {               
                 levels[i].level.gameObject.SetActive(true);
             }
             else

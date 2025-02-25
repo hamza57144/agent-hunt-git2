@@ -61,9 +61,9 @@ MonoBehaviour:
   Scope: {fileID: 0}
   Rate: 1
   BulletsPerShot: 1
-  ConsumeSingleBulletPerShot: 1
+  ConsumeSingleBulletPerShot: 0
   Distance: 1000
-  Damage: 50
+  Damage: 15
   Error: 0
   AutoReload: 0
   ReloadWithMagazines: 1
@@ -101,9 +101,9 @@ MonoBehaviour:
     TallCover: {fileID: 0}
   LaserOverwrite: {fileID: 0}
   Character: {fileID: 0}
-  MagazineSize: 10
+  MagazineSize: 50
   LoadedBullets: 10
-  BulletInventory: 10000
+  BulletInventory: 1000000
 --- !u!114 &5347261943531040274
 MonoBehaviour:
   m_ObjectHideFlags: 0

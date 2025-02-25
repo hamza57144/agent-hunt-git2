@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject environment;
     public static GameManager instance { get; private set; }
-    [SerializeField] int levelCompleteReward;
+    public int levelCompleteReward;
     public LevelManager levelManager;
     [SerializeField] GameObject aimTutorial;
     [SerializeField] GameObject switchWeaponTutorial;
@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviour
     public void LevelComplete()
     {
         GameData.showBossProgress = true;
-        GameData.AddCoins(500);
+        GameData.AddCoins(levelCompleteReward);
         DisableCrossHair(false);
         if (!weaponsData.AreAllWeaponsUnlocked(Items.pistols))
         {

@@ -67,8 +67,10 @@ namespace CoverShooter
                     HideHealthBar();
                 }
             }*/
+            /*Vector3 targetPosition = Target.transform.position + Vector3.up * 6.0f; // Adjust height as needed
+            transform.position = targetPosition;*/
+
            
-            FaceCamera();
             if (Target != _cachedTarget)
             {
                 _cachedTarget = Target;
@@ -107,7 +109,11 @@ namespace CoverShooter
                 }
 
                 if (FillRect != null)
-                    FillRect.anchorMax = new Vector2(Value, 1);
+                {
+                   // FillRect.anchorMax = new Vector2(Value, 1);
+                    FillRect.gameObject.GetComponent<Image>().fillAmount = Value;
+                }
+                  
             }
             
         }
@@ -122,16 +128,7 @@ namespace CoverShooter
 
    
 
-        private void FaceCamera()
-        {
-            if (Camera.main != null)
-            {
-                // Align the health bar to face the camera
-                transform.LookAt(Camera.main.transform);
-                // Correct the rotation to face the camera in the correct direction
-                transform.Rotate(0, 180, 0);
-            }
-        }
+     
 
 
     }

@@ -32,8 +32,8 @@ namespace CoverShooter
         public static Bursts Default()
         {
             var result = new Bursts();
-            result.Wait = 0.25f;
-            result.Duration = 1.0f;
+            result.Wait = 1f;
+            result.Duration = 2.0f;
 
             return result;
         }
@@ -86,7 +86,7 @@ namespace CoverShooter
         {
             var result = new CoverBursts();
             result.Wait = 1.0f;
-            result.Duration = 0.9f;
+            result.Duration = 5f;
             result.IntroDuration = 0.35f;
             result.OutroDuration = 0.35f;
 
