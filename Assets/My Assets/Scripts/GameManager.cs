@@ -272,9 +272,9 @@ public class GameManager : MonoBehaviour
     {
         enemyDisplayManager.gameObject.SetActive(false);
     }
-     public void RestartGame()
+     public void RestartGame(GameObject currentPanel)
      {
-        levelFailCanvas.SetActive(false);
+        currentPanel.SetActive(false);
         loadingCanvas.SetActive(true);
         GameData.SaveCompletedLevel(ind);
         Time.timeScale = 1f;
@@ -300,10 +300,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         StartCoroutine(LoadSceneWithProgress(SceneHandler.MainMenu));
     }
-    public void OnHomeBtnClick()
+    public void OnHomeBtnClick(GameObject panelToDisable)
     {
         DisableCrossHair(false);
-        levelCompleteCanvas.SetActive(false);
+        panelToDisable.SetActive(false);
         loadingCanvas.SetActive(true);
         Time.timeScale = 1f;
         StartCoroutine(LoadSceneWithProgress(SceneHandler.MainMenu));

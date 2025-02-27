@@ -10,7 +10,7 @@ public  class PlayerSelection :MonoBehaviour
    {
         GameData.SaveSelectedPlayer(index);
         Debug.Log($"Selected Player index is {GameData.SelectedPlayerIndex}");
-        GameManager.instance.RestartGame();
+       
      
        
    }

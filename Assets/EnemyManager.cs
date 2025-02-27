@@ -23,6 +23,7 @@ public class EnemyManager : MonoBehaviour
     [HideInInspector]
     public int enemyCount;
     private int totalEnemies;
+    private int targets=0;
     [SerializeField] Text totalEnemiesText;
 
     public  bool finalShot;
@@ -62,7 +63,7 @@ public class EnemyManager : MonoBehaviour
     {
         enemyCount = player.TotalEnemies;
         totalEnemies = enemyCount;
-        totalEnemiesText.text = $"{enemyCount}/{totalEnemies}";
+        totalEnemiesText.text = $"{targets}/{totalEnemies}";
 
     }
     private void OnEnemyDie(object sender, System.EventArgs e)
@@ -207,7 +208,8 @@ public class EnemyManager : MonoBehaviour
     private void CountEnemies()
     {
         enemyCount--;
-        totalEnemiesText.text = $"{enemyCount}/{totalEnemies}";
+        targets++;
+        totalEnemiesText.text = $"{targets}/{totalEnemies}";
     }    
     private void OnDisable()
     {

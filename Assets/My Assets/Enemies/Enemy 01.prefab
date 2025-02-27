@@ -687,7 +687,6 @@ GameObject:
   - component: {fileID: 3200732468071478528}
   - component: {fileID: 3200732468071478591}
   - component: {fileID: 3200732468071478590}
-  - component: {fileID: 3975416816403059942}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -702,20 +701,20 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3200732468071478588}
-  m_LocalRotation: {x: -0.00073042914, y: -0.9991797, z: 0.0039871326, w: 0.040291615}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0947}
-  m_LocalScale: {x: 0.0016388521, y: 0.000109256835, z: 0.001092568}
+  m_LocalRotation: {x: -0, y: -0.95211047, z: -0, w: -0.30575442}
+  m_LocalPosition: {x: 0, y: 0, z: 0.029830223}
+  m_LocalScale: {x: 0.0013327837, y: 0.00008479909, z: 0.00088852}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3200732469053900378}
   - {fileID: 3200732468812530235}
   - {fileID: 3200732468557150788}
-  m_Father: {fileID: 9046995745529623214}
-  m_LocalEulerAnglesHint: {x: 0.453, y: 184.619, z: 0.102}
+  m_Father: {fileID: 3200732469325807608}
+  m_LocalEulerAnglesHint: {x: 0.459, y: 180.468, z: 0.069}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.0634, y: 0.5209}
-  m_SizeDelta: {x: 547.7719, y: 1498.1477}
+  m_AnchoredPosition: {x: -0.11563984, y: 1.9759605}
+  m_SizeDelta: {x: 321.9394, y: 1403.5159}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3200732468071478528
 Canvas:
@@ -780,18 +779,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3975416816403059942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3200732468071478588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e17acd9a6e03fda40980a6276b9350de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3200732468142958398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,6 +1908,9 @@ MonoBehaviour:
   BackgroundRect: {fileID: 3200732468812530235}
   FillRect: {fileID: 3200732468557150788}
   Name: {fileID: 3200732468757372860}
+  healthTransform: {fileID: 3200732468071478589}
+  topPosition: {x: -0.1156398, y: 1.97596, z: 0.02983022}
+  bottomPosition: {x: -0.1156398, y: 1.136, z: 0.02983022}
 --- !u!1 &3200732469076329568
 GameObject:
   m_ObjectHideFlags: 0
@@ -2328,6 +2318,7 @@ Transform:
   m_Children:
   - {fileID: 3200732467919309119}
   - {fileID: 3162072594745024557}
+  - {fileID: 3200732468071478589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -169.209, z: 0}
 --- !u!95 &3200732469325807607
@@ -3180,10 +3171,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3200732467350660264}
-    - targetCorrespondingSourceObject: {fileID: -3321919801592875672, guid: f18a98651e2a7464ca0b64d8e9a27f78,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3200732468071478589}
     - targetCorrespondingSourceObject: {fileID: 6000407479487422213, guid: f18a98651e2a7464ca0b64d8e9a27f78,
         type: 3}
       insertIndex: -1
@@ -3287,12 +3274,6 @@ Transform:
 --- !u!4 &8950589529423500542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3432401550182100168, guid: f18a98651e2a7464ca0b64d8e9a27f78,
-    type: 3}
-  m_PrefabInstance: {fileID: 3200732469296564166}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &9046995745529623214 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: f18a98651e2a7464ca0b64d8e9a27f78,
     type: 3}
   m_PrefabInstance: {fileID: 3200732469296564166}
   m_PrefabAsset: {fileID: 0}

@@ -56,9 +56,19 @@ namespace CoverShooter
         private GameObject _cachedTarget;
         private CharacterHealth _cachedCharacterHealth;
         private CharacterName _cachedCharacterName;
-       
+
+        [Header("Health Bar")]
+        public Transform healthTransform;
+        public Vector3 topPosition;
+        public Vector3 bottomPosition;
+
         private void LateUpdate()
         {
+            // Make the health bar face the camera
+            healthTransform.rotation = Quaternion.LookRotation(healthTransform.position - Camera.main.transform.position);
+
+            // Keep the health bar upright (ignore X & Z rotation)
+            healthTransform.rotation = Quaternion.Euler(0, healthTransform.rotation.eulerAngles.y, 0);
             /*if (isHealthbarEnabled) 
             {
                 timer -= Time.deltaTime;
@@ -70,7 +80,7 @@ namespace CoverShooter
             /*Vector3 targetPosition = Target.transform.position + Vector3.up * 6.0f; // Adjust height as needed
             transform.position = targetPosition;*/
 
-           
+
             if (Target != _cachedTarget)
             {
                 _cachedTarget = Target;
@@ -127,9 +137,15 @@ namespace CoverShooter
         }
 
    
-
-     
-
+        public void SetHealthPositionTop()
+        {
+          
+            healthTransform.transform.localPosition = topPosition;
+        }
+        public void SetHealthPositionBottom()
+        {
+            healthTransform.transform.localPosition = bottomPosition;
+        }
 
     }
 }

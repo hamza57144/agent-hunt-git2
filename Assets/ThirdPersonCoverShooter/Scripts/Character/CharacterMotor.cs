@@ -78,6 +78,7 @@ namespace CoverShooter
         private static bool hasScope;
         private Enemy enemy;
         private HealthBar healthBar;
+        //public HealthBar healthBar;
         public HealthBar GetHealthBar { get { return healthBar; } }
         public bool isVisible;
         public float GetHealth { get { return this.gameObject.GetComponent<CharacterHealth>().GetHealth; } }
@@ -6464,6 +6465,18 @@ namespace CoverShooter
 
                 _animator.SetBool("IsInCover", isInCover);
                 _animator.SetBool("IsInLowCover", isInCover && (!_cover.IsTall || _isCrouching));
+                if (!isPlayer)
+                {
+                    if (isInCover && ((!_cover.IsTall || _isCrouching)&& IsInLowCover))
+                    {                       
+                        healthBar.SetHealthPositionBottom();
+                    }
+                    else 
+                    {                      
+                        healthBar.SetHealthPositionTop();
+                    }
+                }
+                
                 _animator.SetBool("IsInTallLeftCover", isInCover && _cover.IsTall && !_isCrouching && _cover.IsStandingLeft);
                 _animator.SetBool("IsInTallCoverBack", isInCover && _cover.IsTall && _cover.Main.IsFrontField(_throwAngle, 180));
                 /* var isInCover = Nav_Movement.isInCoverAnim;*/

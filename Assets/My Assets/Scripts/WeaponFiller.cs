@@ -18,11 +18,13 @@ public class WeaponFiller : MonoBehaviour
     public Image glowingImage;
     private float rotationSpeed = 30f;
     [SerializeField] WeaponsData weaponData;
+    public GameObject claimNowTutorial;
     private void Awake()
     {
         Instance = this;
         weaponFillImage.sprite = weaponData.GetWeapon(GameData.Unlocked_Pistol_Index + 1, Items.pistols).fillSprite;
         bgImage.sprite = weaponData.GetWeapon(GameData.Unlocked_Pistol_Index + 1, Items.pistols).bgSprite;
+
     }
     private void Start()
     {
@@ -31,6 +33,14 @@ public class WeaponFiller : MonoBehaviour
         progressText.text = $"{weaponFillImage.fillAmount * 100}%";
         weaponCanvas.gameObject.SetActive(false);
         EnableButtonsPanel(false);
+        if (GameData.CompletedLevelIndex < 4)
+        {
+            claimNowTutorial.SetActive(true);
+        }
+        else
+        {
+            claimNowTutorial.SetActive(false);
+        }
     }
     private void Update()
     {

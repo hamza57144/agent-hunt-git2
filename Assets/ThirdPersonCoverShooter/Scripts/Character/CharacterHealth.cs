@@ -115,6 +115,12 @@ namespace CoverShooter
                 Health = Mathf.Clamp(Health + Regeneration * Time.deltaTime, 0, MaxHealth);
                 check();
             }
+
+            /*if (_motor.IsInLowCover && !_motor.isPlayer)
+            {
+                Debug.Log("Low Cover");
+            } */           
+
         }
         
         public float GetHealth {  get { return Health; } }
@@ -193,6 +199,12 @@ namespace CoverShooter
                 if (_previousHealth < Health && Healed != null) Healed(Health);
                 if (_previousHealth > Health && Hurt != null) Hurt(Health);
             }
+        }
+
+
+        public void MoveHealthDown()
+        {
+            Debug.Log("Event Call");
         }
     }
 }
