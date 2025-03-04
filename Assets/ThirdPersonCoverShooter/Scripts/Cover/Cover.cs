@@ -172,6 +172,9 @@ namespace CoverShooter
         [Tooltip("Can the character use the rgiht corner of the cover.")]
         public bool OpenRight = true;
 
+
+        [Tooltip("Can the character use the left corner of the cover.")]
+        public bool LowCover = true;
         /// <summary>
         /// Maximum allowed distance to adjacent covers.
         /// </summary>

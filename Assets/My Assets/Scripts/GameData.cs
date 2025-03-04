@@ -169,6 +169,7 @@ public static class TagsHandler
     public const string Enemy = "Enemy";
     public const string BodyPart = "BodyPart";
     public const string Bullet = "Bullet";
+    public const string BossCoverPoint = "BossCoverPoint";
 }
 public static class SceneHandler
 {

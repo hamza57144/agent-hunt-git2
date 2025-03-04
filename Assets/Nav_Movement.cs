@@ -18,6 +18,7 @@ public enum PlayerState
 public class Nav_Movement : MonoBehaviour
 {
     public static Nav_Movement Instance { get; private set; }
+    
     public int ActiveCoverPoint { get; set; }
     [SerializeField] LevelManager levelManager;
     public float smoothness = 3f;
@@ -40,8 +41,9 @@ public class Nav_Movement : MonoBehaviour
     [SerializeField] StatgesData stagesData;
     
     #region Properties
-        public bool SetCameraLeft { get { return covers[point].OpenLeft; } }//To set Camera left or right 
-        private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
+        public bool SetCameraLeft { get { return covers[point].LowCover; } }//To set Camera left or right 
+    public bool LowCover { get { return true; } }//To set Camera left or right 
+    private bool lastCoverPoint { get { return (point == coverPoint.Length - 1); } }
         public int coverDirection { get { return SetCameraLeft ? -1 : 1; } }//Direction for player to look left or right
         public int TotalEnemies { get { return totalEnemies; } }
         public bool PlaySwitchTutorial { get { return GameData.CompletedLevelIndex == 2 && point == 1; } }

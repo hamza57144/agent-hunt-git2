@@ -82,6 +82,7 @@ namespace CoverShooter
         public HealthBar GetHealthBar { get { return healthBar; } }
         public bool isVisible;
         public float GetHealth { get { return this.gameObject.GetComponent<CharacterHealth>().GetHealth; } }
+        public bool isBossReached = true;
         #region Properties
 
         /// <summary>
@@ -2516,6 +2517,7 @@ namespace CoverShooter
         public void InputGetHit()
         {
             _isGettingHit = true;
+            
         }
 
         /// <summary>
@@ -3302,6 +3304,8 @@ namespace CoverShooter
 
         private void Awake()
         {
+            if(characterType==CharacterType.Boss)
+               isBossReached = true;
             ThirdPersonInput.Fired += ThirdPersonInput_Fired;
             playerMotor = Nav_Movement.Instance;
             if (!isPlayer)
@@ -4202,9 +4206,9 @@ namespace CoverShooter
 
         private void updateAngles()
         {
-            
+           
                 
-            if (isPlayer && !Nav_Movement.Instance.isInCoverAnim)
+            if ((isPlayer && !Nav_Movement.Instance.isInCoverAnim) )
             {
                 // Get the agent's current velocity
                 Vector3 movementDirection = Nav_Movement.Instance.agent.velocity;
@@ -4218,17 +4222,25 @@ namespace CoverShooter
                 _verticalAngle = Util.VerticalAngle(targetDirection);
 
             }
+            else if (characterType == CharacterType.Boss && !isBossReached)
+            {
+                // Get the agent's current velocity
+                Vector3 movementDirection = Nav_Movement.Instance.agent.velocity;
+
+
+                // Calculate the target direction based on the agent's movement
+                Vector3 targetDirection = movementDirection.normalized;
+
+                // Calculate the angles based on the target direction
+                _horizontalAngle = Util.HorizontalAngle(targetDirection);
+                _verticalAngle = Util.VerticalAngle(targetDirection);
+            }
             else
             {
                 var vector = _bodyTarget - VirtualHead;
                 _horizontalAngle = Util.HorizontalAngle(vector);
                 _verticalAngle = Util.VerticalAngle(vector);
             }
-           
-          
-              
-            
-
         }
 
         private void loadBullet()
@@ -5319,6 +5331,30 @@ namespace CoverShooter
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if(characterType == CharacterType.Boss)
+            {
+                if(other.gameObject.CompareTag(TagsHandler.BossCoverPoint))
+                {                   
+                    isBossReached = true;
+                }
+               
+
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (characterType == CharacterType.Boss)
+            {
+                if (other.gameObject.CompareTag(TagsHandler.BossCoverPoint))
+                {                   
+                    isBossReached = false;
+                }
+               
+
+            }
+        }
         private void updateFire()
         {
             if (_isClimbing)

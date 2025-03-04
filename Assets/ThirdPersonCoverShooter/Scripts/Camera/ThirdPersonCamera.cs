@@ -568,7 +568,7 @@ namespace CoverShooter
                     {
                         _stateName = "Corner";
                         state = States.Corner;
-                       // _stateName = "TallCover";
+                        // _stateName = "TallCover";
                         /*if (Target.HasScope())
                         {
                             States.TallCover.Offset = States.TallCornerZoom.ScopeOffset;
@@ -577,7 +577,7 @@ namespace CoverShooter
                         {
                             States.TallCover.Offset = TallCoverOffset;
                         }*/
-                        state = States.TallCover;
+                        //  state = States.TallCover;
                     }
                 }
                 else if (Target.HasGrenadeInHand)
@@ -617,8 +617,12 @@ namespace CoverShooter
 
             var clamped = Mathf.Clamp(Vertical + _verticalDifference, -state.MaxAngle, -state.MinAngle);
             _verticalDifference = clamped - Vertical;
-            var _clamped = Mathf.Clamp(Horizontal + _horizontalDifference, state.MaxX, state.MinX);
-            _horizontalDifference = _clamped - Horizontal;
+            if (!Nav_Movement.Instance.LowCover)
+            {
+                var _clamped = Mathf.Clamp(Horizontal + _horizontalDifference, state.MaxX, state.MinX);
+                _horizontalDifference = _clamped - Horizontal;
+            }
+          
             var fov = state.FOV;
             _stateFOV = state.FOV;
          
@@ -880,7 +884,8 @@ namespace CoverShooter
                 {
                     States.TallCornerZoom.Offset = TallCoverZoomRightOffset;
                 }
-
+                
+                
             }
             _stateName = "TallCornerZoom";
         }

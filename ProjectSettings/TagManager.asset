@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags:
   - PrefabPools
   - FxTemporaire
@@ -16,6 +16,36 @@ TagManager:
   - Head
   - Bullet
   - BodyPart
+  - building
+  - Wood
+  - Glass
+  - Sand
+  - Metal
+  - doc
+  - shootingrange
+  - bakery
+  - barracks
+  - railway
+  - telegraph
+  - fur
+  - butcher
+  - barbershop
+  - energy
+  - gold
+  - tailor
+  - moneyDepot
+  - housing
+  - main
+  - wood
+  - cattle
+  - shoemaker
+  - drugstore
+  - defense
+  - hideout
+  - Weapon
+  - Effects
+  - BossCoverPoint
+  - Reached
   layers:
   - Default
   - TransparentFX
@@ -53,3 +83,5 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  m_RenderingLayers:
+  - Default

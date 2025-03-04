@@ -11,6 +11,7 @@ namespace CoverShooter
         private CharacterMotor enemyMotor;
         [SerializeField] Image dotImg;
         public LayerMask layerMask;
+        private Color crossHairColor;
         // Crosshair colors
         public Color defaultColor = Color.white;
         public Color targetColor = Color.red;
@@ -79,6 +80,7 @@ namespace CoverShooter
                             ChangeOutline(characterOutline, true);
                     }
                     ChangeDotColor(Color.green);
+                    crossHairColor = Color.green;
                 }
             }
             else
@@ -86,6 +88,7 @@ namespace CoverShooter
                 ChangeOutline(characterOutline, false);
                 EnableHealthBar(enemyMotor, false);
                 ChangeDotColor(Color.white);
+                crossHairColor = Color.white;
             }
         }
         /// <summary>
@@ -170,35 +173,32 @@ namespace CoverShooter
 
             // Check if crosshair is on target
             Color crosshairColor = defaultColor;
-            
-            Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+           /* Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-               
+
                 // Check if the object hit is an enemy or a target
                 if (hit.collider.CompareTag(TagsHandler.Enemy))
                 {
-                    crosshairColor = targetColor;                    
-                   /* characterOutline = hit.collider.GetComponent<CharacterOutline>();
-                    enemyMotor = hit.collider.GetComponent<CharacterMotor>();
-                    EnableHealthBar(enemyMotor,true);
-                    if (GameData.CompletedLevelIndex < 3)
-                        ChangeOutline(characterOutline, true);*/
-                }                             
-                else
-                {/*
-                    ChangeOutline(characterOutline, false);
-                    EnableHealthBar(enemyMotor, false);*/
+                    crosshairColor = targetColor;
+                   
                 }
+               
 
 
-            }
+            }*/
 
             // Apply color and draw crosshair
             var previous = GUI.color;
-            GUI.color = new Color(crosshairColor.r, crosshairColor.g, crosshairColor.b, _thirdPersonCamera.CrosshairAlpha);
+            GUI.color = ChangeCrossHairColor(crossHairColor); /*new Color(crosshairColor.r, crosshairColor.g, crosshairColor.b, _thirdPersonCamera.CrosshairAlpha);*/
             GUI.DrawTextureWithTexCoords(dest, texture, source, true);
-            GUI.color = previous;
+            //   GUI.color = previous;
+        }
+
+        private Color ChangeCrossHairColor(Color crosshairColor)
+        {
+            return crosshairColor;
         }
         private void ChangeOutline(CharacterOutline characterOutline,bool change)
         {
